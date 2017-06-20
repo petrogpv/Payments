@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+    <Resource name="jdbc/payments" auth="Container" type="javax.sql.DataSource"
+              maxActive="50" maxIdle="30" maxWait="10000"
+              username="root" password="gorpetval"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost/payments"/>
+
+</Context>

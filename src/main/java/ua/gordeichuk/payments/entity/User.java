@@ -1,9 +1,14 @@
 package ua.gordeichuk.payments.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User implements Entity {
     private Long id;
     private String firstName;
     private String lastName;
+    private UserAuth userAuth;
+    private List<Card> cards = new ArrayList<>();
 
     private User() {
     }
@@ -32,6 +37,22 @@ public class User implements Entity {
         this.lastName = lastName;
     }
 
+    public UserAuth getUserAuth() {
+        return userAuth;
+    }
+
+    public void setUserAuth(UserAuth userAuth) {
+        this.userAuth = userAuth;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
     public static class Builder{
         private User user = new User();
 
@@ -45,6 +66,16 @@ public class User implements Entity {
             return this;
         }
 
+
+        public Builder setUserAuth(UserAuth userAuth) {
+            user.userAuth = userAuth;
+            return this;
+        }
+
+        public Builder setCards(List<Card> cards) {
+            user.cards = cards;
+            return this;
+        }
 
         public Builder setId(Long id) {
             user.id = id;

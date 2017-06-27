@@ -30,7 +30,6 @@ public class JdbcDaoConnection implements DaoConnection {
         try {
             connection.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             throw new RuntimeException(e);
         }
     }
@@ -66,7 +65,7 @@ public class JdbcDaoConnection implements DaoConnection {
 
     }
 
-    Connection getConnection() {
+    protected Connection getConnection() {
         return connection;
     }
 

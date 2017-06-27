@@ -7,6 +7,7 @@ public class UserAuth implements Entity {
     private UserRole role;
     private String login;
     private String password;
+    private String sole;
 
     private UserAuth(){};
 
@@ -42,6 +43,14 @@ public class UserAuth implements Entity {
         this.password = password;
     }
 
+    public String getSole() {
+        return sole;
+    }
+
+    public void setSole(String sole) {
+        this.sole = sole;
+    }
+
     public static class Builder{
         private UserAuth userAuth = new UserAuth();
 
@@ -52,6 +61,10 @@ public class UserAuth implements Entity {
 
         public Builder setPassword(String password) {
             userAuth.password = password;
+            return this;
+        }
+        public Builder setSole(String sole) {
+            userAuth.sole = sole;
             return this;
         }
 

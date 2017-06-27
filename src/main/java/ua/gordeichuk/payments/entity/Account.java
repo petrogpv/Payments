@@ -1,7 +1,5 @@
 package ua.gordeichuk.payments.entity;
 
-import ua.gordeichuk.payments.entity.enums.AccountStatus;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,6 @@ public class Account implements Entity{
     private  Long id;
     private List<Card> cards = new ArrayList<>();
     private Long balance;
-    private AccountStatus status;
 
     private Account() {
     }
@@ -41,15 +38,6 @@ public class Account implements Entity{
         this.balance = balance;
     }
 
-    public AccountStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(AccountStatus status) {
-        this.status = status;
-    }
-
-
     public static class Builder {
         private Account account = new Account();
 
@@ -60,11 +48,6 @@ public class Account implements Entity{
 
         public  Builder setBalance (Long balance){
             account.balance = balance;
-            return this;
-        }
-
-        public Builder setAccountStatus (AccountStatus status){
-            account.status = status;
             return this;
         }
 

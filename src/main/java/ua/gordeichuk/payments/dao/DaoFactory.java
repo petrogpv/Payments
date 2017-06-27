@@ -1,10 +1,10 @@
 package ua.gordeichuk.payments.dao;
 
-import ua.gordeichuk.payments.dao.daoentity.*;
+import org.apache.log4j.Logger;
+import ua.gordeichuk.payments.util.LogMessages;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.Properties;
 
 /**
@@ -13,34 +13,29 @@ import java.util.Properties;
 public abstract class DaoFactory {
     public abstract DaoConnection getConnection();
 
-//    public abstract AccountDao createAccountDao( );
-//    public abstract CardDao createCardDao();
-//    public abstract TransactionDao createTransactionDao();
-//    public abstract UserDao createUserDao();
-//    public abstract UserAuthDao createUserAuthDao();
-
-    public abstract AccountDao createAccountDao(Connection connection );
-    public abstract CardDao createCardDao(Connection connection);
-    public abstract TransactionDao createTransactionDao(Connection connection);
-    public abstract UserDao createUserDao(Connection connection);
-    public abstract UserAuthDao createUserAuthDao(Connection connection);
-
+    private static DaoFactory instance;
+    private static final Logger LOGGER = Logger.getLogger(DaoFactory.class);
     public static final String DB_FILE = "/db.properties";
     private static final String DB_FACTORY_CLASS = "factory.class";
-    private static  DaoFactory instance;
 
-    public static DaoFactory getInstance(){
-        if( instance == null) {
-            try {
-                InputStream inputStream =
-                        DaoFactory.class.getResourceAsStream(DB_FILE);
-                Properties dbProps = new Properties();
-                dbProps.load(inputStream);
-                String factoryClass = dbProps.getProperty(DB_FACTORY_CLASS);
+    public abstract Dao createDao(String entityName, DaoConnection connection);
+
+    public static DaoFactory getInstance() {
+        if (instance == null) {
+            try (InputStream inputStream =
+                         DaoFactory.class.getResourceAsStream(DB_FILE)){
+                Properties properties = new Properties();
+                properties.load(inputStream);
+                String factoryClass = properties.getProperty(DB_FACTORY_CLASS);
                 instance = (DaoFactory) Class.forName(factoryClass).newInstance();
+                LOGGER.info(LogMessages.RB_READ_SUCCESSFUL + LogMessages.DAO_FACTORY_CREATED +
+                        DB_FACTORY_CLASS);
 
-            } catch (IOException | IllegalAccessException|
-                    InstantiationException |ClassNotFoundException e ) {
+            } catch (IOException
+                    | IllegalAccessException
+                    | InstantiationException
+                    | ClassNotFoundException e) {
+                LOGGER.error(LogMessages.DAO_FACTORY_CREATION_ERROR + DB_FACTORY_CLASS, e);
                 throw new RuntimeException(e);
             }
         }

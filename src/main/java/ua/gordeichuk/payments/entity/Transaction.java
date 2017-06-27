@@ -86,8 +86,12 @@ public class Transaction implements Entity {
     public static class Builder{
         private Transaction transaction = new Transaction();
 
-        public Builder setCardId(Card cardId) {
-            transaction.card = cardId;
+        public Builder setCard(Card card) {
+            transaction.card = card;
+            return this;
+        }
+        public Builder setType(TransactionType type) {
+            transaction.type = type;
             return this;
         }
 

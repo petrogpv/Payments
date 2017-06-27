@@ -8,5 +8,54 @@
     <artifactId>Payments</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.junit>4.12</version.junit>
+        <version.jdk>1.8</version.jdk>
+        <version.maven.plugin>2.5.1</version.maven.plugin>
+        <version.javax.servlet-api>3.1.0</version.javax.servlet-api>
+        <version.javax.servlet-jsp>2.0</version.javax.servlet-jsp>
+        <version.javax.servlet.jstl>1.2</version.javax.servlet.jstl>
+        <version.log4j>1.2.17</version.log4j>
+        <version.mysql.connector>6.0.6</version.mysql.connector>
+        <version.apache.codec>1.10</version.apache.codec>
+    </properties>
+
+    <build>
+        <finalName>paymenets</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.maven.plugin}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>${version.jdk}</source>
+                    <target>${version.jdk}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+<dependencies>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${version.log4j}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>${version.apache.codec}</version>
+    </dependency>
+</dependencies>
+
     
 </project>

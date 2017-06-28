@@ -11,6 +11,9 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <form action="races" method="POST">
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
   </body>
 </html>

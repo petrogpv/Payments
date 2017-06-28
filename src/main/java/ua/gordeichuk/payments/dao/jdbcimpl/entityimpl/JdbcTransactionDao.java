@@ -6,6 +6,8 @@ import ua.gordeichuk.payments.dao.jdbcimpl.JdbcEntityDao;
 import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.entity.Transaction;
 import ua.gordeichuk.payments.entity.enums.TransactionType;
+import ua.gordeichuk.payments.exception.ServiceException;
+import ua.gordeichuk.payments.util.ExceptionMessages;
 import ua.gordeichuk.payments.util.LogMessages;
 
 import java.sql.*;
@@ -18,7 +20,6 @@ import java.util.Date;
 public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements TransactionDao {
 
     private static final Logger LOGGER = Logger.getLogger(JdbcTransactionDao.class);
-    private static final String ENTITY_NAME = "transaction";
     private static final String FIND_BY_CARD_CONDITION = "findByCard";
     private static final String FIND_BY_ACCOUNT_CONDITION = "findByAccount";
     private static final String FIND_BY_USER_CONDITION = "findByUser";
@@ -78,6 +79,13 @@ public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements Tr
     }
 
     @Override
+    public boolean delete(Long id) {
+        String message = LogMessages.TRANSACTION_DELETE_ERROR;
+        LOGGER.error(message);
+        throw new RuntimeException(message);
+    }
+
+    @Override
     public List<Transaction> findManyByCard(Long cardId) {
         String sql = getSqlString(FIND_ALL_QUERY) + getSqlString(FIND_BY_CARD_CONDITION);
         return findManyById(sql, cardId);
@@ -117,7 +125,7 @@ public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements Tr
     }
 
     @Override
-    public List<Transaction> findManyByUserAndByDateBetwee(Long userId, Date dateFrom, Date dateTo) {
+    public List<Transaction> findManyByUserAndByDateBetween(Long userId, Date dateFrom, Date dateTo) {
         String sql = getSqlString(FIND_ALL_QUERY) + getSqlString(FIND_BY_USER_CONDITION) +
                 getSqlString(FIND_AND_BY_DATE_BETWEEN);
         return findManyById(sql, userId, dateFrom, dateTo);

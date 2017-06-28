@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
 
 /**
  * Created by Валерий on 18.06.2017.
@@ -47,7 +48,7 @@ public class JdbcDaoFactory extends DaoFactory {
 
 
         }catch(Exception e){
-            e.printStackTrace();
+            LOGGER.error(LogMessages.RETRIEVE_DATASOURCE_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -55,7 +56,9 @@ public class JdbcDaoFactory extends DaoFactory {
     @Override
     public DaoConnection getConnection() {
         try {
-            return new JdbcDaoConnection( dataSource.getConnection() );
+            Connection connection =  dataSource.getConnection();
+            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+            return new JdbcDaoConnection( connection );
         } catch (SQLException e) {
             LOGGER.error(LogMessages.GET_CONNECTION_ERROR, e);
             throw new RuntimeException(e);

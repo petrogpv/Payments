@@ -17,7 +17,6 @@ import java.sql.SQLException;
 public class JdbcUserAuthDao extends JdbcEntityDao<UserAuth> implements UserAuthDao {
 
     private static final Logger LOGGER = Logger.getLogger(JdbcUserAuthDao.class);
-    private static final String ENTITY_NAME = "userAuth";
     private static final String ID = "user_auth_id";
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";

@@ -20,11 +20,12 @@ public class JdbcUserDao extends JdbcEntityDao<User> implements UserDao {
 
     private static final Logger LOGGER = Logger.getLogger(JdbcEntityDao.class);
     private static final String FIND_BY_LOGIN_CONDITION = "findByLogin";
-    private static final String ENTITY_NAME = "user";
+    private static final String FIND_BY_TAX_CODE = "findByTaxCode";
     private static final String ID = "user_id";
     private static final String FIRST_NAME = "first_name";
     private static final String LAST_NAME = "last_name";
-    public static final int ID_INDEX = 3;
+    private static final String TAX_CODE = "tax_code";
+    public static final int ID_INDEX = 4;
 
 
     public JdbcUserDao(Connection connection) {
@@ -44,6 +45,7 @@ public class JdbcUserDao extends JdbcEntityDao<User> implements UserDao {
                     .setId(resultSet.getLong(ID))
                     .setFirstName(resultSet.getString(FIRST_NAME))
                     .setLastName(resultSet.getString(LAST_NAME))
+                    .setTaxCode(resultSet.getLong(TAX_CODE))
                     .setUserAuth(userAuth)
                     .build();
         } catch (SQLException e) {
@@ -58,6 +60,7 @@ public class JdbcUserDao extends JdbcEntityDao<User> implements UserDao {
         try {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
+            statement.setLong(3, user.getTaxcode());
             if (statement.getParameterMetaData().getParameterCount() == ID_INDEX) {
                 statement.setLong(ID_INDEX, user.getId());
             }
@@ -72,5 +75,11 @@ public class JdbcUserDao extends JdbcEntityDao<User> implements UserDao {
     public Optional<User> findByLogin(String login) {
         String sql = getSqlString(FIND_ALL_QUERY) + getSqlString(FIND_BY_LOGIN_CONDITION);
         return findBy(sql, login);
+    }
+
+    @Override
+    public Optional<User> findByTaxCode(Long taxCode) {
+        String sql = getSqlString(FIND_ALL_QUERY) + getSqlString(FIND_BY_TAX_CODE);
+        return findBy(sql, taxCode);
     }
 }

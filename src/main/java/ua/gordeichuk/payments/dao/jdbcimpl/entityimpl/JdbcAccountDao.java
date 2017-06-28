@@ -10,15 +10,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 
 public class JdbcAccountDao extends JdbcEntityDao<Account> implements AccountDao {
 
     private static final Logger LOGGER = Logger.getLogger(JdbcAccountDao.class);
-    private static final String ENTITY_NAME = "transaction";
     private static final String ID = "account_id";
     private static final String BALANCE = "balance";
     public static final int ID_INDEX = 2;
+    private static final String FIND_BY_CARD = "findByCard";
 
     public JdbcAccountDao(Connection connection) {
        super(connection, ENTITY_NAME);
@@ -54,5 +55,11 @@ public class JdbcAccountDao extends JdbcEntityDao<Account> implements AccountDao
             LOGGER.error(LogMessages.EXCEPTION, e);
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Optional<Account> findByCard(Long CardId) {
+        String sql = getSqlString(FIND_ALL_QUERY) + getSqlString(FIND_BY_CARD);
+        return findBy(sql, CardId);
     }
 }

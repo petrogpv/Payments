@@ -5,11 +5,10 @@ package ua.gordeichuk.payments.entity.enums;
  */
 public enum TransactionType {
 
-    INCOME, OUTCOME, WITHDRAWAL, DEPOSITING;
+    INCOME, OUTCOME, DEPOSIT;
 
     public static boolean isPartOfTransferBetweenAccounts (TransactionType transactionType){
-        return (transactionType.equals(INCOME)
-                || transactionType.equals(OUTCOME))
+        return (!transactionType.equals(DEPOSIT))
                 ? true
                 : false;
 

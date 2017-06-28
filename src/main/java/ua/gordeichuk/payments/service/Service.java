@@ -26,7 +26,7 @@ public abstract class Service<T extends Entity> {
     public void create(T entity) throws ServiceException {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
-            Dao dao = daoFactory.createDao(entityName, connection);
+            Dao <T> dao = daoFactory.createDao(entityName, connection);
             if (!dao.create(entity)) {
                 String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.CREATE_FAILED) + dao.getEntityName();
                 LOGGER.error(logMessage);
@@ -39,7 +39,7 @@ public abstract class Service<T extends Entity> {
     public void update(T entity) throws ServiceException {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
-            Dao dao = daoFactory.createDao(entityName, connection);
+            Dao <T> dao = daoFactory.createDao(entityName, connection);
             if (!dao.update(entity)) {
                 String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.UPDATE_FAILED) + dao.getEntityName();
                 LOGGER.error(logMessage);
@@ -49,11 +49,12 @@ public abstract class Service<T extends Entity> {
         }
     }
 
-    public void delete(Long id) throws ServiceException {
+    public void delete(T entity) throws ServiceException {
+
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
-            Dao dao = daoFactory.createDao(entityName, connection);
-            if (!dao.delete(id)) {
+            Dao <T> dao = daoFactory.createDao(entityName, connection);
+            if (!dao.delete(entity.getId())) {
                 String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.DELETE_FAILED) + dao.getEntityName();
                 LOGGER.error(logMessage);
                 String message = ExceptionMessages.getMessage(ExceptionMessages.DELETE_FAILED) + dao.getEntityName();
@@ -65,7 +66,7 @@ public abstract class Service<T extends Entity> {
     public Optional<T> find(Long id) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
-            Dao dao = daoFactory.createDao(entityName, connection);
+            Dao <T> dao = daoFactory.createDao(entityName, connection);
 //            Optional<T> optional = dao.find(id);
 //            if (!optional.isPresent()) {
 //                String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.FIND_ITEMS_FAILED) + dao.getEntityName() +
@@ -83,7 +84,7 @@ public abstract class Service<T extends Entity> {
     public List<T> findAll(){
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
-            Dao dao = daoFactory.createDao(entityName, connection);
+            Dao <T> dao = daoFactory.createDao(entityName, connection);
 //            List<T> itemList = dao.findAll();
 //            if (itemList.size() == 0) {
 //                String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.FIND_ITEMS_FAILED) +

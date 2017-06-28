@@ -7,6 +7,7 @@ public class User implements Entity {
     private Long id;
     private String firstName;
     private String lastName;
+    private Long taxcode;
     private UserAuth userAuth;
     private List<Card> cards = new ArrayList<>();
 
@@ -37,6 +38,14 @@ public class User implements Entity {
         this.lastName = lastName;
     }
 
+    public Long getTaxcode() {
+        return taxcode;
+    }
+
+    public void setTaxcode(Long taxcode) {
+        this.taxcode = taxcode;
+    }
+
     public UserAuth getUserAuth() {
         return userAuth;
     }
@@ -63,6 +72,10 @@ public class User implements Entity {
 
         public Builder setLastName(String lastName) {
             user.lastName = lastName;
+            return this;
+        }
+        public Builder setTaxCode(Long taxCode) {
+            user.taxcode = taxCode;
             return this;
         }
 

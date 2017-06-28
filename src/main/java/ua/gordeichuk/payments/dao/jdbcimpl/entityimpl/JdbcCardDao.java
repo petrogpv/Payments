@@ -18,7 +18,6 @@ import java.util.List;
 public class JdbcCardDao extends JdbcEntityDao<Card> implements CardDao {
 
     private static final Logger LOGGER = Logger.getLogger(JdbcCardDao.class);
-    private static final String ENTITY_NAME = "card";
     private static final String FIND_BY_USER_CONDITION = "findByUser";
     private static final String FIND_BY_ACCOUNT_CONDITION = "findByAccount";
     private static final String FIND_AND_BY_CARD_STATUS = "findAndByCardStatus";

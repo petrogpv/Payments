@@ -3,7 +3,7 @@ package ua.gordeichuk.payments.dao.jdbcimpl;
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.dao.Dao;
 import ua.gordeichuk.payments.entity.Entity;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import java.sql.*;
 import java.util.*;
@@ -22,7 +22,7 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
     public static final String DELETE_QUERY = "delete";
     public static final String SPACE = " ";
     public static final String DOT = ".";
-    public static final String SQL_PROPERTIES_FILE = "sql.properties";
+    public static final String SQL_PROPERTIES_FILE = "sql";
     protected static ResourceBundle sqlBundle;
     protected String entityName;
     private static final Logger LOGGER = Logger.getLogger(JdbcEntityDao.class);
@@ -32,9 +32,9 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
         this.entityName = entityName;
         try {
             sqlBundle = ResourceBundle.getBundle(SQL_PROPERTIES_FILE);
-            LOGGER.info(LogMessages.RB_READ_SUCCESSFUL + SQL_PROPERTIES_FILE);
+            LOGGER.info(LogMessage.RB_READ_SUCCESSFUL + SQL_PROPERTIES_FILE);
         } catch (MissingResourceException e) {
-            LOGGER.error(LogMessages.RB_READ_ERROR + SQL_PROPERTIES_FILE);
+            LOGGER.error(LogMessage.RB_READ_ERROR + SQL_PROPERTIES_FILE);
             throw new RuntimeException(e);
         }
     }
@@ -60,23 +60,22 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
         return findManyById(sql, null);
     }
     protected List<T> findManyById(String sql, Object ... param){
-        List<T> result = new ArrayList<>();
+        List<T> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             setConditionParametersToStatement(statement, param);
             LOGGER.info(statement.toString());
             ResultSet resultSet = statement.executeQuery();
-            int rows = statement.getUpdateCount();
-            LOGGER.info(LogMessages.ROWS_FOUND + rows + LogMessages.IN_TABLE + entityName);
             while (resultSet.next()) {
-                result.add(extractEntityFromResultSet(resultSet));
+                list.add(extractEntityFromResultSet(resultSet));
 
             }
+            LOGGER.info(LogMessage.ROWS_FOUND + list.size() + LogMessage.IN_TABLE + entityName);
 
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.DB_ERROR_FIND + entityName +
-                    LogMessages.EXCEPTION_MESSAGE + e.getMessage());
+            LOGGER.error(LogMessage.DB_ERROR_FIND + entityName +
+                    LogMessage.EXCEPTION_MESSAGE + e.getMessage());
         }
-        return result;
+        return list;
     }
 
 
@@ -105,18 +104,18 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
                              , Statement.RETURN_GENERATED_KEYS)) {
 
             setEntityToPreparedStatement(entity, statement);
-            LOGGER.info(LogMessages.PREPARED_STATEMENT + statement.toString());
+            LOGGER.info(LogMessage.PREPARED_STATEMENT + statement.toString());
             statement.executeUpdate();
             int rows = statement.getUpdateCount();
             updated = rows > 0;
-            LOGGER.info(LogMessages.ROWS_SAVED + rows + LogMessages.IN_TABLE + entityName);
+            LOGGER.info(LogMessage.ROWS_SAVED + rows + LogMessage.IN_TABLE + entityName);
             ResultSet keys = statement.getGeneratedKeys();
             if (keys.next()) {
                 entity.setId(keys.getLong(1));
             }
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.DB_ERROR_CREATE + entityName +
-                    LogMessages.EXCEPTION_MESSAGE + e.getMessage());
+            LOGGER.error(LogMessage.DB_ERROR_CREATE + entityName +
+                    LogMessage.EXCEPTION_MESSAGE + e.getMessage());
             throw new RuntimeException(e);
         }
         return updated;
@@ -128,14 +127,14 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
         String sql = getSqlString(UPDATE_QUERY);
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             setEntityToPreparedStatement(entity, statement);
-            LOGGER.info(LogMessages.PREPARED_STATEMENT + statement.toString());
+            LOGGER.info(LogMessage.PREPARED_STATEMENT + statement.toString());
             statement.executeUpdate();
             int rows = statement.getUpdateCount();
             updated = rows > 0;
-            LOGGER.info(LogMessages.ROWS_UPDATED + rows + LogMessages.IN_TABLE + entityName);
+            LOGGER.info(LogMessage.ROWS_UPDATED + rows + LogMessage.IN_TABLE + entityName);
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.DB_ERROR_UPDATE + entityName +
-                    LogMessages.EXCEPTION_MESSAGE + e.getMessage());
+            LOGGER.error(LogMessage.DB_ERROR_UPDATE + entityName +
+                    LogMessage.EXCEPTION_MESSAGE + e.getMessage());
             throw new RuntimeException(e);
         }
         return updated;
@@ -147,13 +146,13 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
         String sql = getSqlString(DELETE_QUERY);
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
-            LOGGER.info(LogMessages.PREPARED_STATEMENT + statement.toString());
+            LOGGER.info(LogMessage.PREPARED_STATEMENT + statement.toString());
             int rows = statement.executeUpdate();
             updated = rows > 0;
-            LOGGER.info(LogMessages.ROWS_DELETED + rows);
+            LOGGER.info(LogMessage.ROWS_DELETED + rows);
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.DB_ERROR_DELETE + entityName +
-                    LogMessages.EXCEPTION_MESSAGE + e.getMessage());
+            LOGGER.error(LogMessage.DB_ERROR_DELETE + entityName +
+                    LogMessage.EXCEPTION_MESSAGE + e.getMessage());
             throw new RuntimeException(e);
         }
         return updated;

@@ -1,20 +1,14 @@
 package ua.gordeichuk.payments.service;
 
-import com.sun.corba.se.spi.legacy.connection.Connection;
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.dao.DaoConnection;
-import ua.gordeichuk.payments.dao.daoentity.AccountDao;
 import ua.gordeichuk.payments.dao.daoentity.TransactionDao;
 import ua.gordeichuk.payments.entity.Account;
 import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.entity.Transaction;
 import ua.gordeichuk.payments.entity.User;
-import ua.gordeichuk.payments.entity.enums.CardStatus;
-import ua.gordeichuk.payments.entity.enums.TransactionType;
 import ua.gordeichuk.payments.exception.ServiceException;
-import ua.gordeichuk.payments.util.LogMessages;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +21,18 @@ public class TransactionService extends Service<Transaction> {
     private static final int TRANSACTION_FAILD_NOT_ENOUGH_MONEY = 0;
     private static final int TRANSACTION_APPLIED = 1;
 
-    protected TransactionService(String entityName) {
+    private static class Holder{
+        static final TransactionService INSTANCE = new TransactionService();
+    }
+
+    private TransactionService () {
         super(TransactionDao.ENTITY_NAME);
     }
+
+    public static TransactionService getInstance(){
+        return TransactionService.Holder.INSTANCE;
+    }
+
 
     @Override
     public void delete(Transaction entity) throws ServiceException {
@@ -40,7 +43,9 @@ public class TransactionService extends Service<Transaction> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             TransactionDao transactionDao = (TransactionDao) daoFactory.createDao(entityName, connection);
-            return transactionDao.findManyByCard(card.getId());
+            List<Transaction> list = transactionDao.findManyByCard(card.getId());
+            connection.commit();
+            return list;
         }
     }
 
@@ -48,7 +53,9 @@ public class TransactionService extends Service<Transaction> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             TransactionDao transactionDao = (TransactionDao) daoFactory.createDao(entityName, connection);
-            return transactionDao.findManyByAccount(account.getId());
+            List<Transaction> list = transactionDao.findManyByAccount(account.getId());
+            connection.commit();
+            return list;
         }
     }
 
@@ -56,7 +63,9 @@ public class TransactionService extends Service<Transaction> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             TransactionDao transactionDao = (TransactionDao) daoFactory.createDao(entityName, connection);
-            return transactionDao.findManyByAccountAndByDate(account.getId(), date);
+            List<Transaction> list = transactionDao.findManyByAccountAndByDate(account.getId(), date);
+            connection.commit();
+            return list;
         }
     }
 
@@ -64,7 +73,9 @@ public class TransactionService extends Service<Transaction> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             TransactionDao transactionDao = (TransactionDao) daoFactory.createDao(entityName, connection);
-            return transactionDao.findManyByAccountAndByDateBetween(account.getId(), dateFrom, dateTo);
+            List<Transaction> list = transactionDao.findManyByAccountAndByDateBetween(account.getId(), dateFrom, dateTo);
+            connection.commit();
+            return list;
         }
     }
 
@@ -72,7 +83,9 @@ public class TransactionService extends Service<Transaction> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             TransactionDao transactionDao = (TransactionDao) daoFactory.createDao(entityName, connection);
-            return transactionDao.findManyByUser(user.getId());
+            List<Transaction> list = transactionDao.findManyByUser(user.getId());
+            connection.commit();
+            return list;
         }
     }
 
@@ -80,7 +93,9 @@ public class TransactionService extends Service<Transaction> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             TransactionDao transactionDao = (TransactionDao) daoFactory.createDao(entityName, connection);
-            return transactionDao.findManyByUserAndByDate(user.getId(), date);
+            List<Transaction> list = transactionDao.findManyByUserAndByDate(user.getId(), date);
+            connection.commit();
+            return list;
         }
     }
 
@@ -88,7 +103,9 @@ public class TransactionService extends Service<Transaction> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             TransactionDao transactionDao = (TransactionDao) daoFactory.createDao(entityName, connection);
-            return transactionDao.findManyByUserAndByDateBetween(user.getId(), dateFrom, dateTo);
+            List<Transaction> list = transactionDao.findManyByUserAndByDateBetween(user.getId(), dateFrom, dateTo);
+            connection.commit();
+            return list;
         }
     }
 

@@ -1,6 +1,7 @@
 package ua.gordeichuk.payments.service;
 
 import org.apache.log4j.Logger;
+import ua.gordeichuk.payments.dao.daoentity.TransactionDao;
 import ua.gordeichuk.payments.dao.daoentity.UserAuthDao;
 import ua.gordeichuk.payments.entity.UserAuth;
 
@@ -10,7 +11,15 @@ import ua.gordeichuk.payments.entity.UserAuth;
 public class UserAuthService extends Service<UserAuth> {
     private static final Logger LOGGER = Logger.getLogger(UserAuthService.class);
 
-    protected UserAuthService(String entityName) {
+    private static class Holder{
+        static final UserAuthService INSTANCE = new UserAuthService();
+    }
+
+    private UserAuthService () {
         super(UserAuthDao.ENTITY_NAME);
+    }
+
+    public static UserAuthService getInstance(){
+        return UserAuthService.Holder.INSTANCE;
     }
 }

@@ -3,7 +3,7 @@ package ua.gordeichuk.payments.util;
 /**
  * Created by Валерий on 25.06.2017.
  */
-public final class LogMessages {
+public final class LogMessage {
 
     public static final String EXCEPTION = "exception";
     public static final String PREPARED_STATEMENT = "Prepared statement: ";
@@ -34,4 +34,6 @@ public final class LogMessages {
     public static final String TO = "to ";
     public static final String DEPOSITING_SUCCESSFUL = "Depositing successful to card: ";
     public static final String TRANSACTION_DELETE_ERROR = "Transaction deletion isn't supported";
+    public static final String ATTEMPT_TO_VISIT_AUTHORIZED = "Attempt ro visit authorized area without signing in";
+    public static final String ATTEMPT_TO_VISIT_WITHOUT_PERMISSION = "Attempt ro visit without permission";
 }

@@ -5,13 +5,12 @@ import ua.gordeichuk.payments.dao.Dao;
 import ua.gordeichuk.payments.dao.DaoConnection;
 import ua.gordeichuk.payments.dao.DaoFactory;
 import ua.gordeichuk.payments.dao.jdbcimpl.entityimpl.*;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collections;
 
 /**
  * Created by Валерий on 18.06.2017.
@@ -48,7 +47,7 @@ public class JdbcDaoFactory extends DaoFactory {
 
 
         }catch(Exception e){
-            LOGGER.error(LogMessages.RETRIEVE_DATASOURCE_ERROR, e);
+            LOGGER.error(LogMessage.RETRIEVE_DATASOURCE_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -60,7 +59,7 @@ public class JdbcDaoFactory extends DaoFactory {
             connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
             return new JdbcDaoConnection( connection );
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.GET_CONNECTION_ERROR, e);
+            LOGGER.error(LogMessage.GET_CONNECTION_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -87,7 +86,7 @@ public class JdbcDaoFactory extends DaoFactory {
                 dao = new JdbcUserAuthDao(sqlConnection);
                 break;
             default:
-                String message = LogMessages.CREATE_DAO_ERROR  + entityName;
+                String message = LogMessage.CREATE_DAO_ERROR  + entityName;
                 LOGGER.error(message);
                 throw new RuntimeException(message);
         }

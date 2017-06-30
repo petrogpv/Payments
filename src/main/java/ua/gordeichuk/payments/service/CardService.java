@@ -5,12 +5,11 @@ import ua.gordeichuk.payments.dao.DaoConnection;
 import ua.gordeichuk.payments.dao.daoentity.AccountDao;
 import ua.gordeichuk.payments.dao.daoentity.CardDao;
 import ua.gordeichuk.payments.dao.daoentity.TransactionDao;
-import ua.gordeichuk.payments.dao.daoentity.UserDao;
 import ua.gordeichuk.payments.entity.Account;
 import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.entity.Transaction;
 import ua.gordeichuk.payments.entity.enums.TransactionType;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,15 +21,25 @@ import java.util.List;
 public class CardService extends Service<Card> {
     private static final Logger LOGGER = Logger.getLogger(CardService.class);
 
-    protected CardService(String entityName) {
+    private static class Holder{
+        static final CardService INSTANCE = new CardService();
+    }
+
+    private CardService () {
         super(CardDao.ENTITY_NAME);
+    }
+
+    public static CardService getInstance(){
+        return CardService.Holder.INSTANCE;
     }
 
     public List<Card> findManyByUser(Long userId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             CardDao cardDao = (CardDao) daoFactory.createDao(entityName, connection);
-            return cardDao.findManyByUser(userId);
+            List<Card> list = cardDao.findManyByUser(userId);
+            connection.commit();
+            return list;
         }
     }
 
@@ -38,7 +47,9 @@ public class CardService extends Service<Card> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             CardDao cardDao = (CardDao) daoFactory.createDao(entityName, connection);
-            return cardDao.findManyByUserAndCardStatus(userId, cardStatus);
+            List<Card> list = cardDao.findManyByUserAndCardStatus(userId, cardStatus);
+            connection.commit();
+            return list;
         }
     }
 
@@ -46,7 +57,9 @@ public class CardService extends Service<Card> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             CardDao cardDao = (CardDao) daoFactory.createDao(entityName, connection);
-            return cardDao.findManyByAccount(accountId);
+            List<Card> list = cardDao.findManyByAccount(accountId);
+            connection.commit();
+            return list;
         }
     }
 
@@ -54,7 +67,9 @@ public class CardService extends Service<Card> {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             CardDao cardDao = (CardDao) daoFactory.createDao(entityName, connection);
-            return cardDao.findManyByAccountAndCardStatus(accountId, cardStatus);
+            List<Card> list = cardDao.findManyByAccountAndCardStatus(accountId, cardStatus);
+            connection.commit();
+            return list;
         }
     }
 
@@ -105,8 +120,8 @@ public class CardService extends Service<Card> {
 
         transactionDao.update(transactionFrom);
         transactionDao.update(transactionTo);
-        LOGGER.info(LogMessages.TRANSFER_SUCCESSFUL + cardFrom.getId()
-                + LogMessages.TO + cardTo.getId());
+        LOGGER.info(LogMessage.TRANSFER_SUCCESSFUL + cardFrom.getId()
+                + LogMessage.TO + cardTo.getId());
         return true;
 //        }
     }
@@ -119,7 +134,8 @@ public class CardService extends Service<Card> {
             account.setBalance(account.getBalance() + sum);
             AccountDao accountDao = (AccountDao) daoFactory.createDao(AccountDao.ENTITY_NAME, connection);
             accountDao.update(account);
-            LOGGER.info(LogMessages.DEPOSITING_SUCCESSFUL);
+            connection.commit();
+            LOGGER.info(LogMessage.DEPOSITING_SUCCESSFUL);
             return true;
         }
     }

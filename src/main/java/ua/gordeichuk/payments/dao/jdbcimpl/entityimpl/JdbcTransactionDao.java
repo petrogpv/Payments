@@ -6,9 +6,7 @@ import ua.gordeichuk.payments.dao.jdbcimpl.JdbcEntityDao;
 import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.entity.Transaction;
 import ua.gordeichuk.payments.entity.enums.TransactionType;
-import ua.gordeichuk.payments.exception.ServiceException;
-import ua.gordeichuk.payments.util.ExceptionMessages;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import java.sql.*;
 import java.util.*;
@@ -53,7 +51,7 @@ public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements Tr
                         .setDate(resultSet.getTimestamp(DATE))
                         .build();
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
         return  transaction;
@@ -73,14 +71,14 @@ public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements Tr
                 statement.setLong(ID_INDEX, transaction.getId());
             }
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public boolean delete(Long id) {
-        String message = LogMessages.TRANSACTION_DELETE_ERROR;
+        String message = LogMessage.TRANSACTION_DELETE_ERROR;
         LOGGER.error(message);
         throw new RuntimeException(message);
     }

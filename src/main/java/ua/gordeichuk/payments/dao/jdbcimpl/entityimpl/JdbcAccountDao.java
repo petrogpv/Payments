@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.dao.daoentity.AccountDao;
 import ua.gordeichuk.payments.dao.jdbcimpl.JdbcEntityDao;
 import ua.gordeichuk.payments.entity.Account;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,7 +38,7 @@ public class JdbcAccountDao extends JdbcEntityDao<Account> implements AccountDao
                     .setBalance(resultSet.getLong(BALANCE))
                     .build();
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
         return account;
@@ -52,7 +52,7 @@ public class JdbcAccountDao extends JdbcEntityDao<Account> implements AccountDao
                 statement.setLong(ID_INDEX, account.getId());
             }
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
     }

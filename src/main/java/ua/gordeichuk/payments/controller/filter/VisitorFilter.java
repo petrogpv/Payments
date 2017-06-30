@@ -1,8 +1,8 @@
 package ua.gordeichuk.payments.controller.filter;
 
-import ua.gordeichuk.payments.controller.Pages;
-import ua.gordeichuk.payments.entity.User;
-import ua.gordeichuk.payments.entity.enums.UserRole;
+import org.apache.log4j.Logger;
+import ua.gordeichuk.payments.controller.AppServlet;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import java.io.IOException;
  * Created by Администратор on 28.06.2017.
  */
 public abstract  class VisitorFilter implements Filter {
-
+    private static final Logger LOGGER = Logger.getLogger(AppServlet.class);
     static final String USER_ATTRIBUTE = "user";
     static final String DEFAULT_PATH = "/";
 
@@ -28,14 +28,15 @@ public abstract  class VisitorFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession(false);
 
-        if (session == null || !checkUser(session)) {
+        if (session == null || !isUserEligible(session)) {
+            LOGGER.info(LogMessage.ATTEMPT_TO_VISIT_WITHOUT_PERMISSION);
             res.sendRedirect(DEFAULT_PATH);
         } else {
             filterChain.doFilter(req, res);
         }
     }
 
-    abstract boolean checkUser(HttpSession session);
+    abstract boolean isUserEligible(HttpSession session);
 
     @Override
     public void destroy() {

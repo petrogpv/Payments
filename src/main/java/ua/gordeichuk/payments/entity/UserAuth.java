@@ -78,4 +78,40 @@ public class UserAuth implements Entity {
             return userAuth;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserAuth userAuth = (UserAuth) o;
+
+        if (id != null ? !id.equals(userAuth.id) : userAuth.id != null) return false;
+        if (role != userAuth.role) return false;
+        if (login != null ? !login.equals(userAuth.login) : userAuth.login != null) return false;
+        if (password != null ? !password.equals(userAuth.password) : userAuth.password != null) return false;
+        return sole != null ? sole.equals(userAuth.sole) : userAuth.sole == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (sole != null ? sole.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAuth{" +
+                "id=" + id +
+                ", role=" + role +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", sole='" + sole + '\'' +
+                '}';
+    }
 }

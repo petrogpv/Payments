@@ -1,7 +1,7 @@
 package ua.gordeichuk.payments.dao;
 
 import org.apache.log4j.Logger;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,14 +28,14 @@ public abstract class DaoFactory {
                 properties.load(inputStream);
                 String factoryClass = properties.getProperty(DB_FACTORY_CLASS);
                 instance = (DaoFactory) Class.forName(factoryClass).newInstance();
-                LOGGER.info(LogMessages.RB_READ_SUCCESSFUL + LogMessages.DAO_FACTORY_CREATED +
+                LOGGER.info(LogMessage.RB_READ_SUCCESSFUL + LogMessage.DAO_FACTORY_CREATED +
                         DB_FACTORY_CLASS);
 
             } catch (IOException
                     | IllegalAccessException
                     | InstantiationException
                     | ClassNotFoundException e) {
-                LOGGER.error(LogMessages.DAO_FACTORY_CREATION_ERROR + DB_FACTORY_CLASS, e);
+                LOGGER.error(LogMessage.DAO_FACTORY_CREATION_ERROR + DB_FACTORY_CLASS, e);
                 throw new RuntimeException(e);
             }
         }

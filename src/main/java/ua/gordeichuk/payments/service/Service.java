@@ -6,7 +6,7 @@ import ua.gordeichuk.payments.dao.DaoConnection;
 import ua.gordeichuk.payments.dao.DaoFactory;
 import ua.gordeichuk.payments.entity.Entity;
 import ua.gordeichuk.payments.exception.ServiceException;
-import ua.gordeichuk.payments.util.ExceptionMessages;
+import ua.gordeichuk.payments.util.ExceptionMessage;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,11 +28,13 @@ public abstract class Service<T extends Entity> {
             connection.begin();
             Dao <T> dao = daoFactory.createDao(entityName, connection);
             if (!dao.create(entity)) {
-                String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.CREATE_FAILED) + dao.getEntityName();
+                String logMessage = ExceptionMessage.getLogMessage(ExceptionMessage.CREATE_FAILED) + dao.getEntityName();
                 LOGGER.error(logMessage);
-                String message = ExceptionMessages.getMessage(ExceptionMessages.CREATE_FAILED) + dao.getEntityName();
+                String message = ExceptionMessage.getMessage(ExceptionMessage.CREATE_FAILED) + dao.getEntityName();
                 throw new ServiceException(message);
             }
+            connection.commit();
+
         }
     }
 
@@ -41,11 +43,12 @@ public abstract class Service<T extends Entity> {
             connection.begin();
             Dao <T> dao = daoFactory.createDao(entityName, connection);
             if (!dao.update(entity)) {
-                String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.UPDATE_FAILED) + dao.getEntityName();
+                String logMessage = ExceptionMessage.getLogMessage(ExceptionMessage.UPDATE_FAILED) + dao.getEntityName();
                 LOGGER.error(logMessage);
-                String message = ExceptionMessages.getMessage(ExceptionMessages.UPDATE_FAILED) + dao.getEntityName();
+                String message = ExceptionMessage.getMessage(ExceptionMessage.UPDATE_FAILED) + dao.getEntityName();
                 throw new ServiceException(message);
             }
+            connection.commit();
         }
     }
 
@@ -55,11 +58,12 @@ public abstract class Service<T extends Entity> {
             connection.begin();
             Dao <T> dao = daoFactory.createDao(entityName, connection);
             if (!dao.delete(entity.getId())) {
-                String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.DELETE_FAILED) + dao.getEntityName();
+                String logMessage = ExceptionMessage.getLogMessage(ExceptionMessage.DELETE_FAILED) + dao.getEntityName();
                 LOGGER.error(logMessage);
-                String message = ExceptionMessages.getMessage(ExceptionMessages.DELETE_FAILED) + dao.getEntityName();
+                String message = ExceptionMessage.getMessage(ExceptionMessage.DELETE_FAILED) + dao.getEntityName();
                 throw new ServiceException(message);
             }
+            connection.commit();
         }
     }
 
@@ -69,15 +73,19 @@ public abstract class Service<T extends Entity> {
             Dao <T> dao = daoFactory.createDao(entityName, connection);
 //            Optional<T> optional = dao.find(id);
 //            if (!optional.isPresent()) {
-//                String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.FIND_ITEMS_FAILED) + dao.getEntityName() +
-//                        ExceptionMessages.getLogMessage(ExceptionMessages.ITEM_ID) + id;
+//                String logMessage = ExceptionMessage.getLogMessage(ExceptionMessage.FIND_ITEMS_FAILED) + dao.getEntityName() +
+//                        ExceptionMessage.getLogMessage(ExceptionMessage.ITEM_ID) + id;
 //                LOGGER.error(logMessage);
-//                String message = ExceptionMessages.getMessage(ExceptionMessages.FIND_ITEMS_FAILED) + dao.getEntityName() +
-//                        ExceptionMessages.getMessage(ExceptionMessages.ITEM_ID) + id;
+//                String message = ExceptionMessage.getMessage(ExceptionMessage.FIND_ITEMS_FAILED) + dao.getEntityName() +
+//                        ExceptionMessage.getMessage(ExceptionMessage.ITEM_ID) + id;
 //                throw new ServiceException(message);
 //            }
 //            return optional.get();
-            return dao.find(id);
+            Optional<T> entity =  dao.find(id);
+            connection.commit();
+            return entity;
+
+
         }
     }
 
@@ -87,14 +95,16 @@ public abstract class Service<T extends Entity> {
             Dao <T> dao = daoFactory.createDao(entityName, connection);
 //            List<T> itemList = dao.findAll();
 //            if (itemList.size() == 0) {
-//                String logMessage = ExceptionMessages.getLogMessage(ExceptionMessages.FIND_ITEMS_FAILED) +
+//                String logMessage = ExceptionMessage.getLogMessage(ExceptionMessage.FIND_ITEMS_FAILED) +
 //                        dao.getEntityName();
 //                LOGGER.error(logMessage);
-//                String message = ExceptionMessages.getMessage(ExceptionMessages.FIND_ITEMS_FAILED) +
+//                String message = ExceptionMessage.getMessage(ExceptionMessage.FIND_ITEMS_FAILED) +
 //                        dao.getEntityName();
 //                throw new ServiceException(message);
 //            }
-            return dao.findAll();
+            List<T> list = dao.findAll();
+            connection.commit();
+            return list;
         }
 
     }

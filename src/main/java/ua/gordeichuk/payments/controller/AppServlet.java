@@ -1,6 +1,9 @@
 package ua.gordeichuk.payments.controller;
 
 import org.apache.log4j.Logger;
+import ua.gordeichuk.payments.util.Page;
+import ua.gordeichuk.payments.util.RequestAttribute;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,7 @@ public class AppServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
+        String login = (String) request.getAttribute(RequestAttribute.USERNAME);
         processRequest(request, response);
     }
 
@@ -36,15 +40,16 @@ public class AppServlet extends HttpServlet {
             String path = request.getServletPath();
             Command command = commandGetter.getCommand(path);
             String page = command.execute(request, response);
-            if(page.endsWith(EXTENSION)){
+//            if(page.endsWith(EXTENSION)){
                 request.getRequestDispatcher(page).forward(request, response);
-            } else {
-                response.sendRedirect(page);
-            }
+//            } else {
+//                response.sendRedirect(page);
+////                request.getRequestDispatcher(page).forward(request, response);
+//            }
         } catch ( ServletException | IOException e) {
             LOGGER.warn("Warning!", e);
             try {
-                request.getRequestDispatcher(Pages.ERROR_PAGE).forward(request, response);
+                request.getRequestDispatcher(Page.ERROR_PAGE).forward(request, response);
             } catch (ServletException | IOException e1) {
                 LOGGER.warn("Warning!", e1);
                 //nothing to do here

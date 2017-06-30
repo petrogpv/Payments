@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.dao.daoentity.UserAuthDao;
 import ua.gordeichuk.payments.dao.jdbcimpl.JdbcEntityDao;
 import ua.gordeichuk.payments.entity.UserAuth;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +42,7 @@ public class JdbcUserAuthDao extends JdbcEntityDao<UserAuth> implements UserAuth
                     .setSole(resultSet.getString(SOLE))
                     .build();
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
         return userAuth;
@@ -58,7 +58,7 @@ public class JdbcUserAuthDao extends JdbcEntityDao<UserAuth> implements UserAuth
                 statement.setLong(ID_INDEX, userAuth.getId());
             }
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
     }

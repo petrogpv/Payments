@@ -124,4 +124,50 @@ public class Transaction implements Entity {
             return transaction;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Transaction that = (Transaction) o;
+
+        if (!id.equals(that.id)) return false;
+        if (card != null ? !card.equals(that.card) : that.card != null) return false;
+        if (transaction != null ? !transaction.equals(that.transaction) : that.transaction != null) return false;
+        if (balanceBefore != null ? !balanceBefore.equals(that.balanceBefore) : that.balanceBefore != null)
+            return false;
+        if (balanceAfter != null ? !balanceAfter.equals(that.balanceAfter) : that.balanceAfter != null) return false;
+        if (value != null ? !value.equals(that.value) : that.value != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        return type == that.type;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (card != null ? card.hashCode() : 0);
+        result = 31 * result + (transaction != null ? transaction.hashCode() : 0);
+        result = 31 * result + (balanceBefore != null ? balanceBefore.hashCode() : 0);
+        result = 31 * result + (balanceAfter != null ? balanceAfter.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", transaction=" + transaction +
+                ", type=" + type +
+                ", card=" + card +
+                ", balanceBefore=" + balanceBefore +
+                ", balanceAfter=" + balanceAfter +
+                ", value=" + value +
+                ", date=" + date +
+                '}';
+    }
 }

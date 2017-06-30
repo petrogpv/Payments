@@ -5,7 +5,7 @@ import ua.gordeichuk.payments.dao.daoentity.UserDao;
 import ua.gordeichuk.payments.dao.jdbcimpl.JdbcEntityDao;
 import ua.gordeichuk.payments.entity.User;
 import ua.gordeichuk.payments.entity.UserAuth;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,7 +49,7 @@ public class JdbcUserDao extends JdbcEntityDao<User> implements UserDao {
                     .setUserAuth(userAuth)
                     .build();
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
         return user;
@@ -60,12 +60,12 @@ public class JdbcUserDao extends JdbcEntityDao<User> implements UserDao {
         try {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
-            statement.setLong(3, user.getTaxcode());
+            statement.setLong(3, user.getTaxCode());
             if (statement.getParameterMetaData().getParameterCount() == ID_INDEX) {
                 statement.setLong(ID_INDEX, user.getId());
             }
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
 

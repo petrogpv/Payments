@@ -7,7 +7,7 @@ public class User implements Entity {
     private Long id;
     private String firstName;
     private String lastName;
-    private Long taxcode;
+    private Long taxCode;
     private UserAuth userAuth;
     private List<Card> cards = new ArrayList<>();
 
@@ -38,12 +38,12 @@ public class User implements Entity {
         this.lastName = lastName;
     }
 
-    public Long getTaxcode() {
-        return taxcode;
+    public Long getTaxCode() {
+        return taxCode;
     }
 
-    public void setTaxcode(Long taxcode) {
-        this.taxcode = taxcode;
+    public void setTaxCode(Long taxCode) {
+        this.taxCode = taxCode;
     }
 
     public UserAuth getUserAuth() {
@@ -75,7 +75,7 @@ public class User implements Entity {
             return this;
         }
         public Builder setTaxCode(Long taxCode) {
-            user.taxcode = taxCode;
+            user.taxCode = taxCode;
             return this;
         }
 
@@ -100,4 +100,42 @@ public class User implements Entity {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!id.equals(user.id)) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (taxCode != null ? !taxCode.equals(user.taxCode) : user.taxCode != null) return false;
+        if (userAuth != null ? !userAuth.equals(user.userAuth) : user.userAuth != null) return false;
+        return cards != null ? cards.equals(user.cards) : user.cards == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (taxCode != null ? taxCode.hashCode() : 0);
+        result = 31 * result + (userAuth != null ? userAuth.hashCode() : 0);
+        result = 31 * result + (cards != null ? cards.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", taxCode=" + taxCode +
+                ", cards=" + cards +
+                ", userAuth=" + userAuth +
+                '}';
+    }
 }

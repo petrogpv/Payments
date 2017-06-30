@@ -7,7 +7,7 @@ import ua.gordeichuk.payments.entity.Account;
 import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.entity.User;
 import ua.gordeichuk.payments.entity.enums.CardStatus;
-import ua.gordeichuk.payments.util.LogMessages;
+import ua.gordeichuk.payments.util.LogMessage;
 
 import java.sql.*;
 import java.util.List;
@@ -32,7 +32,7 @@ public class JdbcCardDao extends JdbcEntityDao<Card> implements CardDao {
 
     @Override
     protected Card extractEntityFromResultSet(ResultSet resultSet){
-        return extractEntityFromResultSet(resultSet);
+        return extractCardFromResultSet(resultSet);
     }
 
     protected static Card extractCardFromResultSet(ResultSet resultSet){
@@ -49,7 +49,7 @@ public class JdbcCardDao extends JdbcEntityDao<Card> implements CardDao {
                     .setCardStatus(cardStatus)
                     .build();
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
         return  card;
@@ -65,7 +65,7 @@ public class JdbcCardDao extends JdbcEntityDao<Card> implements CardDao {
                 statement.setLong(ID_INDEX, card.getId());
             }
         } catch (SQLException e) {
-            LOGGER.error(LogMessages.EXCEPTION, e);
+            LOGGER.error(LogMessage.EXCEPTION, e);
             throw new RuntimeException(e);
         }
     }

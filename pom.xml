@@ -19,6 +19,7 @@
         <version.log4j>1.2.17</version.log4j>
         <version.mysql.connector>6.0.6</version.mysql.connector>
         <version.apache.codec>1.10</version.apache.codec>
+
     </properties>
 
     <build>
@@ -60,6 +61,25 @@
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>${version.javax.servlet-api}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jsp-api</artifactId>
+        <version>${version.javax.servlet-jsp}</version>
+    </dependency>
+
+
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <version>${version.javax.servlet.jstl}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${version.mysql.connector}</version>
     </dependency>
 </dependencies>
 

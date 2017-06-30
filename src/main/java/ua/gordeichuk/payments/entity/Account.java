@@ -61,5 +61,33 @@ public class Account implements Entity{
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Account account = (Account) o;
+
+        if (!id.equals(account.id)) return false;
+        if (cards != null ? !cards.equals(account.cards) : account.cards != null) return false;
+        return balance != null ? balance.equals(account.balance) : account.balance == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (cards != null ? cards.hashCode() : 0);
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", balance=" + balance +
+                ", cards=" + cards +
+                '}';
+    }
 }

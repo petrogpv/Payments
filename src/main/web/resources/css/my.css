@@ -1,0 +1,66 @@
+div.container {
+    width: 100%;
+}
+
+header, footer {
+    padding: 1em;
+    clear: left;
+    text-align: center;
+}
+
+header {
+    color: lightyellow;
+    background-color: #4c5e8b;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+    font-size: 16px;
+
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+.no-bottom-margin {
+    margin-bottom: 0px;
+}
+
+.greeting {
+    margin-left: 1px;
+    width: 25%;
+}
+
+.greeting a,
+.greeting a:visited {
+    color: gold;
+}
+
+.greeting a:hover,
+.greeting a:active {
+    color: darkkhaki;
+}
+
+.headers {
+    width: 100%;
+}
+.logout {
+   color: white;
+    margin-right: 1px;
+}

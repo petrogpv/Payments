@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Валерий on 25.06.2017.
  */
-public final class ExceptionMessages {
+public final class ExceptionMessage {
 
     public final static String CREATE_FAILED = "failed.create";
     public final static String UPDATE_FAILED = "failed.update";
@@ -44,17 +44,17 @@ public final class ExceptionMessages {
     public final static String ERROR_SETTING_PLACES = "race.errorSettingPlaces";
     public final static String BET_CANT_BE_CANCELLED = "bet.cantBeCancelled";
 
-    public static final Locale ENGLISH = new Locale("en", "US");
-    public static final Locale UKRAINIAN = new Locale("uk", "UA");
+    public static final Locale ENGLISH_LOCALE = new Locale("en", "US");
+    public static final Locale LOCALE_LOCALE = new Locale("uk", "UA");
 
-    private static final Logger LOGGER = Logger.getLogger(ExceptionMessages.class);
+    private static final Logger LOGGER = Logger.getLogger(ExceptionMessage.class);
 
     private static final String BUNDLE_NAME = "/localization/exceptions";
 
     private static ResourceBundle messagesBundle;
-    private static ResourceBundle logBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH);
+    private static ResourceBundle logBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH_LOCALE);
     {
-        setLocale(ENGLISH);
+        setLocale(ENGLISH_LOCALE);
     }
 
     public static void setLocale(Locale locale) {
@@ -62,7 +62,7 @@ public final class ExceptionMessages {
         try {
             messagesBundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);
         } catch (Exception e) {
-            LOGGER.error(LogMessages.RB_READ_ERROR + BUNDLE_NAME + locale);
+            LOGGER.error(LogMessage.RB_READ_ERROR + BUNDLE_NAME + locale);
         }
 
     }

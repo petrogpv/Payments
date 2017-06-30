@@ -70,4 +70,37 @@ public class Card implements Entity {
             return card;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Card card = (Card) o;
+
+        if (!id.equals(card.id)) return false;
+        if (user != null ? !user.equals(card.user) : card.user != null) return false;
+        if (account != null ? !account.equals(card.account) : card.account != null) return false;
+        return status == card.status;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (account != null ? account.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ", status=" + status +
+                ", user=" + user +
+                ", account=" + account +
+                '}';
+    }
 }

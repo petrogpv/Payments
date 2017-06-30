@@ -26,8 +26,7 @@
 
 
     <welcome-file-list>
-        <welcome-file>f</welcome-file>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file></welcome-file>
     </welcome-file-list>
 
 
@@ -61,9 +60,9 @@
 
 
     <!--<filter>-->
-        <!--<filter-name>SessionFilter</filter-name>-->
-        <!--<filter-class>ua.gordeichuk.payments.controller.filter.SessionFilter</filter-class>-->
-    <!--</filter>-->
+    <!--<filter-name>SessionFilter</filter-name>-->
+    <!--<filter-class>ua.gordeichuk.payments.controller.filter.CommonFilter</filter-class>-->
+<!--</filter>-->
     <!--<filter-mapping>-->
         <!--<filter-name>SessionFilter</filter-name>-->
         <!--<url-pattern>/*</url-pattern>-->

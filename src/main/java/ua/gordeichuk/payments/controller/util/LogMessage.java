@@ -48,4 +48,5 @@ public final class LogMessage {
     public static final String USER_LOGOUT = "User logout: ";
     public static final String REGISTRATION_ERROR = "Registration error: ";
     public static final String SET_LOCALE = "Locale set: ";
+    public static final String  ATTEMPT_TO_SIGN_UP_BY_SIGNED_IN_USER = "Attempt to visit get sign up while signing in.";
 }

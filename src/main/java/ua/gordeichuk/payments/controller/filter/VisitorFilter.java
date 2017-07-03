@@ -28,7 +28,7 @@ public abstract  class VisitorFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession(false);
 
-        if (session == null || !isUserEligible(session)) {
+        if (session == null || !isUserAuthorized(session)) {
             LOGGER.info(LogMessage.ATTEMPT_TO_VISIT_WITHOUT_PERMISSION);
             res.sendRedirect(DEFAULT_PATH);
         } else {
@@ -36,7 +36,7 @@ public abstract  class VisitorFilter implements Filter {
         }
     }
 
-    abstract boolean isUserEligible(HttpSession session);
+    abstract boolean isUserAuthorized(HttpSession session);
 
     @Override
     public void destroy() {

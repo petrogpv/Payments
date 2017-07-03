@@ -10,12 +10,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Администратор on 28.06.2017.
+ * Created by Администратор on 03.07.2017.
  */
-public class CommonFilter implements Filter {
-    private static final Logger LOGGER = Logger.getLogger(CommonFilter.class);
+public class SignedInAndSignUpFilter implements Filter{
+    private static final Logger LOGGER = Logger.getLogger(CommonVisitorFilter.class);
     private static final String DEFAULT_PATH = "/";
-    private static final String AUTH = "/auth";
     private static final String USER_ATTRIBUTE_NAME = "user";
 
 
@@ -32,11 +31,10 @@ public class CommonFilter implements Filter {
         String path = request.getServletPath();
         HttpSession session = request.getSession(false);
 
-        if (pathNeedsAuthentication(path)) {
-            if(!isUserSigned(session)) {
-                LOGGER.info(LogMessage.ATTEMPT_TO_VISIT_AUTHORIZED);
-                response.sendRedirect(DEFAULT_PATH);
-            }
+
+        if (isUserSigned(session)) {
+            LOGGER.info(LogMessage.ATTEMPT_TO_SIGN_UP_BY_SIGNED_IN_USER);
+            response.sendRedirect(DEFAULT_PATH);
         } else {
             chain.doFilter(req, res);
         }
@@ -46,9 +44,6 @@ public class CommonFilter implements Filter {
         return !(session == null || session.getAttribute(USER_ATTRIBUTE_NAME) == null);
     }
 
-    private boolean pathNeedsAuthentication(String url) {
-       return !(url.equals(DEFAULT_PATH) || url.startsWith(AUTH));
-    }
     @Override
     public void destroy() {
 

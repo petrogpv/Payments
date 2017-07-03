@@ -3,6 +3,54 @@
 <body>
 <%@include file="/WEB-INF/pages/common/header.jsp" %>
 
-<h1>Request URI: ${pageContext.request.requestURI}</h1>
-${pageContext.request.servletPath}
+<div class="container">
+    <span class="label label-info"><fmt:message key="main.button.menu" bundle="${bundle}"/></span>
+
+    <c:choose>
+    <c:when test="${sessionScope.user.userAuth.role eq 'USER'}">
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"><fmt:message key="main.button.payment"
+                                                                       bundle="${bundle}"/></button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"><fmt:message key="main.button.deposit"
+                                                                       bundle="${bundle}"/></button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"><fmt:message key="main.button.history"
+                                                                       bundle="${bundle}"/></button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"><fmt:message key="main.button.lock"
+                                                                       bundle="${bundle}"/></button>
+        </div>
+    </div>
+</div>
+</c:when>
+<c:when test="${sessionScope.user.userAuth.role eq 'ADMIN'}">
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"><fmt:message key="main.button.search"
+                                                                       bundle="${bundle}"/></button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"><fmt:message key="main.button.history"
+                                                                       bundle="${bundle}"/></button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"><fmt:message key="main.button.management"
+                                                                       bundle="${bundle}"/></button>
+        </div>
+    </div>
+</c:when>
+</c:choose>
+
+
+<div class="container">
+    <h3><fmt:message key="main.pleaseChoose" bundle="${bundle}"/></h3>
+</div>
+
+
 </body>

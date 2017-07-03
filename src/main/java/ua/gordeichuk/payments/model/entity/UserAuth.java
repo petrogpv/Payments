@@ -54,6 +54,10 @@ public class UserAuth implements Entity {
     public static class Builder{
         private UserAuth userAuth = new UserAuth();
 
+        public Builder setRole(UserRole role) {
+            userAuth.role = role;
+            return this;
+        }
         public Builder setLogin(String login) {
             userAuth.login = login;
             return this;

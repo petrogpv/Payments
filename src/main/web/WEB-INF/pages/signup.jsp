@@ -15,11 +15,9 @@
         <input type="text" class="form-control" name="username" placeholder=<fmt:message key="signin.email" bundle="${bundle}"/> required >
         <input type="password" class="form-control" name="password" placeholder=<fmt:message key="signin.pass" bundle="${bundle}"/> required >
         <input type="password" class="form-control" name="passwordConfirm" placeholder="<fmt:message key="signin.passConfirm" bundle="${bundle}"/>" required >
-        <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="app.signup" bundle="${bundle}"/></button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="app.button.signup" bundle="${bundle}"/></button>
     </form>
-    <a href="/" class="lnk"><fmt:message key="app.signin" bundle="${bundle}"/></a>
+    <a href="/" class="lnk"><fmt:message key="app.button.signin" bundle="${bundle}"/></a>
 </div>
-<h1>Request URI: ${pageContext.request.requestURI}</h1>
-${pageContext.request.servletPath}
 </body>
 </html>

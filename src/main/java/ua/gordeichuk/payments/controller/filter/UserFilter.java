@@ -10,8 +10,9 @@ import javax.servlet.http.HttpSession;
  */
 public class UserFilter extends VisitorFilter{
 
-    boolean isUserEligible(HttpSession session) {
+    boolean isUserAuthorized(HttpSession session) {
         User user = (User) session.getAttribute(USER_ATTRIBUTE);
+        System.out.println(user);
         UserRole userRole = user.getUserAuth().getRole();
         return userRole.equals(UserRole.USER);
     }

@@ -18,7 +18,7 @@ import java.util.Optional;
  * Created by Валерий on 26.06.2017.
  */
 public class UserService {
-    private static final Logger LOGGER = Logger.getLogger(User.class);
+    private static final Logger LOGGER = Logger.getLogger(UserService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
 

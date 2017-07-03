@@ -2,7 +2,7 @@ package ua.gordeichuk.payments.controller.filter;
 
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.controller.AppServlet;
-import ua.gordeichuk.payments.util.LogMessage;
+import ua.gordeichuk.payments.controller.util.LogMessage;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

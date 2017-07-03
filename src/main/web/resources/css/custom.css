@@ -1,0 +1,14 @@
+.submit-transparent {
+    color:transparent;
+    border: none;
+}
+.img-uk {
+    background-image: url(/resources/img/uk.png);
+    width: 32px;
+    height: 25px;
+}
+.img-ua {
+    background-image: url(/resources/img/ua.png);
+    width: 32px;
+    height: 25px;
+}

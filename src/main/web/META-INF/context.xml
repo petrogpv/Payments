@@ -4,7 +4,9 @@
               maxTotal="30" maxIdle="10" maxWaitMillis="10000"
 
               username="root" password="root"
-              driverClassName="com.mysql.jdbc.Driver"
+
+              driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://localhost/payments?serverTimezone=Europe/Helsinki"/>
 
 </Context>
+        <!--driverClassName="com.mysql.jdbc.Driver"-->

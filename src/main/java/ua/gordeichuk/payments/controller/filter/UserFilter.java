@@ -1,7 +1,7 @@
 package ua.gordeichuk.payments.controller.filter;
 
-import ua.gordeichuk.payments.entity.User;
-import ua.gordeichuk.payments.entity.enums.UserRole;
+import ua.gordeichuk.payments.model.entity.User;
+import ua.gordeichuk.payments.model.entity.enums.UserRole;
 
 import javax.servlet.http.HttpSession;
 

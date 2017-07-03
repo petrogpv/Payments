@@ -27,6 +27,7 @@
 
     <welcome-file-list>
         <welcome-file></welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
 
@@ -36,9 +37,11 @@
     </servlet-mapping>
 
     <session-config>
-        <session-timeout>
-            1
-        </session-timeout>
+        <session-timeout>20</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <max-age>1200</max-age>
+        </cookie-config>
     </session-config>
 
     <resource-ref>
@@ -59,14 +62,14 @@
 
 
 
-    <!--<filter>-->
-    <!--<filter-name>SessionFilter</filter-name>-->
-    <!--<filter-class>ua.gordeichuk.payments.controller.filter.CommonFilter</filter-class>-->
-<!--</filter>-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>SessionFilter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter>
+        <filter-name>CommonFilter</filter-name>
+        <filter-class>ua.gordeichuk.payments.controller.filter.CommonFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CommonFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!--<filter>-->
         <!--<filter-name>AdminFilter</filter-name>-->

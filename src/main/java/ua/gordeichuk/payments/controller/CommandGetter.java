@@ -2,9 +2,9 @@ package ua.gordeichuk.payments.controller;
 
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.controller.command.*;
+import ua.gordeichuk.payments.controller.service.UserService;
+import ua.gordeichuk.payments.controller.util.Path;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,10 +18,12 @@ public class CommandGetter {
 
 
     private CommandGetter() {
-        commands.put("/auth/login", new LoginCommand());
-        commands.put("/auth/register", new RegisterCommand());
-        commands.put("/locale", new LocaleCommand());
-        commands.put("/logout", new LogoutCommand());
+        commands.put(Path.SIGNIN, new SignInCommand(UserService.getInstance()));
+        commands.put(Path.GET_SIGN_UP, new GetSignUpCommand());
+        commands.put(Path.SIGNUP, new SignUpCommand(UserService.getInstance()));
+        commands.put(Path.LOCALE, new LocaleCommand());
+        commands.put(Path.SIGNOUT, new SignOutCommand());
+
 
 
     }

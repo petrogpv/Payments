@@ -6,11 +6,6 @@
       <element id="directory" name="web.war">
         <element id="artifact" artifact-name="Payments:war exploded" />
       </element>
-      <element id="directory" name="lib">
-        <element id="library" level="project" name="Maven: javax.servlet:jsp-api:2.0" />
-        <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.4" />
-        <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
-      </element>
     </root>
   </artifact>
 </component>

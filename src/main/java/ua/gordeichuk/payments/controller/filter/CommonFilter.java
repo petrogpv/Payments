@@ -1,7 +1,7 @@
 package ua.gordeichuk.payments.controller.filter;
 
 import org.apache.log4j.Logger;
-import ua.gordeichuk.payments.util.LogMessage;
+import ua.gordeichuk.payments.controller.util.LogMessage;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +31,6 @@ public class CommonFilter implements Filter {
 
         String path = request.getServletPath();
         HttpSession session = request.getSession(false);
-
-        boolean test = pathNeedsAuthentication(path);
-        boolean test2 = isUserSigned(session);
 
         if (pathNeedsAuthentication(path)) {
             if(!isUserSigned(session)) {

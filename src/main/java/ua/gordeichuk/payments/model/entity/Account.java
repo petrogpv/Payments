@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Валерий on 12.06.2017.
  */
-public class Account implements Entity{
+public class Account implements Entity, Cloneable{
     private  Long id;
     private List<Card> cards = new ArrayList<>();
     private Long balance;
@@ -23,11 +23,26 @@ public class Account implements Entity{
     }
 
     public List<Card> getCards() {
-        return cards;
+        List<Card> cardsToGet = new ArrayList<>();
+        for ( Card card: cards ) {
+            try {
+                cardsToGet.add(card.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        return cardsToGet;
     }
 
     public void setCards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>();
+        for (Card card : cards ) {
+            try {
+                this.cards.add(card.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Long getBalance() {
@@ -42,8 +57,16 @@ public class Account implements Entity{
         private Account account = new Account();
 
         public Builder setCardsList (List<Card> cards){
+            account.cards = new ArrayList<>();
+            for (Card card : cards ) {
+                try {
+                    account.cards.add(card.clone());
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }
             account.cards = cards;
-            return  this;
+            return this;
         }
 
         public  Builder setBalance (Long balance){
@@ -80,6 +103,11 @@ public class Account implements Entity{
         result = 31 * result + (cards != null ? cards.hashCode() : 0);
         result = 31 * result + (balance != null ? balance.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public Account clone() throws CloneNotSupportedException {
+        return (Account)super.clone();
     }
 
     @Override

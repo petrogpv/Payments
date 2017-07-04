@@ -3,7 +3,7 @@ package ua.gordeichuk.payments.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements Entity {
+public class User implements Entity, Cloneable {
     private Long id;
     private String firstName;
     private String lastName;
@@ -46,11 +46,26 @@ public class User implements Entity {
     }
 
     public List<Card> getCards() {
+        List<Card> cardsToGet = new ArrayList<>();
+        for (Card card :cards ) {
+            try {
+                cardsToGet.add(card.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
         return cards;
     }
 
     public void setCards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>();
+        for (Card card : cards) {
+            try {
+                this.cards.add(card.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static class Builder{
@@ -109,6 +124,11 @@ public class User implements Entity {
         result = 31 * result + (userAuth != null ? userAuth.hashCode() : 0);
         result = 31 * result + (cards != null ? cards.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public User clone() throws CloneNotSupportedException {
+        return (User)super.clone();
     }
 
     @Override

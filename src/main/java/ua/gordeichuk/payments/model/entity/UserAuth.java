@@ -2,7 +2,7 @@ package ua.gordeichuk.payments.model.entity;
 
 import ua.gordeichuk.payments.model.entity.enums.UserRole;
 
-public class UserAuth implements Entity {
+public class UserAuth implements Entity, Cloneable {
     private Long id;
     private UserRole role;
     private String login;
@@ -106,6 +106,11 @@ public class UserAuth implements Entity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (sole != null ? sole.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public UserAuth clone() throws CloneNotSupportedException {
+        return (UserAuth)super.clone();
     }
 
     @Override

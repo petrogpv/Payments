@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Валерий on 12.06.2017.
  */
-public class Transaction implements Entity {
+public class Transaction implements Entity, Cloneable {
     private Long id;
     private Card card;
     private Transaction transaction;
@@ -140,6 +140,11 @@ public class Transaction implements Entity {
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public Transaction clone() throws CloneNotSupportedException {
+        return (Transaction) super.clone();
     }
 
     @Override

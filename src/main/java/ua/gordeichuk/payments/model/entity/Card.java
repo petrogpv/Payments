@@ -2,15 +2,18 @@ package ua.gordeichuk.payments.model.entity;
 
 import ua.gordeichuk.payments.model.entity.enums.CardStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Валерий on 12.06.2017.
  */
-public class Card implements Entity {
+public class Card implements Entity, Cloneable {
     private Long id;
     private User user;
     private Account account;
     private CardStatus status;
-
+    private List<Transaction> transactions = new ArrayList<>();
     private Card() {
     }
 
@@ -36,6 +39,29 @@ public class Card implements Entity {
 
     public void setStatus(CardStatus status) {
         this.status = status;
+    }
+
+    public List<Transaction> getTransactions() {
+        List<Transaction> transactionsToGet = new ArrayList<>();
+        for (Transaction transaction : transactions ) {
+            try {
+                transactionsToGet.add(transaction.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+         return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = new ArrayList<>();
+        for (Transaction transaction: transactions) {
+            try {
+                this.transactions.add(transaction.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Account getAccount() {
@@ -65,6 +91,17 @@ public class Card implements Entity {
             card.id = id;
             return this;
         }
+        public Builder setTransactions (List<Transaction> transactions){
+            card.transactions = new ArrayList<>();
+            for (Transaction transaction: transactions) {
+                try {
+                    card.transactions.add(transaction.clone());
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return this;
+        }
 
         public Card build(){
             return card;
@@ -92,6 +129,11 @@ public class Card implements Entity {
         result = 31 * result + (account != null ? account.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public Card clone() throws CloneNotSupportedException {
+        return (Card) super.clone();
     }
 
     @Override

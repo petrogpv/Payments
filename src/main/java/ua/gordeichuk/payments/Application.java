@@ -2,6 +2,8 @@ package ua.gordeichuk.payments;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
+import ua.gordeichuk.payments.model.entity.Card;
+import ua.gordeichuk.payments.model.entity.enums.CardStatus;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -45,6 +47,17 @@ public class Application {
         System.out.println(resmd5Hex2 + "  " + sole2);
         System.out.println(resmd5Hex3 + "  " + sole3);
 
+        Card card = new Card.Builder().setId(100l).setCardStatus(CardStatus.ACTIVE).build();
+        Card card2 =  null;
+        try {
+            card2 = card.clone();
+            card2.setId(1l);
+            card2.setStatus(CardStatus.DEACTIVATED);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(card);
+        System.out.println(card2);
 
     }
 

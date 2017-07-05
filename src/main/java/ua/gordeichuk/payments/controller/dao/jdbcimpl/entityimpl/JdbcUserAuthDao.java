@@ -6,10 +6,7 @@ import ua.gordeichuk.payments.controller.dao.jdbcimpl.JdbcEntityDao;
 import ua.gordeichuk.payments.model.entity.UserAuth;
 import ua.gordeichuk.payments.model.entity.enums.UserRole;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by Валерий on 18.06.2017.
@@ -46,10 +43,24 @@ public class JdbcUserAuthDao extends JdbcEntityDao<UserAuth> implements UserAuth
 
     @Override
     protected void setEntityToPreparedStatement(UserAuth userAuth, PreparedStatement statement) throws SQLException {
+        String password = userAuth.getPassword();
+        String sole = userAuth.getSole();
             statement.setString(1, userAuth.getRole().name());
             statement.setString(2, userAuth.getLogin());
+        if(password == null){
+            statement.setNull(3, Types.BIGINT);
+        }else{
             statement.setString(3, userAuth.getPassword());
+
+        }
+        if(sole == null){
+            statement.setNull(4, Types.BIGINT);
+
+        }else{
             statement.setString(4, userAuth.getSole());
+
+        }
+
             if (statement.getParameterMetaData().getParameterCount() == ID_INDEX) {
                 statement.setLong(ID_INDEX, userAuth.getId());
             }

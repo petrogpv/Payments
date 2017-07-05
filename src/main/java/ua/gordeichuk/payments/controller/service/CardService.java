@@ -12,7 +12,7 @@ import ua.gordeichuk.payments.model.entity.Transaction;
 import ua.gordeichuk.payments.model.entity.enums.CardStatus;
 import ua.gordeichuk.payments.model.entity.enums.TransactionType;
 import ua.gordeichuk.payments.controller.exception.ServiceException;
-import ua.gordeichuk.payments.controller.util.ExceptionMessage;
+import ua.gordeichuk.payments.controller.util.Message;
 import ua.gordeichuk.payments.controller.util.LogMessage;
 
 import java.util.Calendar;
@@ -26,6 +26,8 @@ import java.util.Optional;
 public class CardService {
     private static final Logger LOGGER = Logger.getLogger(CardService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
+
+
 
     private static class Holder {
         static final CardService INSTANCE = new CardService();
@@ -81,19 +83,21 @@ public class CardService {
 
             Card cardFrom = findCard(cardIdFrom, connection);
             checkCardForActivity(cardFrom);
+
             Card cardTo = findCard(cardIdTo, connection);
+            checkCardForAvailability(cardTo);
 
             updateCardDeduct(cardFrom, sum, connection);
             updateCardAdd(cardTo, sum, connection);
 
-
             saveTransactions(cardFrom, cardTo, sum, connection);
-
+            connection.commit();
             LOGGER.info(LogMessage.TRANSFER_SUCCESSFUL + cardFrom.getId()
                     + LogMessage.TO + cardTo.getId());
             return true;
         }
     }
+
 
     private void saveTransactions(Card cardFrom, Card cardTo, Long sum, DaoConnection connection) {
         Date date = Calendar.getInstance().getTime();
@@ -126,7 +130,8 @@ public class CardService {
         transactionDao.update(transactionTo);
     }
 
-    private void updateCardDeduct(Card card, Long sum, DaoConnection connection) throws ServiceException {
+    private void updateCardDeduct(Card card, Long sum, DaoConnection connection)
+            throws ServiceException {
         Account accountFrom = card.getAccount();
         Long balance = getBalanceAndCheckSufficiency(sum, accountFrom);
         accountFrom.setBalance(balance - sum);
@@ -142,14 +147,14 @@ public class CardService {
         accountDao.update(accountTo);
     }
 
-    private Long getBalanceAndCheckSufficiency(Long sum, Account accountFrom) throws ServiceException {
+    private Long getBalanceAndCheckSufficiency(Long sum, Account accountFrom)
+            throws ServiceException {
         Long balanceBeforeFrom = accountFrom.getBalance();
         if (balanceBeforeFrom < sum) {
-            String logMessage = ExceptionMessage.getLogMessage(ExceptionMessage.NOT_ENOUGH_MONEY)
+            String logMessage = Message.getLogMessage(Message.NOT_ENOUGH_MONEY)
                     + accountFrom.getId();
             LOGGER.error(logMessage);
-            String message = ExceptionMessage.getMessage(ExceptionMessage.NOT_ENOUGH_MONEY)
-                    + accountFrom.getId();
+            String message = Message.getMessage(Message.NOT_ENOUGH_MONEY);
             throw new ServiceException(message);
         }
         return balanceBeforeFrom;
@@ -159,10 +164,10 @@ public class CardService {
         CardDao cardDao = daoFactory.createCardDao(connection);
         Optional<Card> optional = cardDao.find(cardId);
         if (!optional.isPresent()) {
-            String logMessage = ExceptionMessage.getLogMessage(ExceptionMessage.CARD_NOT_EXIST)
+            String logMessage = Message.getLogMessage(Message.CARD_NOT_EXIST)
                     + cardId;
             LOGGER.error(logMessage);
-            String message = ExceptionMessage.getMessage(ExceptionMessage.CARD_NOT_EXIST)
+            String message = Message.getMessage(Message.CARD_NOT_EXIST)
                     + cardId;
             throw new ServiceException(message);
         }
@@ -171,25 +176,50 @@ public class CardService {
 
     private void checkCardForActivity(Card cardFrom) throws ServiceException {
         if (!cardFrom.getStatus().equals(CardStatus.ACTIVE)) {
-            String logMessage = ExceptionMessage.getLogMessage(ExceptionMessage.CARD_NOT_ACTIVE)
+            String logMessage = Message.getLogMessage(Message.CARD_NOT_ACTIVE)
                     + cardFrom.getId();
             LOGGER.error(logMessage);
-            String message = ExceptionMessage.getMessage(ExceptionMessage.CARD_NOT_ACTIVE)
+            String message = Message.getMessage(Message.CARD_NOT_ACTIVE)
                     + cardFrom.getId();
             throw new ServiceException(message);
         }
     }
+    private void checkCardForAvailability(Card cardTo) throws ServiceException {
+        if (cardTo.getStatus().equals(CardStatus.DEACTIVATED)
+                || cardTo.getStatus().equals(CardStatus.EXPIRED) ) {
+            String logMessage = Message.getLogMessage(Message.CARD_IS_NOT_AVAILABLE)
+                    + cardTo.getId();
+            LOGGER.error(logMessage);
+            String message = Message.getMessage(Message.CARD_NOT_ACTIVE)
+                    + cardTo.getId();
+            throw new ServiceException(message);
+        }
+    }
 
-    public boolean deposit(Card card, Long sum) {
+    public boolean deposit(Long cardId, Long sum) throws ServiceException {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
-
+            Card card = findCard(cardId, connection);
             Account account = card.getAccount();
             account.setBalance(account.getBalance() + sum);
             AccountDao accountDao = daoFactory.createAccountDao(connection);
             accountDao.update(account);
             connection.commit();
             LOGGER.info(LogMessage.DEPOSITING_SUCCESSFUL);
+            return true;
+        }
+    }
+
+    public boolean lockCard(Long cardId) throws ServiceException {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            connection.begin();
+            Card card = findCard(cardId, connection);
+            checkCardForActivity(card);
+            card.setStatus(CardStatus.LOCKED);
+            CardDao cardDao = daoFactory.createCardDao(connection);
+            cardDao.update(card);
+            connection.commit();
+            LOGGER.info(LogMessage.LOCKED_SUCCESSFUL + card.getId());
             return true;
         }
     }

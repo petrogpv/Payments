@@ -1,0 +1,23 @@
+input[type="radio"] {
+    margin-left: 2%;
+}
+
+.description-text{
+    text-decoration: underline;
+}
+
+.header-text{
+    font-family: Garamond;
+    margin-top: 5px;
+    font-size: 20px;
+    color: #287c8c;
+}
+
+.label-input {
+    margin-top: 5px;
+    width: 300px;
+    text-align: right;
+}​
+
+
+

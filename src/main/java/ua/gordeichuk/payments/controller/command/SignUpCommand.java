@@ -7,7 +7,7 @@ import ua.gordeichuk.payments.controller.service.UserService;
 import ua.gordeichuk.payments.controller.util.Attribute;
 import ua.gordeichuk.payments.controller.util.LogMessage;
 import ua.gordeichuk.payments.controller.util.Page;
-import ua.gordeichuk.payments.model.entity.User;
+import ua.gordeichuk.payments.controller.util.Path;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,18 +25,6 @@ public class SignUpCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        String login =  request.getParameter(Attribute.USERNAME);
-        String password =  request.getParameter(Attribute.PASSWORD);
-        String passwordConfirm =  request.getParameter(Attribute.PASSWORD_CONFIRM);
-        User user = userService.signUpUser(login, password, passwordConfirm);
-//        request.getSession().setAttribute(Attribute.USER, user);
-        return Page.MAIN;
-    }
-
-    @Override
-    public String doOnError(HttpServletRequest request, Exception e) {
-        LOGGER.warn(LogMessage.REGISTRATION_ERROR + request.getParameter(Attribute.USERNAME));
-        request.setAttribute(Attribute.MESSAGE_ERROR, e.getMessage());
-        return Page.SIGN_UP;
+            return Page.SIGNUP;
     }
 }

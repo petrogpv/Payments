@@ -3,7 +3,7 @@ package ua.gordeichuk.payments.controller;
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.controller.exception.ServiceException;
 import ua.gordeichuk.payments.controller.util.Attribute;
-import ua.gordeichuk.payments.controller.util.ExceptionMessage;
+import ua.gordeichuk.payments.controller.util.Message;
 import ua.gordeichuk.payments.controller.util.LogMessage;
 import ua.gordeichuk.payments.controller.util.Page;
 
@@ -40,7 +40,7 @@ public class AppServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
-            System.out.println("$$$$$$$$$in process request");
+
             localeHandling(request);
             String path = request.getServletPath();
             Command command = commandGetter.getCommand(path);
@@ -72,11 +72,11 @@ public class AppServlet extends HttpServlet {
         if(locale!=null) {
             if (locale.equals(EN)) {
                 request.getSession().setAttribute(Attribute.LOCALE, EN_LOCALE);
-                ExceptionMessage.setLocale(ExceptionMessage.ENGLISH_LOCALE);
+                Message.setLocale(Message.ENGLISH_LOCALE);
                 LOGGER.info(LogMessage.SET_LOCALE + locale);
             } else if (locale.equals(UA)) {
                 request.getSession().setAttribute(Attribute.LOCALE, UA_LOCALE);
-                ExceptionMessage.setLocale(ExceptionMessage.LOCALE_LOCALE);
+                Message.setLocale(Message.LOCALE_LOCALE);
                 LOGGER.info(LogMessage.SET_LOCALE + locale);
             }
         }

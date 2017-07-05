@@ -12,7 +12,6 @@ public class UserFilter extends VisitorFilter{
 
     boolean isUserAuthorized(HttpSession session) {
         User user = (User) session.getAttribute(USER_ATTRIBUTE);
-        System.out.println(user);
         UserRole userRole = user.getUserAuth().getRole();
         return userRole.equals(UserRole.USER);
     }

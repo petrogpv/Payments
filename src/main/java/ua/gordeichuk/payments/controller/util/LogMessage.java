@@ -31,7 +31,9 @@ public final class LogMessage {
     public static final String ROLLBACK_ERROR = "Rollback error ";
     public static final String SET_TRANSACTION_ISO_LEVEL_ERROR = "Set transaction isolation level error ";
     public static final String TRANSFER_SUCCESSFUL = "Transfer successful from  ";
-    public static final String TO = "to ";
+    public static final String TO = " to ";
+    public static final String FROM = " from ";
+    public static final String VALUE = " value ";
     public static final String DEPOSITING_SUCCESSFUL = "Depositing successful to card: ";
     public static final String TRANSACTION_DELETE_ERROR = "Transaction deletion isn't supported ";
     public static final String ATTEMPT_TO_VISIT_AUTHORIZED = "Attempt ro visit authorized area without signing in ";
@@ -49,4 +51,10 @@ public final class LogMessage {
     public static final String REGISTRATION_ERROR = "Registration error: ";
     public static final String SET_LOCALE = "Locale set: ";
     public static final String  ATTEMPT_TO_SIGN_UP_BY_SIGNED_IN_USER = "Attempt to visit get sign up while signing in.";
+    public static final String PAYMENT_OK = "Payment successful ";
+    public static final String DEPOSIT_OK = "Deposit successful ";
+    public static final String PAYMENT_FAILED = "Payment failed " ;
+    public static final String DEPOSIT_FAILED = "Deposit failed ";
+    public static final String LOCKED_SUCCESSFUL = "Card locked successfully: ";
+    public static final String LOCKING_FAILED = "Card locking failed: ";
 }

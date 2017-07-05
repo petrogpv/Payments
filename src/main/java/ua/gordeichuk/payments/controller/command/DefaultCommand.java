@@ -14,12 +14,13 @@ public class DefaultCommand implements Command {
     public static final String USER_ATTRIBUTE = "user";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-            return needsAuthentication(request) ? Page.INDEX : Page.MAIN;
+//            return needsAuhentication(request) ? Page.INDEX : Page.MAIN;
+            return Page.INDEX;
     }
 
-    private boolean needsAuthentication (HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        return session == null ||  session.getAttribute(USER_ATTRIBUTE) == null;
-
-    }
+//    private boolean needsAuthentication (HttpServletRequest request){
+//        HttpSession session = request.getSession(false);
+//        return session == null ||  session.getAttribute(USER_ATTRIBUTE) == null;
+//
+//    }
 }

@@ -2,6 +2,7 @@ package ua.gordeichuk.payments.controller;
 
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.controller.command.*;
+import ua.gordeichuk.payments.controller.service.CardService;
 import ua.gordeichuk.payments.controller.service.UserService;
 import ua.gordeichuk.payments.controller.util.Path;
 
@@ -19,12 +20,17 @@ public class CommandGetter {
 
     private CommandGetter() {
         commands.put(Path.SIGNIN, new SignInCommand(UserService.getInstance()));
-        commands.put(Path.GET_SIGN_UP, new GetSignUpCommand());
         commands.put(Path.SIGNUP, new SignUpCommand(UserService.getInstance()));
-        commands.put(Path.LOCALE, new LocaleCommand());
+        commands.put(Path.SIGNUP_ACTION, new SignUpActionCommand(UserService.getInstance()));
         commands.put(Path.SIGNOUT, new SignOutCommand());
-
-
+        commands.put(Path.LOCALE, new LocaleCommand());
+        commands.put(Path.MANAGEMENT, new ManagementCommand());
+        commands.put(Path.HISTORY, new HistoryCommand());
+        commands.put(Path.SEARCH, new SearchCommand());
+        commands.put(Path.LOCK, new LockCommand(CardService.getInstance()));
+        commands.put(Path.DEPOSIT, new DepositCommand(CardService.getInstance()));
+        commands.put(Path.PAYMENT, new PaymentCommand(CardService.getInstance()));
+        commands.put(Path.PAYMENT_ACTION, new PaymentActionCommand(CardService.getInstance()));
 
     }
 

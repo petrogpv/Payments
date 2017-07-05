@@ -27,7 +27,7 @@ public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements Tr
     private static final String BALANCE_AFTER = "balance_after";
     private static final String VALUE = "value";
     private static final String DATE = "date";
-    public static final int ID_INDEX = 6;
+    public static final int ID_INDEX = 7;
 
     public JdbcTransactionDao(Connection connection) {
         super(connection, ENTITY_NAME);
@@ -49,11 +49,18 @@ public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements Tr
 
     @Override
     protected void setEntityToPreparedStatement(Transaction transaction, PreparedStatement statement) throws SQLException {
+        Long relativeId = transaction.getId();
             statement.setString(1, transaction.getType().name());
             statement.setLong(2, transaction.getCard().getId());
-            statement.setLong(3, transaction.getTransaction().getId());
+        if(relativeId == null){
+            statement.setNull(3, Types.BIGINT);
+        }else{
+            statement.setLong(3, relativeId);
+        }
+
             statement.setLong(4, transaction.getBalanceAfter());
-            statement.setTimestamp(5, (Timestamp) transaction.getDate());
+            statement.setLong(5, transaction.getValue());
+            statement.setTimestamp(6, new Timestamp(transaction.getDate().getTime()) );
             if (statement.getParameterMetaData().getParameterCount() == ID_INDEX) {
                 statement.setLong(ID_INDEX, transaction.getId());
             }

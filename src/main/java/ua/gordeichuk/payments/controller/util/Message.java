@@ -8,11 +8,11 @@ import java.util.ResourceBundle;
 /**
  * Created by Валерий on 25.06.2017.
  */
-public final class ExceptionMessage {
+public final class Message {
 
-    public static final String CARD_NOT_ACTIVE = "failed.cardNotActive";
+    public static final String CARD_NOT_ACTIVE = "failed.card.notActive";
     public static final String NOT_ENOUGH_MONEY = "failed.notEnoughMoney";
-    public static final String CARD_NOT_EXIST = "failed.cardNotExist";
+    public static final String CARD_NOT_EXIST = "failed.card.notExist";
     public static final String LOGIN_WRONG_FORMAT = "signin.wrong.loginFormat";
     public static final String PASSWORD_WRONG_FORMAT = "signin.wrong.passwordFormat";
     public static final String WRONG_LOGIN = "signin.wrong.login";
@@ -20,11 +20,19 @@ public final class ExceptionMessage {
     public static final String USER_IS_NOT_SIGNED_UP = "signin.wrong.userNotSignedUp";
     public static final String USER_IS_ALREADY_SIGNED_UP = "signup.wrong.user";
     public static final String PASSWORDS_NOT_IDENTICAL = "signup.wrong.passwordsNotIdentical";
+    public static final String SIGNED_IN_SUCCESS = "signin.success";
+    public static final String CARD_IS_NOT_AVAILABLE = "faild.card.notAvailable";
+    public static final String WRONG_CARD_FORMAT = "failed.wrong.card";
+    public static final String WRONG_MONEY_VALUE_FORMAT = "failed.wrong.moneyValue";
+    public static final String PAYMENT_SUCCESS = "success.payment";
+    public static final String CARDS_EQUALS = "failed.cardsEquals";
+    public static final String CARD_LOCKED_SUCCESS = "success.lock";
+
 
     public static final Locale ENGLISH_LOCALE = new Locale("en", "US");
     public static final Locale LOCALE_LOCALE = new Locale("uk", "UA");
-    private static final Logger LOGGER = Logger.getLogger(ExceptionMessage.class);
-    private static final String BUNDLE_NAME = "/localization/exceptions";
+    private static final Logger LOGGER = Logger.getLogger(Message.class);
+    private static final String BUNDLE_NAME = "/localization/messages";
     private static ResourceBundle messagesBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH_LOCALE);;
     private static ResourceBundle logBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH_LOCALE);
 

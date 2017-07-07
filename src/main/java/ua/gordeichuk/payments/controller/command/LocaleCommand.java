@@ -14,6 +14,6 @@ public class LocaleCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        return Path.DEFAULT_PATH;
+        return Path.DEFAULT;
     }
 }

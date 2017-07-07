@@ -13,9 +13,10 @@
             <a href="/user/lock"><fmt:message key="main.button.lock" bundle="${bundle}"/></a>
     </c:when>
     <c:when test="${sessionScope.user.userAuth.role eq 'ADMIN'}">
-        <a href="/admin/search"><fmt:message key="main.button.search" bundle="${bundle}"/></a>
+        <%--<a href="/admin/search_unlock"><fmt:message key="main.button.searchUnlock" bundle="${bundle}"/></a>--%>
         <a href="/history"><fmt:message key="main.button.history" bundle="${bundle}"/></a>
-        <a href="/admin/management"><fmt:message key="main.button.management" bundle="${bundle}"/></a>
+        <a href="/admin/manage"><fmt:message key="main.button.manage" bundle="${bundle}"/></a>
+        <a href="/admin/add_user"><fmt:message key="main.button.add" bundle="${bundle}"/></a>
     </c:when>
 </c:choose>
         </nav>
@@ -46,11 +47,11 @@
 
         <%--<c:otherwise>--%>
 
-            <form id="previousRequest" method="post" action=${previousPath}>
-        <form id="previousRequest" method="post" action="/">
-            <%--</c:otherwise>--%>
-            <%--</c:choose>--%>
+    <%--<form id="previousRequest" method="post" action="/">--%>
+    <%--</c:otherwise>--%>
+    <%--</c:choose>--%>
 
+            <form id="previousRequest" method="post" action=${previousPath}>
             <c:forEach items="${param}" var="par">
                 <c:if test="${par.key ne 'password' && par.key ne 'paswordConfirm'}">
                     <input type="hidden" name="${par.key}" value="${par.value}">

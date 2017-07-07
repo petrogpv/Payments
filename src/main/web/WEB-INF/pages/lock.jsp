@@ -12,7 +12,7 @@
     <%@include file = "/WEB-INF/pages/common/message.jsp"%>
     <form method="post" action="/user/lock">
         <div class="row">
-            <div class=" col-xs-5">
+            <div class=" col-xs-4">
                 <select class="selectpicker form-control form-group" required name="card">
                     <option value="" disabled selected>select card</option>
                     <c:forEach items="${cards}" var="card">
@@ -23,7 +23,8 @@
                                 <c:if test="${card.status ne 'ACTIVE'}">
                                     disabled
                                 </c:if>
-                                value="${card.id}">${card.id} (${card.account.balance}) -
+                                value="${card.id}">${card.id}
+                            (<custom:convertLong value="${card.account.balance}"/>) -
                             <fmt:message key="card.status.${card.status}" bundle="${bundleEnums}"/></option>
                     </c:forEach>
                 </select>

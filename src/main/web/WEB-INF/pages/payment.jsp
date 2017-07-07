@@ -25,7 +25,8 @@
                                 <c:if test="${card.status ne 'ACTIVE'}">
                                     disabled
                                 </c:if>
-                                value="${card.id}">${card.id} (${card.account.balance}) -
+                                value="${card.id}">${card.id}
+                            (<custom:convertLong value="${card.account.balance}"/>) -
                             <fmt:message key="card.status.${card.status}" bundle="${bundleEnums}"/></option>
                     </c:forEach>
                 </select>
@@ -40,7 +41,7 @@
 
         <div class="row">
             <div class="col-xs-2"><label class="label-input"><p><b>Value: </b></p></label></div>
-            <div class="col-xs-4"><input type="number" step="0.01" class="form-control" name="value" required
+            <div class="col-xs-4"><input type="text" step="0.01" class="form-control" name="value" required
                     <c:if test="${not empty param.value}"> value="${param.value}" </c:if>/></div>
         </div>
         <div class="row">

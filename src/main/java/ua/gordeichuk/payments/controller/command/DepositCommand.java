@@ -29,29 +29,10 @@ public class DepositCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        String cardIdString = request.getParameter(Attribute.CARD);
-
-        if( cardIdString == null){
             User user = (User)request.getSession().getAttribute(Attribute.USER);
             List<Card> cards = cardService.findManyByUser(user.getId());
             request.setAttribute(Attribute.CARDS, cards);
             return Page.DEPOSIT;
 
-        }else{
-            String valueString = request.getParameter(Attribute.VALUE);
-            Long cardId = Validator.validateAndParseCardNumber(cardIdString);
-            Long value = Validator.validateAndParseMoneyValue(valueString);
-            cardService.deposit(cardId, value);
-            request.setAttribute(Attribute.MESSAGE, Message.getMessage(Message.PAYMENT_SUCCESS));
-            LOGGER.info(LogMessage.DEPOSIT_OK  + LogMessage.TO + cardId + LogMessage.VALUE + value);
-            return Page.INDEX;
-        }
-
-    }
-    @Override
-    public String doOnError(HttpServletRequest request, Exception e) {
-        LOGGER.warn(LogMessage.DEPOSIT_FAILED + LogMessage.TO + request.getParameter(Attribute.CARD));
-        request.setAttribute(Attribute.MESSAGE_ERROR, e.getMessage());
-        return Page.DEPOSIT;
     }
 }

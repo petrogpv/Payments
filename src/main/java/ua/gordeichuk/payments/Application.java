@@ -7,7 +7,10 @@ import ua.gordeichuk.payments.model.entity.enums.CardStatus;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +61,15 @@ public class Application {
         }
         System.out.println(card);
         System.out.println(card2);
+
+String regex = "^[^0]\\d*([\\.|,]\\d\\d?)?$";
+
+        String num = "10.";
+        String num1 = "10,";
+
+        System.out.println(num + " " + num.matches(regex));
+        System.out.println(num1 + " " + num1.matches(regex));
+
 
     }
 

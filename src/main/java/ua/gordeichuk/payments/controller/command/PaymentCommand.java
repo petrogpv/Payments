@@ -33,14 +33,5 @@ public class PaymentCommand implements Command {
             List<Card> cards = cardService.findManyByUser(user.getId());
             request.setAttribute(Attribute.CARDS, cards);
             return Page.PAYMENT;
-
     }
-
-//    @Override
-//    public String doOnError(HttpServletRequest request, Exception e) {
-//        LOGGER.warn(LogMessage.PAYMENT_FAILED + LogMessage.FROM + request.getParameter(Attribute.CARD_FROM) +
-//        LogMessage.TO + request.getParameter(Attribute.CARD_TO));
-//        request.setAttribute(Attribute.MESSAGE_ERROR, e.getMessage());
-//        return Page.PAYMENT;
-//    }
 }

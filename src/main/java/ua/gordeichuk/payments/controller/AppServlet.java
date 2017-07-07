@@ -13,10 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by Администратор on 28.06.2017.
- */
-//@WebServlet("/")
+
 public class AppServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(AppServlet.class);
     private static final String EN = "en";

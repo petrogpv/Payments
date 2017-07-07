@@ -18,4 +18,11 @@ public final class Attribute {
     public static final String VALUE = "value";
     public static final String CARDS = "cards";
     public static final String CARD = "card";
+    public static final String DATE_FROM = "dateFrom";
+    public static final String DATE_TO = "dateTo";
+    public static final String TRANSACTION_TYPE = "transactionType";
+    public static final String TRANSACTIONS = "transactions";
+    public static final String SORT_TYPE = "sortType";
+    public static final String SEARCH_TYPE = "searchType";
+    public static final String SEARCH_PARAMETER = "searchParameter";
 }

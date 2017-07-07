@@ -7,7 +7,6 @@ import ua.gordeichuk.payments.controller.exception.ServiceException;
 import ua.gordeichuk.payments.controller.service.UserService;
 import ua.gordeichuk.payments.controller.util.Attribute;
 import ua.gordeichuk.payments.controller.util.LogMessage;
-import ua.gordeichuk.payments.controller.util.Page;
 import ua.gordeichuk.payments.controller.util.Path;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +32,7 @@ public class SignUpActionCommand implements Command {
 
         userService.signUpUser(login, password, passwordConfirm);
 //        request.getSession().setAttribute(Attribute.USER, user);
-        return Path.DEFAULT_PATH;
+        return Path.DEFAULT;
     }
 
     @Override

@@ -5,10 +5,7 @@ import ua.gordeichuk.payments.controller.Command;
 import ua.gordeichuk.payments.controller.Validator;
 import ua.gordeichuk.payments.controller.exception.ServiceException;
 import ua.gordeichuk.payments.controller.service.UserService;
-import ua.gordeichuk.payments.controller.util.Attribute;
-import ua.gordeichuk.payments.controller.util.LogMessage;
-import ua.gordeichuk.payments.controller.util.Message;
-import ua.gordeichuk.payments.controller.util.Page;
+import ua.gordeichuk.payments.controller.util.*;
 import ua.gordeichuk.payments.model.entity.User;
 import ua.gordeichuk.payments.model.entity.UserAuth;
 
@@ -36,7 +33,7 @@ public class SignInCommand implements Command {
         request.setAttribute(Attribute.MESSAGE, Message.getMessage(Message.SIGNED_IN_SUCCESS));
 
         LOGGER.info(LogMessage.USER_SIGNED_IN + user.getUserAuth().getLogin());
-        return Page.INDEX;
+        return Path.DEFAULT;
     }
 
     private UserAuth createUserAuthFromRequest(HttpServletRequest request) {
@@ -52,6 +49,6 @@ public class SignInCommand implements Command {
     public String doOnError(HttpServletRequest request, Exception e) {
         LOGGER.warn(LogMessage.VISITOR_WAS_DENIED_ACCESS + request.getParameter(Attribute.USERNAME));
         request.setAttribute(Attribute.MESSAGE_ERROR, e.getMessage());
-        return Page.INDEX;
+        return Path.DEFAULT;
     }
 }

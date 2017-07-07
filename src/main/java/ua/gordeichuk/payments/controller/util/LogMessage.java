@@ -57,4 +57,6 @@ public final class LogMessage {
     public static final String DEPOSIT_FAILED = "Deposit failed ";
     public static final String LOCKED_SUCCESSFUL = "Card locked successfully: ";
     public static final String LOCKING_FAILED = "Card locking failed: ";
+    public static final String TRANSACTIONS_FOUND =  "Transactions found: ";
+    public static final String SEARCHING_TRANSACTIONS_FAILED = "Transactions search failed!";
 }

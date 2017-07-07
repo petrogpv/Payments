@@ -2,13 +2,12 @@ package ua.gordeichuk.payments.controller.service;
 
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.controller.Hasher;
-import ua.gordeichuk.payments.controller.Validator;
-import ua.gordeichuk.payments.controller.dao.DaoConnection;
-import ua.gordeichuk.payments.controller.dao.DaoFactory;
+import ua.gordeichuk.payments.controller.daojdbc.DaoConnection;
+import ua.gordeichuk.payments.controller.daojdbc.DaoFactory;
 import ua.gordeichuk.payments.controller.exception.ServiceException;
 import ua.gordeichuk.payments.controller.util.Message;
-import ua.gordeichuk.payments.model.daoentity.UserAuthDao;
-import ua.gordeichuk.payments.model.daoentity.UserDao;
+import ua.gordeichuk.payments.controller.daoentity.UserAuthDao;
+import ua.gordeichuk.payments.controller.daoentity.UserDao;
 import ua.gordeichuk.payments.model.entity.User;
 import ua.gordeichuk.payments.model.entity.UserAuth;
 

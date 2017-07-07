@@ -23,18 +23,13 @@ public class PaymentActionCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-
             String cardIdFromString = request.getParameter(Attribute.CARD_FROM);
             String cardIdToString = request.getParameter(Attribute.CARD_TO);
             String valueString = request.getParameter(Attribute.VALUE);
-
-
             Long cardIdFrom = Validator.validateAndParseCardNumber(cardIdFromString);
             Long cardIdTo = Validator.validateAndParseCardNumber(cardIdToString);
             Validator.validateCardsNotEquals(cardIdFrom, cardIdTo );
-
             Long value = Validator.validateAndParseMoneyValue(valueString);
-
             cardService.transfer(cardIdFrom, cardIdTo, value);
             request.setAttribute(Attribute.MESSAGE, Message.getMessage(Message.PAYMENT_SUCCESS));
             LOGGER.info(LogMessage.PAYMENT_OK + LogMessage.FROM + cardIdFrom + LogMessage.TO + cardIdTo +

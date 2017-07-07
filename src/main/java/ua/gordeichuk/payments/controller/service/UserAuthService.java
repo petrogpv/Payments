@@ -1,7 +1,7 @@
 package ua.gordeichuk.payments.controller.service;
 
 import org.apache.log4j.Logger;
-import ua.gordeichuk.payments.controller.dao.DaoFactory;
+import ua.gordeichuk.payments.controller.daojdbc.DaoFactory;
 
 /**
  * Created by Валерий on 26.06.2017.

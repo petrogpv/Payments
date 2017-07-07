@@ -2,15 +2,16 @@ package ua.gordeichuk.payments.model.entity;
 
 import ua.gordeichuk.payments.model.entity.enums.TransactionType;
 
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Created by Валерий on 12.06.2017.
  */
-public class Transaction implements Entity, Cloneable {
+public class Transaction implements Entity, Comparable<Transaction>, Cloneable {
     private Long id;
     private Card card;
-    private Transaction transaction;
+    private Transaction relativeTransaction;
     private Long balanceAfter;
     private Long value;
     private Date date;
@@ -34,12 +35,12 @@ public class Transaction implements Entity, Cloneable {
         this.card = card;
     }
 
-    public Transaction getTransaction() {
-        return transaction;
+    public Transaction getRelativeTransaction() {
+        return relativeTransaction;
     }
 
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
+    public void setRelativeTransaction(Transaction relativeTransaction) {
+        this.relativeTransaction = relativeTransaction;
     }
 
     public Long getBalanceAfter() {
@@ -74,6 +75,11 @@ public class Transaction implements Entity, Cloneable {
         this.type = type;
     }
 
+    @Override
+    public int compareTo(Transaction transaction) {
+        return this.date.compareTo(transaction.getDate());
+    }
+
     public static class Builder{
         private Transaction transaction = new Transaction();
 
@@ -86,8 +92,8 @@ public class Transaction implements Entity, Cloneable {
             return this;
         }
 
-        public Builder setTransactionId(Transaction transactionId) {
-            transaction.transaction = transactionId;
+        public Builder setTransaction(Transaction t) {
+            transaction.relativeTransaction = t;
             return this;
         }
 
@@ -113,6 +119,11 @@ public class Transaction implements Entity, Cloneable {
         }
     }
 
+//    @Override
+//    public int compare(Transaction o1, Transaction o2) {
+//        return o1.getDate().compareTo(o2.getDate());
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,7 +133,7 @@ public class Transaction implements Entity, Cloneable {
 
         if (!id.equals(that.id)) return false;
         if (card != null ? !card.equals(that.card) : that.card != null) return false;
-        if (transaction != null ? !transaction.equals(that.transaction) : that.transaction != null) return false;
+        if (relativeTransaction != null ? !relativeTransaction.equals(that.relativeTransaction) : that.relativeTransaction != null) return false;
         if (balanceAfter != null ? !balanceAfter.equals(that.balanceAfter) : that.balanceAfter != null) return false;
         if (value != null ? !value.equals(that.value) : that.value != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
@@ -134,7 +145,7 @@ public class Transaction implements Entity, Cloneable {
     public int hashCode() {
         int result = id.hashCode();
         result = 31 * result + (card != null ? card.hashCode() : 0);
-        result = 31 * result + (transaction != null ? transaction.hashCode() : 0);
+        result = 31 * result + (relativeTransaction != null ? relativeTransaction.hashCode() : 0);
         result = 31 * result + (balanceAfter != null ? balanceAfter.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
@@ -151,12 +162,12 @@ public class Transaction implements Entity, Cloneable {
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-                ", transaction=" + transaction +
+//                ", relativeTransaction=" + relativeTransaction +
                 ", type=" + type +
-                ", card=" + card +
-                ", balanceAfter=" + balanceAfter +
-                ", value=" + value +
-                ", date=" + date +
+//                ", card=" + card +
+//                ", balanceAfter=" + balanceAfter +
+//                ", value=" + value +
+//                ", date=" + date +
                 '}';
     }
 }

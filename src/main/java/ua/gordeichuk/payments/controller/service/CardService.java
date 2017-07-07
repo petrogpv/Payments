@@ -1,11 +1,11 @@
 package ua.gordeichuk.payments.controller.service;
 
 import org.apache.log4j.Logger;
-import ua.gordeichuk.payments.controller.dao.DaoConnection;
-import ua.gordeichuk.payments.controller.dao.DaoFactory;
-import ua.gordeichuk.payments.model.daoentity.AccountDao;
-import ua.gordeichuk.payments.model.daoentity.CardDao;
-import ua.gordeichuk.payments.model.daoentity.TransactionDao;
+import ua.gordeichuk.payments.controller.daojdbc.DaoConnection;
+import ua.gordeichuk.payments.controller.daojdbc.DaoFactory;
+import ua.gordeichuk.payments.controller.daoentity.AccountDao;
+import ua.gordeichuk.payments.controller.daoentity.CardDao;
+import ua.gordeichuk.payments.controller.daoentity.TransactionDao;
 import ua.gordeichuk.payments.model.entity.Account;
 import ua.gordeichuk.payments.model.entity.Card;
 import ua.gordeichuk.payments.model.entity.Transaction;
@@ -34,7 +34,16 @@ public class CardService {
     }
 
     public static CardService getInstance() {
-        return CardService.Holder.INSTANCE;
+        return Holder.INSTANCE;
+    }
+
+    public Card findCardById(Long cardId) throws ServiceException {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            connection.begin();
+            Card card = findCard(cardId, connection);
+            connection.commit();
+            return card;
+        }
     }
 
     public List<Card> findManyByUser(Long userId) {
@@ -123,8 +132,8 @@ public class CardService {
         transactionDao.create(transactionFrom);
         transactionDao.create(transactionTo);
 
-        transactionFrom.setTransaction(transactionTo);
-        transactionTo.setTransaction(transactionFrom);
+        transactionFrom.setRelativeTransaction(transactionTo);
+        transactionTo.setRelativeTransaction(transactionFrom);
 
         transactionDao.update(transactionFrom);
         transactionDao.update(transactionTo);
@@ -160,7 +169,7 @@ public class CardService {
         return balanceBeforeFrom;
     }
 
-    private Card findCard(Long cardId, DaoConnection connection) throws ServiceException {
+    protected Card findCard(Long cardId, DaoConnection connection) throws ServiceException {
         CardDao cardDao = daoFactory.createCardDao(connection);
         Optional<Card> optional = cardDao.find(cardId);
         if (!optional.isPresent()) {
@@ -204,10 +213,25 @@ public class CardService {
             account.setBalance(account.getBalance() + sum);
             AccountDao accountDao = daoFactory.createAccountDao(connection);
             accountDao.update(account);
+            saveTransactionDeposit(card, sum, connection);
             connection.commit();
             LOGGER.info(LogMessage.DEPOSITING_SUCCESSFUL);
             return true;
         }
+    }
+    public void saveTransactionDeposit(Card card, Long sum, DaoConnection connection){
+        Date date = Calendar.getInstance().getTime();
+
+        Transaction transaction = new Transaction.Builder()
+                .setCard(card)
+                .setBalanceAfter(card.getAccount().getBalance())
+                .setValue(sum)
+                .setType(TransactionType.DEPOSIT)
+                .setDate(date)
+                .build();
+
+        TransactionDao transactionDao = daoFactory.createTransactionDao(connection);
+        transactionDao.create(transaction);
     }
 
     public boolean lockCard(Long cardId) throws ServiceException {

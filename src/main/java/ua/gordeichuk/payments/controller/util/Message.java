@@ -27,12 +27,23 @@ public final class Message {
     public static final String PAYMENT_SUCCESS = "success.payment";
     public static final String CARDS_EQUALS = "failed.cardsEquals";
     public static final String CARD_LOCKED_SUCCESS = "success.lock";
+    public static final String WRONG_DATE_FORMAT = "failed.wrong.date";
+    public static final String TRANSACTIONS_NOT_FOUND = "failed.transactions.notFound";
+    public static final String TRANSACTION_NOT_FOUND = "failed.transaction.notFound";
+    public static final String FOR_CARD = "forCard";
+    public static final String DATE_FROM = "date.from";
+    public static final String DATE_TO = "date.to";
+    public static final String TRANSACTION_TYPE = "transaction.type";
+    public static final String TRANSACTION_TYPE_PATH = "transaction.type.";
+    public static final String WRONG_SORT_TYPE = "failed.wrong.sortType";
 
 
+    public static final String WRONG_DATES_RELATIONS = "failed.wrong.datesRelations";
     public static final Locale ENGLISH_LOCALE = new Locale("en", "US");
     public static final Locale LOCALE_LOCALE = new Locale("uk", "UA");
     private static final Logger LOGGER = Logger.getLogger(Message.class);
     private static final String BUNDLE_NAME = "/localization/messages";
+
     private static ResourceBundle messagesBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH_LOCALE);;
     private static ResourceBundle logBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH_LOCALE);
 
@@ -46,6 +57,11 @@ public final class Message {
 
     }
 
+    public static String getTransactionTypeMessage(String type) {
+        String key = TRANSACTION_TYPE_PATH + type;
+        System.out.println("@"+ key +"@");
+        return messagesBundle.getString(key);
+    }
     public static String getMessage(String key) {
         return messagesBundle.getString(key);
     }

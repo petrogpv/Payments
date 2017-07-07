@@ -5,10 +5,7 @@ import ua.gordeichuk.payments.controller.Command;
 import ua.gordeichuk.payments.controller.Validator;
 import ua.gordeichuk.payments.controller.exception.ServiceException;
 import ua.gordeichuk.payments.controller.service.CardService;
-import ua.gordeichuk.payments.controller.util.Attribute;
-import ua.gordeichuk.payments.controller.util.LogMessage;
-import ua.gordeichuk.payments.controller.util.Message;
-import ua.gordeichuk.payments.controller.util.Page;
+import ua.gordeichuk.payments.controller.util.*;
 import ua.gordeichuk.payments.model.entity.Card;
 import ua.gordeichuk.payments.model.entity.User;
 
@@ -42,7 +39,7 @@ public class LockCommand implements Command {
             cardService.lockCard(cardId);
             request.setAttribute(Attribute.MESSAGE, Message.getMessage(Message.CARD_LOCKED_SUCCESS));
             LOGGER.info(LogMessage.LOCKED_SUCCESSFUL + cardId);
-            return Page.INDEX;
+            return Path.DEFAULT;
         }
 
     }
@@ -50,6 +47,6 @@ public class LockCommand implements Command {
     public String doOnError(HttpServletRequest request, Exception e) {
         LOGGER.warn(LogMessage.LOCKING_FAILED + request.getParameter(Attribute.CARD));
         request.setAttribute(Attribute.MESSAGE_ERROR, e.getMessage());
-        return Page.LOCK;
+        return Path.DEFAULT;
     }
 }

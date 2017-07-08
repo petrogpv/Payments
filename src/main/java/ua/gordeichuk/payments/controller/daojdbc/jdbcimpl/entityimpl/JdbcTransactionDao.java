@@ -1,7 +1,7 @@
 package ua.gordeichuk.payments.controller.daojdbc.jdbcimpl.entityimpl;
 
 import org.apache.log4j.Logger;
-import ua.gordeichuk.payments.controller.daoentity.TransactionDao;
+import ua.gordeichuk.payments.model.daoentity.TransactionDao;
 import ua.gordeichuk.payments.controller.daojdbc.jdbcimpl.JdbcEntityDao;
 import ua.gordeichuk.payments.model.entity.Card;
 import ua.gordeichuk.payments.model.entity.Transaction;

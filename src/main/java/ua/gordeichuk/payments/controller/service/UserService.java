@@ -6,8 +6,8 @@ import ua.gordeichuk.payments.controller.daojdbc.DaoConnection;
 import ua.gordeichuk.payments.controller.daojdbc.DaoFactory;
 import ua.gordeichuk.payments.controller.exception.ServiceException;
 import ua.gordeichuk.payments.controller.util.Message;
-import ua.gordeichuk.payments.controller.daoentity.UserAuthDao;
-import ua.gordeichuk.payments.controller.daoentity.UserDao;
+import ua.gordeichuk.payments.model.daoentity.UserAuthDao;
+import ua.gordeichuk.payments.model.daoentity.UserDao;
 import ua.gordeichuk.payments.model.entity.User;
 import ua.gordeichuk.payments.model.entity.UserAuth;
 

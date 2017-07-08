@@ -3,9 +3,9 @@ package ua.gordeichuk.payments.controller.service;
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.controller.daojdbc.DaoConnection;
 import ua.gordeichuk.payments.controller.daojdbc.DaoFactory;
-import ua.gordeichuk.payments.controller.daoentity.AccountDao;
-import ua.gordeichuk.payments.controller.daoentity.CardDao;
-import ua.gordeichuk.payments.controller.daoentity.TransactionDao;
+import ua.gordeichuk.payments.model.daoentity.AccountDao;
+import ua.gordeichuk.payments.model.daoentity.CardDao;
+import ua.gordeichuk.payments.model.daoentity.TransactionDao;
 import ua.gordeichuk.payments.model.entity.Account;
 import ua.gordeichuk.payments.model.entity.Card;
 import ua.gordeichuk.payments.model.entity.Transaction;
@@ -90,6 +90,7 @@ public class CardService {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
 
+// TODO make access first for card with less number
             Card cardFrom = findCard(cardIdFrom, connection);
             checkCardForActivity(cardFrom);
 

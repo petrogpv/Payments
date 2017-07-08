@@ -10,8 +10,6 @@ import ua.gordeichuk.payments.model.entity.Transaction;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -31,13 +29,14 @@ public class HistoryActionCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+//        TODO: make DTO
         String cardIdString = request.getParameter(Attribute.CARD);
         String dateFromString = request.getParameter(Attribute.DATE_FROM);
         String dateToString = request.getParameter(Attribute.DATE_TO);
         String transactionTypeString = request.getParameter(Attribute.TRANSACTION_TYPE);
         String sortType = request.getParameter(Attribute.SORT_TYPE);
 
-
+// TODO extract to method
         Long cardId = Validator.validateAndParseCardNumber(cardIdString);
         String locale = (String) request.getSession().getAttribute(Attribute.LOCALE);
 
@@ -85,8 +84,8 @@ public class HistoryActionCommand implements Command {
                         + Parser.parseDateToString(dateFrom, locale);
             }
             if (dateTo != null) {
-               message += Message.getMessage(Message.DATE_TO)
-                       + Parser.parseDateToString(dateTo, locale);
+                message += Message.getMessage(Message.DATE_TO)
+                        + Parser.parseDateToString(dateTo, locale);
             }
 
             request.setAttribute(Attribute.MESSAGE_ERROR, message);

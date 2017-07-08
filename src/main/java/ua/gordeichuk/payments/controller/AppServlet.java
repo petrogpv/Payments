@@ -20,7 +20,7 @@ public class AppServlet extends HttpServlet {
     private static final String UA = "ua";
     private static final String EN_LOCALE = "en_US";
     private static final String UA_LOCALE = "uk_UA";
-    private static final CommandGetter commandGetter = CommandGetter.getInstance();
+    private static final CommandFactory COMMAND_FACTORY = CommandFactory.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -40,7 +40,7 @@ public class AppServlet extends HttpServlet {
 
             localeHandling(request);
             String path = request.getServletPath();
-            Command command = commandGetter.getCommand(path);
+            Command command = COMMAND_FACTORY.getCommand(path);
             String page;
             try {
                 page = command.execute(request, response);

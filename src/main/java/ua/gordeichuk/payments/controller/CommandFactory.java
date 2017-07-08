@@ -13,13 +13,13 @@ import java.util.Map;
 /**
  * Created by Администратор on 28.06.2017.
  */
-public class CommandGetter {
+public class CommandFactory {
     private static Map<String, Command> commands = new HashMap<>();
-    private static CommandGetter instance = new CommandGetter();
-    private static final Logger LOGGER = Logger.getLogger(CommandGetter.class);
+    private static CommandFactory instance = new CommandFactory();
+    private static final Logger LOGGER = Logger.getLogger(CommandFactory.class);
 
 
-    private CommandGetter() {
+    private CommandFactory() {
         commands.put(Path.SIGNIN, new SignInCommand(UserService.getInstance()));
         commands.put(Path.SIGNUP, new SignUpCommand(UserService.getInstance()));
         commands.put(Path.SIGNUP_ACTION, new SignUpActionCommand(UserService.getInstance()));
@@ -41,7 +41,7 @@ public class CommandGetter {
 
     }
 
-    public static CommandGetter getInstance() {
+    public static CommandFactory getInstance() {
         return instance;
     }
 

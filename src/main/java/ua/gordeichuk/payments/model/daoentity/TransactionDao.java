@@ -1,4 +1,4 @@
-package ua.gordeichuk.payments.controller.daoentity;
+package ua.gordeichuk.payments.model.daoentity;
 
 import ua.gordeichuk.payments.model.entity.Transaction;
 

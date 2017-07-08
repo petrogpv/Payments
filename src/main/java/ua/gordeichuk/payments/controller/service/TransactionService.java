@@ -5,7 +5,7 @@ import ua.gordeichuk.payments.controller.daojdbc.DaoConnection;
 import ua.gordeichuk.payments.controller.daojdbc.DaoFactory;
 import ua.gordeichuk.payments.controller.exception.ServiceException;
 import ua.gordeichuk.payments.controller.util.Message;
-import ua.gordeichuk.payments.controller.daoentity.TransactionDao;
+import ua.gordeichuk.payments.model.daoentity.TransactionDao;
 import ua.gordeichuk.payments.model.entity.Transaction;
 
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ public class TransactionService {
             TransactionDao transactionDao = daoFactory.createTransactionDao(connection);
             List<Transaction> transactions = new ArrayList<>();
 
+//            TODO dynamic DAO
             if (dateFrom == null && dateTo == null) {
                 if(type == null){
                     transactions = transactionDao.findManyByCard(cardId);

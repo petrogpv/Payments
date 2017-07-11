@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>AppServlet</servlet-name>
-        <servlet-class>ua.gordeichuk.payments.controller.AppServlet</servlet-class>
+        <servlet-class>ua.gordeichuk.payments.AppServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -26,7 +26,7 @@
 
 
     <welcome-file-list>
-        <welcome-file></welcome-file>
+        <welcome-file>/</welcome-file>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
@@ -64,7 +64,7 @@
 
     <filter>
         <filter-name>EncodingFilter</filter-name>
-        <filter-class>ua.gordeichuk.payments.controller.filter.EncodingFilter</filter-class>
+        <filter-class>ua.gordeichuk.payments.filter.EncodingFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
@@ -73,7 +73,7 @@
 
     <filter>
         <filter-name>SignedInAndSignUpFilter</filter-name>
-        <filter-class>ua.gordeichuk.payments.controller.filter.SignedInAndSignUpFilter</filter-class>
+        <filter-class>ua.gordeichuk.payments.filter.SignedInAndSignUpFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SignedInAndSignUpFilter</filter-name>
@@ -82,7 +82,7 @@
 
     <filter>
         <filter-name>CommonFilter</filter-name>
-        <filter-class>ua.gordeichuk.payments.controller.filter.CommonVisitorFilter</filter-class>
+        <filter-class>ua.gordeichuk.payments.filter.CommonVisitorFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CommonFilter</filter-name>
@@ -92,7 +92,7 @@
 
     <filter>
         <filter-name>AdminFilter</filter-name>
-        <filter-class>ua.gordeichuk.payments.controller.filter.AdminFilter</filter-class>
+        <filter-class>ua.gordeichuk.payments.filter.AdminFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
@@ -101,7 +101,7 @@
 
     <filter>
         <filter-name>UserFilter</filter-name>
-        <filter-class>ua.gordeichuk.payments.controller.filter.UserFilter</filter-class>
+        <filter-class>ua.gordeichuk.payments.filter.UserFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>UserFilter</filter-name>

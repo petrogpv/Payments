@@ -24,7 +24,7 @@
                                             selected
                                         </c:if>
                                         value="${card.id}">${card.id}
-                                    (<custom:convertLong value="${card.account.balance}"/>) -
+                                    (<custom:formatMoney value="${card.account.balance}"/>) -
                                     <fmt:message key="card.status.${card.status}" bundle="${bundleEnums}"/></option>
                             </c:forEach>
                         </select>
@@ -35,7 +35,7 @@
             <c:when test="${sessionScope.user.userAuth.role eq 'ADMIN'}">
                 <div class="row">
                     <div class=" col-xs-2"><label class="label-input"><p><b>Card number:</b></p></label></div>
-                    <div class=" col-xs-2"><input type="number" class="form-control" required name="card"
+                    <div class=" col-xs-2"><input type="number" class="form-control no-spin" required name="card"
                             <c:if test="${not empty param.card}"> value="${param.card}" </c:if>/></div>
 
                 </div>
@@ -106,8 +106,8 @@
         <td>${t.id}</td>
         <td><fmt:message key="transaction.type.${t.type}" bundle="${bundleEnums}"/></td>
         <td>${t.relativeTransaction.card.id}</td>
-        <td><custom:convertLong value="${t.balanceAfter}"/></td>
-        <td><custom:convertLong value="${t.value}"/></td>
+        <td><custom:formatMoney value="${t.balanceAfter}"/></td>
+        <td><custom:formatMoney value="${t.value}"/></td>
         <td><fmt:formatDate type = "both" value = "${t.date}" /></td>
         </tr>
         </c:forEach>

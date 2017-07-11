@@ -9,8 +9,8 @@
     <uri>custom</uri>
 
     <tag>
-        <name>convertLong</name>
-        <tag-class>ua.gordeichuk.payments.controller.tag.ConvertLongTag</tag-class>
+        <name>formatMoney</name>
+        <tag-class>ua.gordeichuk.payments.tag.ConvertLongTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>value</name>

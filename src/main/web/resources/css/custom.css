@@ -1,23 +1,82 @@
+
 input[type="radio"] {
     margin-left: 2%;
 }
-
 .description-text{
     text-decoration: underline;
 }
-
+.header-main-label{
+    font-style: italic;
+    color: white;
+    font-family: "Cooper Black";
+    font-size: large;
+}
+.header-main-label span{
+    color: dodgerblue;
+}
 .header-text{
     font-family: Garamond;
     margin-top: 5px;
     font-size: 20px;
     color: #287c8c;
 }
-
 .label-input {
     margin-top: 5px;
     width: 300px;
     text-align: right;
-}​
-
-
-
+}
+.header-background{
+    background-color: black;
+}
+.header-padding{
+    display:flex;
+    align-items:center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+}
+.header-element{
+    color: white;
+    padding-left:5px ;
+    white-space: nowrap ;
+}
+.padding-left{
+    padding-left: 3px;
+}
+.hover a:hover {
+    color: yellow;
+}
+.align-center{
+    text-align: center;
+}
+.align-center-right{
+    display:flex;
+    justify-content: flex-end;
+    align-items:center;
+}
+.margin-menu{
+    margin-left: 5px;
+}
+.align-center-left {
+    display: flex;
+    align-items: center;
+}
+.submit-transparent {
+    color:transparent;
+    border: none;
+}
+.img-uk {
+    background-image: url(/resources/img/uk.png);
+    width: 32px;
+    height: 25px;
+}
+.img-ua {
+    background-image: url(/resources/img/ua.png);
+    width: 32px;
+    height: 25px;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

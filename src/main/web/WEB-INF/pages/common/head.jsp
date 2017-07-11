@@ -17,7 +17,6 @@
     <%--<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>--%>
     <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Cookie'>
     <link rel="stylesheet" href="<c:url value="/resources/css/msg.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/locale.css" />">
     <link rel="stylesheet" href="<c:url value="/resources/css/custom.css" />">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${title}</title>

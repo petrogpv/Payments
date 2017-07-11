@@ -2,15 +2,13 @@ package ua.gordeichuk.payments;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
-import ua.gordeichuk.payments.model.entity.Card;
-import ua.gordeichuk.payments.model.entity.enums.CardStatus;
+import ua.gordeichuk.payments.entity.Card;
+import ua.gordeichuk.payments.entity.enums.CardStatus;
+import ua.gordeichuk.payments.util.Attribute;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,15 +60,32 @@ public class Application {
         System.out.println(card);
         System.out.println(card2);
 
-String regex = "^[^0]\\d*([\\.|,]\\d\\d?)?$";
-
-        String num = "10.";
-        String num1 = "10,";
-
-        System.out.println(num + " " + num.matches(regex));
-        System.out.println(num1 + " " + num1.matches(regex));
 
 
+        String result = String.valueOf("0");
+        char separator = '.';
+        int length = result.length();
+        String MINUS = "-";
+        String ZERO = "0";
+        String DOUBLE_ZERO = "00";
+
+        if (result.startsWith(MINUS) && length == 2) {
+            result = MINUS + DOUBLE_ZERO + result.substring(1);
+        } else if (result.startsWith(MINUS) && length == 3) {
+            result = MINUS + ZERO + result.substring(1);
+
+        } else if (length == 1) {
+            result = DOUBLE_ZERO + result;
+        } else if (length == 2) {
+            result = ZERO + result;
+        }
+
+        length = result.length();
+
+        result = result.substring(0, length - 2)
+                + separator + result.substring(length - 2, length);
+
+        System.out.println("Res:  " + result);
     }
 
     public static String nextRandomString() {

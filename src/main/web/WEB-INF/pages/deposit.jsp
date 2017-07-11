@@ -25,7 +25,7 @@
                                     disabled
                                 </c:if>
                                 value="${card.id}">${card.id}
-                            (<custom:convertLong value="${card.account.balance}"/>) -
+                            (<custom:formatMoney value="${card.account.balance}"/>) -
                             <fmt:message key="card.status.${card.status}" bundle="${bundleEnums}"/></option>
                     </c:forEach>
                 </select>

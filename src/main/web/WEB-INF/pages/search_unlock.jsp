@@ -45,8 +45,8 @@
                     <td>${t.id}</td>
                     <td> <fmt:message key="transaction.type.${t.type}" bundle="${bundleEnums}"/></td>
                     <td>${t.relativeTransaction.card.id}</td>
-                    <td><custom:convertLong value="${t.balanceAfter}"/></td>
-                    <td><custom:convertLong value="${t.value}"/></td>
+                    <td><custom:formatMoney value="${t.balanceAfter}"/></td>
+                    <td><custom:formatMoney value="${t.value}"/></td>
                     <td><fmt:formatDate type = "both" value = "${t.date}" /></td>
                 </tr>
             </c:forEach>

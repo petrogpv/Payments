@@ -52,9 +52,9 @@ public class HistoryActionCommand implements Command {
     }
 
     private void writeNotFoundMessages(HttpServletRequest request) {
-        List<String> messageKeys = new ArrayList<>();
-        messageKeys.add(Message.TRANSACTIONS_NOT_FOUND);
-        MessageDto messageDto = Message.getMessageDto(messageKeys);
+        MessageDto messageDto = new MessageDto.Builder()
+                .addMessage(Message.TRANSACTIONS_NOT_FOUND)
+                .build();
         request.setAttribute(Attribute.MESSAGE_ERROR, messageDto.getMessage());
         LOGGER.info(messageDto.getLogMessage());
     }

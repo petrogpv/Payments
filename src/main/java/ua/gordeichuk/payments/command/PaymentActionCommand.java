@@ -29,7 +29,7 @@ public class PaymentActionCommand implements Command{
             PaymentParamDto paramDto = extractPaymentParamDto(request);
             TransferParamDto transferParamDto = validateAndGetParams(paramDto);
             cardService.transfer(transferParamDto);
-            request.setAttribute(Attribute.MESSAGE, Message.getMessage(Message.PAYMENT_SUCCESS));
+            request.setAttribute(Attribute.MESSAGE, MessageDto.getMessage(Message.PAYMENT_SUCCESS));
             writeLog(paramDto);
         return Path.PAYMENT;
     }

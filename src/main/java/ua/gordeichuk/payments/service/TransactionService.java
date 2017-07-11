@@ -47,10 +47,10 @@ public class TransactionService {
         TransactionDao transactionDao = daoFactory.createTransactionDao(connection);
         Optional<Transaction> optional = transactionDao.find(transactionId);
         if (!optional.isPresent()) {
-            List<String> messageKeys = new ArrayList<>();
-            messageKeys.add(Message.TRANSACTION_NOT_FOUND);
-            messageKeys.add(String.valueOf(transactionId));
-            MessageDto messageDto = Message.getMessageDto(messageKeys);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.TRANSACTION_NOT_FOUND)
+                    .addMessage(String.valueOf(transactionId))
+                    .build();
             LOGGER.error(messageDto.getLogMessage());
             throw new ServiceException(messageDto.getMessage());
         }

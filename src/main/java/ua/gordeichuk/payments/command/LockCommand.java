@@ -37,7 +37,7 @@ public class LockCommand implements Command {
         }else{
             Long cardId = validator.validateAndParseCardNumber(cardIdString);
             cardService.lockCard(cardId);
-            request.setAttribute(Attribute.MESSAGE, Message.getMessage(Message.CARD_LOCKED_SUCCESS));
+            request.setAttribute(Attribute.MESSAGE, MessageDto.getMessage(Message.CARD_LOCKED_SUCCESS));
             LOGGER.info(LogMessage.CARD_STATUS_CHANGED + cardId);
             return Path.DEFAULT;
         }

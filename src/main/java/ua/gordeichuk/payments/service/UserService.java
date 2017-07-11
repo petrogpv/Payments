@@ -10,6 +10,7 @@ import ua.gordeichuk.payments.daoentity.UserAuthDao;
 import ua.gordeichuk.payments.daoentity.UserDao;
 import ua.gordeichuk.payments.entity.User;
 import ua.gordeichuk.payments.entity.UserAuth;
+import ua.gordeichuk.payments.util.MessageDto;
 
 import java.util.Optional;
 
@@ -75,12 +76,11 @@ public class UserService {
 
     private void checkUserIsNotNull(String login, Optional<User> optionalUser) throws ServiceException {
         if (!optionalUser.isPresent()) {
-            String logMessage = Message.getLogMessage(
-                    Message.WRONG_LOGIN)  + login;
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(
-                    Message.WRONG_LOGIN)  + login;
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.WRONG_LOGIN)
+                    .build();
+            LOGGER.warn(messageDto.getMessage());
+            throw new ServiceException(messageDto.getLogMessage());
         }
     }
 
@@ -88,33 +88,32 @@ public class UserService {
         String sole = user.getUserAuth().getSole();
         String hash = Hasher.getHash(password, sole);
         if (!user.getUserAuth().getPassword().equals(hash)) {
-            String logMessage = Message.getLogMessage(
-                    Message.WRONG_PASSWORD);
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(
-                    Message.WRONG_PASSWORD);
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.WRONG_PASSWORD)
+                    .build();
+            LOGGER.warn(messageDto.getMessage());
+            throw new ServiceException(messageDto.getLogMessage());
         }
     }
 
     private void checkUserIsSignedUp(String login, User user) throws ServiceException {
         if (user.getUserAuth().getPassword() == null) {
-            String logMessage = Message.getLogMessage(
-                    Message.USER_IS_NOT_SIGNED_UP) + login;
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(
-                    Message.USER_IS_NOT_SIGNED_UP)  + login;
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.USER_IS_NOT_SIGNED_UP)
+                    .addMessage(login)
+                    .build();
+            LOGGER.warn(messageDto.getMessage());
+            throw new ServiceException(messageDto.getLogMessage());
         }
     }
     private void checkUserIsNotSignedUp(String login, User user) throws ServiceException {
         if (user.getUserAuth().getPassword() != null) {
-            String logMessage = Message.getLogMessage(
-                    Message.USER_IS_ALREADY_SIGNED_UP) + login;
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(
-                    Message.USER_IS_ALREADY_SIGNED_UP)  + login;
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.USER_IS_ALREADY_SIGNED_UP)
+                    .addMessage(login)
+                    .build();
+            LOGGER.warn(messageDto.getMessage());
+            throw new ServiceException(messageDto.getLogMessage());
         }
     }
 

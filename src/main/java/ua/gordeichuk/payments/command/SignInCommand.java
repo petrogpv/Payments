@@ -30,7 +30,7 @@ public class SignInCommand implements Command {
         validateUser(userAuth);
         User user = userService.signInUser(userAuth);
         request.getSession().setAttribute(Attribute.USER, user);
-        request.setAttribute(Attribute.MESSAGE, Message.getMessage(Message.SIGNED_IN_SUCCESS));
+        request.setAttribute(Attribute.MESSAGE, MessageDto.getMessage(Message.SIGNED_IN_SUCCESS));
 
         LOGGER.info(LogMessage.USER_SIGNED_IN + user.getUserAuth().getLogin());
         return Path.DEFAULT;

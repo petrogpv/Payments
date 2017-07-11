@@ -173,10 +173,10 @@ public class CardService {
             throws ServiceException {
         Long balanceBeforeFrom = accountFrom.getBalance();
         if (balanceBeforeFrom < sum) {
-            List<String> messageKeys = new ArrayList<>();
-            messageKeys.add(Message.NOT_ENOUGH_MONEY);
-            messageKeys.add(String.valueOf(accountFrom.getId()));
-            MessageDto messageDto = Message.getMessageDto(messageKeys);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.NOT_ENOUGH_MONEY)
+                    .addMessage(String.valueOf(accountFrom.getId()))
+                    .build();
             LOGGER.error(messageDto.getLogMessage());
             throw new ServiceException(messageDto.getMessage());
         }
@@ -187,11 +187,10 @@ public class CardService {
         CardDao cardDao = daoFactory.createCardDao(connection);
         Optional<Card> optional = cardDao.find(cardId);
         if (!optional.isPresent()) {
-            List<String> messageKeys = new ArrayList<>();
-            messageKeys.add(Message.CARD_NOT_EXIST);
-            messageKeys.add(String.valueOf(cardId));
-            MessageDto messageDto = Message.getMessageDto(messageKeys);
-            LOGGER.error(messageDto.getLogMessage());
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.CARD_NOT_EXIST)
+                    .addMessage(String.valueOf(cardId))
+                    .build();
             throw new ServiceException(messageDto.getMessage());
         }
         return optional.get();
@@ -199,10 +198,10 @@ public class CardService {
 
     private void checkCardForActivity(Card cardFrom) throws ServiceException {
         if (!cardFrom.getStatus().equals(CardStatus.ACTIVE)) {
-            List<String> messageKeys = new ArrayList<>();
-            messageKeys.add(Message.CARD_NOT_ACTIVE);
-            messageKeys.add(String.valueOf(cardFrom.getId()));
-            MessageDto messageDto = Message.getMessageDto(messageKeys);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.CARD_NOT_ACTIVE)
+                    .addMessage(String.valueOf(cardFrom.getId()))
+                    .build();
             LOGGER.error(messageDto.getLogMessage());
             throw new ServiceException(messageDto.getMessage());
         }
@@ -210,10 +209,10 @@ public class CardService {
     private void checkCardForAvailability(Card cardTo) throws ServiceException {
         if (cardTo.getStatus().equals(CardStatus.DEACTIVATED)
                 || cardTo.getStatus().equals(CardStatus.EXPIRED) ) {
-            List<String> messageKeys = new ArrayList<>();
-            messageKeys.add(Message.CARD_IS_NOT_AVAILABLE);
-            messageKeys.add(String.valueOf(cardTo.getId()));
-            MessageDto messageDto = Message.getMessageDto(messageKeys);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.CARD_IS_NOT_AVAILABLE)
+                    .addMessage(String.valueOf(cardTo.getId()))
+                    .build();
             LOGGER.error(messageDto.getLogMessage());
             throw new ServiceException(messageDto.getMessage());
         }

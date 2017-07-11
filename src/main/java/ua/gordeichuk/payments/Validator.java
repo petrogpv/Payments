@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.exception.ServiceException;
 import ua.gordeichuk.payments.service.enums.SortType;
 import ua.gordeichuk.payments.util.Message;
+import ua.gordeichuk.payments.util.MessageDto;
 import ua.gordeichuk.payments.util.Parser;
 import ua.gordeichuk.payments.entity.enums.TransactionType;
 
@@ -54,10 +55,12 @@ public class Validator {
             try{
                 date = Parser.parseStringToDate(dateString, locale);
             } catch (ParseException e) {
-                String logMessage = Message.getLogMessage(Message.WRONG_DATE_FORMAT) + dateString;
-                LOGGER.warn(logMessage);
-                String message = Message.getMessage(Message.WRONG_DATE_FORMAT) + dateString;
-                throw new ServiceException(message);
+                MessageDto messageDto = new MessageDto.Builder()
+                        .addMessage(Message.WRONG_DATE_FORMAT)
+                        .addMessage(dateString)
+                        .build();
+                LOGGER.warn(messageDto.getLogMessage());
+                throw new ServiceException(messageDto.getMessage());
             }
         }
         return date;
@@ -78,19 +81,22 @@ public class Validator {
 
         if (dateTo != null && dateFrom != null && dateFrom.after(dateTo)
                 || dateFrom != null && dateFrom.after(now)) {
-            String logMessage = Message.getLogMessage(Message.WRONG_DATES_RELATIONS);
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.WRONG_DATES_RELATIONS);
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.WRONG_DATES_RELATIONS)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         }
     }
 
     public Long validateAndParseCardNumber(String cardNumber) throws ServiceException {
         if (cardNumber == null || !cardNumber.matches(CARD_NUMBER_REGEX)) {
-            String logMessage = Message.getLogMessage(Message.WRONG_CARD_FORMAT) + cardNumber;
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.WRONG_CARD_FORMAT) + cardNumber;
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.WRONG_CARD_FORMAT)
+                    .addMessage(cardNumber)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         }
         return Long.parseLong(cardNumber);
     }
@@ -98,10 +104,12 @@ public class Validator {
 
     public Long validateAndParseMoneyValue(String value) throws ServiceException {
         if (value == null || !value.matches(MONEY_VALUE_REGEX)) {
-            String logMessage = Message.getLogMessage(Message.WRONG_MONEY_VALUE_FORMAT) + value;
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.WRONG_MONEY_VALUE_FORMAT) + value;
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.WRONG_MONEY_VALUE_FORMAT)
+                    .addMessage(value)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         } else {
             return parseMoneyValue(value);
         }
@@ -121,19 +129,22 @@ public class Validator {
 
     public void validateLogin(String login) throws ServiceException {
         if (login == null || !login.matches(LOGIN_EMAIL_REGEX)) {
-            String logMessage = Message.getLogMessage(Message.LOGIN_WRONG_FORMAT) + login;
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.LOGIN_WRONG_FORMAT) + login;
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.LOGIN_WRONG_FORMAT)
+                    .addMessage(login)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         }
     }
 
     public void validatePassword(String password) throws ServiceException {
         if (password == null || !password.matches(PASSWORD_REGEX)) {
-            String logMessage = Message.getLogMessage(Message.PASSWORD_WRONG_FORMAT);
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.PASSWORD_WRONG_FORMAT);
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.PASSWORD_WRONG_FORMAT)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         }
     }
 
@@ -142,20 +153,22 @@ public class Validator {
         validatePassword(password);
         validatePassword(passwordConfirm);
         if (!password.equals(passwordConfirm)) {
-            String logMessage = Message.getLogMessage(Message.PASSWORDS_NOT_IDENTICAL);
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.PASSWORDS_NOT_IDENTICAL);
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.PASSWORDS_NOT_IDENTICAL)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         }
     }
 
     public void validateCardsNotEquals(Long cardIdFrom, Long cardIdTo)
             throws ServiceException {
         if (cardIdFrom == null || cardIdFrom.equals(cardIdTo)) {
-            String logMessage = Message.getLogMessage(Message.CARDS_EQUALS);
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.CARDS_EQUALS);
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.CARDS_EQUALS)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         }
     }
 
@@ -163,10 +176,12 @@ public class Validator {
         try {
             return SortType.valueOf(sortType);
         }catch (IllegalArgumentException e){
-            String logMessage = Message.getLogMessage(Message.WRONG_SORT_TYPE) + sortType;
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.WRONG_SORT_TYPE);
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.WRONG_SORT_TYPE)
+                    .addMessage(sortType)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         }
     }
 
@@ -177,10 +192,12 @@ public class Validator {
         try {
             return TransactionType.valueOf(transactionTypeString);
         } catch (IllegalArgumentException e) {
-            String logMessage = Message.getLogMessage(Message.WRONG_TRANCASTION_TYPE) + transactionTypeString;
-            LOGGER.warn(logMessage);
-            String message = Message.getMessage(Message.WRONG_TRANCASTION_TYPE);
-            throw new ServiceException(message);
+            MessageDto messageDto = new MessageDto.Builder()
+                    .addMessage(Message.WRONG_TRANCASTION_TYPE)
+                    .addMessage(transactionTypeString)
+                    .build();
+            LOGGER.warn(messageDto.getLogMessage());
+            throw new ServiceException(messageDto.getMessage());
         }
 
     }

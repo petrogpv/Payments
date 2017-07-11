@@ -50,10 +50,10 @@ public class CardsChangeCommand implements Command {
     }
 
     private void writeMessageAndLog(HttpServletRequest request){
-        List<String> messageKeys = new ArrayList<>();
-        messageKeys.add(Message.CARD_STATUS_CHANGED);
-        messageKeys.add(request.getParameter(Attribute.CARD));
-        MessageDto messageDto = Message.getMessageDto(messageKeys);
+        MessageDto messageDto = new MessageDto.Builder()
+                .addMessage(Message.CARD_STATUS_CHANGED)
+                .addMessage(request.getParameter(Attribute.CARD))
+                .build();
         request.setAttribute(Attribute.MESSAGE, messageDto.getMessage());
         LOGGER.info(messageDto.getLogMessage());
 

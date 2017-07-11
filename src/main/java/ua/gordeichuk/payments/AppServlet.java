@@ -2,10 +2,7 @@ package ua.gordeichuk.payments;
 
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.exception.ServiceException;
-import ua.gordeichuk.payments.util.Attribute;
-import ua.gordeichuk.payments.util.Message;
-import ua.gordeichuk.payments.util.LogMessage;
-import ua.gordeichuk.payments.util.Page;
+import ua.gordeichuk.payments.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -69,11 +66,11 @@ public class AppServlet extends HttpServlet {
         if(locale!=null) {
             if (locale.equals(EN)) {
                 request.getSession().setAttribute(Attribute.LOCALE, EN_LOCALE);
-                Message.setLocale(Message.ENGLISH_LOCALE);
+                MessageDto.setLocale(MessageDto.ENGLISH_LOCALE);
                 LOGGER.info(LogMessage.SET_LOCALE + locale);
             } else if (locale.equals(UA)) {
                 request.getSession().setAttribute(Attribute.LOCALE, UA_LOCALE);
-                Message.setLocale(Message.LOCALE_LOCALE);
+                MessageDto.setLocale(MessageDto.UKRAINIAN_LOCALE);
                 LOGGER.info(LogMessage.SET_LOCALE + locale);
             }
         }

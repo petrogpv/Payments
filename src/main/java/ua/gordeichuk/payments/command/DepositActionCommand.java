@@ -29,7 +29,7 @@ public class DepositActionCommand implements Command {
             Long cardId = validator.validateAndParseCardNumber(cardIdString);
             Long value = validator.validateAndParseMoneyValue(valueString);
             cardService.deposit(cardId, value);
-            request.setAttribute(Attribute.MESSAGE, Message.getMessage(Message.PAYMENT_SUCCESS));
+            request.setAttribute(Attribute.MESSAGE, MessageDto.getMessage(Message.PAYMENT_SUCCESS));
             LOGGER.info(LogMessage.DEPOSIT_OK  + LogMessage.TO + cardId + LogMessage.VALUE + value);
             return Path.DEPOSIT;
 

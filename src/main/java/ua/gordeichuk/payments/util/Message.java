@@ -40,63 +40,7 @@ public final class Message {
     public static final String WRONG_SORT_TYPE = "failed.wrong.sortType";
     public static final String WRONG_TRANCASTION_TYPE = "failed.wrong.transactionType";
     public static final String CARD_STATUS_CHANGED = "success.cardStatusChanged";
-
-
     public static final String WRONG_DATES_RELATIONS = "failed.wrong.datesRelations";
-    public static final Locale ENGLISH_LOCALE = new Locale("en", "US");
-    public static final Locale LOCALE_LOCALE = new Locale("uk", "UA");
-    private static final Logger LOGGER = Logger.getLogger(Message.class);
-    private static final String BUNDLE_NAME = "/localization/messages";
-
-
-    private static ResourceBundle messagesBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH_LOCALE);;
-    private static ResourceBundle logBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH_LOCALE);
-
-    public static void setLocale(Locale locale) {
-
-        try {
-            messagesBundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);
-        } catch (Exception e) {
-            LOGGER.error(LogMessage.RB_READ_ERROR + BUNDLE_NAME + locale);
-        }
-
-    }
-
-    public static String getTransactionTypeMessage(String type) {
-        String key = TRANSACTION_TYPE_PATH + type;
-        return messagesBundle.getString(key);
-    }
-    public static String getMessage(String key) {
-        return messagesBundle.getString(key);
-    }
-    public static String getLogMessage(String key) {
-        return logBundle.getString(key);
-    }
-    public static String getMessageForDto(ResourceBundle bundle, String key){
-        String message;
-        try {
-            message = bundle.getString(key);
-        } catch (MissingResourceException e) {
-            message = key;
-        }
-        return message;
-    }
-
-    public static MessageDto getMessageDto (List<String> messageKeys){
-        MessageDto messageDto = new MessageDto();
-        StringBuilder sbMessage = new StringBuilder();
-        StringBuilder sbLog = new StringBuilder();
-        for (String key: messageKeys) {
-            sbMessage.append(getMessageForDto(messagesBundle, key));
-            sbLog.append(getMessageForDto(logBundle, key));
-        }
-        messageDto.setMessage(sbMessage.toString());
-        messageDto.setLogMessage(sbLog.toString());
-        return messageDto;
-
-
-
-    }
 
 
 }

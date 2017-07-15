@@ -3,19 +3,22 @@ package ua.gordeichuk.payments.command;
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.Command;
 import ua.gordeichuk.payments.Validator;
-
+import ua.gordeichuk.payments.dto.commandparam.HistoryParamDto;
 import ua.gordeichuk.payments.dto.entityparam.TransactionParamDto;
+import ua.gordeichuk.payments.entity.Transaction;
+import ua.gordeichuk.payments.entity.enums.TransactionType;
 import ua.gordeichuk.payments.exception.ServiceException;
 import ua.gordeichuk.payments.service.TransactionService;
 import ua.gordeichuk.payments.service.enums.SortType;
-import ua.gordeichuk.payments.util.*;
-import ua.gordeichuk.payments.entity.Transaction;
-import ua.gordeichuk.payments.entity.enums.TransactionType;
-import ua.gordeichuk.payments.dto.commandparam.HistoryParamDto;
+import ua.gordeichuk.payments.service.localization.Message;
+import ua.gordeichuk.payments.service.localization.MessageDto;
+import ua.gordeichuk.payments.service.localization.MessageDtoBuilder;
+import ua.gordeichuk.payments.util.Attribute;
+import ua.gordeichuk.payments.util.LogMessage;
+import ua.gordeichuk.payments.util.Path;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +27,6 @@ import java.util.List;
  */
 public class HistoryActionCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(HistoryActionCommand.class);
-    private static final String ALL = "ALL";
-    private static final String DESC = "DESC";
     private TransactionService transactionService;
     private Validator validator = Validator.getInstance();
 
@@ -52,7 +53,7 @@ public class HistoryActionCommand implements Command {
     }
 
     private void writeNotFoundMessages(HttpServletRequest request) {
-        MessageDto messageDto = new MessageDto.Builder()
+        MessageDto messageDto = new MessageDtoBuilder()
                 .addMessage(Message.TRANSACTIONS_NOT_FOUND)
                 .build();
         request.setAttribute(Attribute.MESSAGE_ERROR, messageDto.getMessage());
@@ -66,17 +67,14 @@ public class HistoryActionCommand implements Command {
                 .setDateToString( request.getParameter(Attribute.DATE_TO))
                 .setTransactionTypeString(request.getParameter(Attribute.TRANSACTION_TYPE))
                 .setSortTypeString(request.getParameter(Attribute.SORT_TYPE))
-                .setLocale(getLocale(request))
                 .build();
 
     }
     private TransactionParamDto validateAndGetParams (HistoryParamDto historyParamDto)
             throws ServiceException {
         Long cardId = validator.validateAndParseCardNumber(historyParamDto.getCardIdString());
-        Date dateFrom = validator.validateAndParseDate(historyParamDto.getDateFromString(),
-                historyParamDto.getLocale());
-        Date dateTo = validator.validateAndParseDate(historyParamDto.getDateToString(),
-                historyParamDto.getLocale());
+        Date dateFrom = validator.validateAndParseDate(historyParamDto.getDateFromString());
+        Date dateTo = validator.validateAndParseDate(historyParamDto.getDateToString());
         validator.validateDates(dateFrom, dateTo);
         SortType sortType = validator.validateSortType(historyParamDto.getSortTypeString());
         TransactionType transactionType = validator
@@ -88,9 +86,6 @@ public class HistoryActionCommand implements Command {
                 .setSortType(sortType)
                 .setTransactionType(transactionType)
                 .build();
-    }
-    private String getLocale(HttpServletRequest request){
-        return (String) request.getSession().getAttribute(Attribute.LOCALE);
     }
 
 

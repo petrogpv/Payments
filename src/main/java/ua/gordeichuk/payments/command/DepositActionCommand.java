@@ -5,6 +5,8 @@ import ua.gordeichuk.payments.Command;
 import ua.gordeichuk.payments.Validator;
 import ua.gordeichuk.payments.exception.ServiceException;
 import ua.gordeichuk.payments.service.CardService;
+import ua.gordeichuk.payments.service.localization.Message;
+import ua.gordeichuk.payments.service.localization.MessageDtoBuilder;
 import ua.gordeichuk.payments.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +31,8 @@ public class DepositActionCommand implements Command {
             Long cardId = validator.validateAndParseCardNumber(cardIdString);
             Long value = validator.validateAndParseMoneyValue(valueString);
             cardService.deposit(cardId, value);
-            request.setAttribute(Attribute.MESSAGE, MessageDto.getMessage(Message.PAYMENT_SUCCESS));
+            String message = new MessageDtoBuilder().getMessage(Message.PAYMENT_SUCCESS);
+            request.setAttribute(Attribute.MESSAGE,message);
             LOGGER.info(LogMessage.DEPOSIT_OK  + LogMessage.TO + cardId + LogMessage.VALUE + value);
             return Path.DEPOSIT;
 

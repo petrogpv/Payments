@@ -10,7 +10,7 @@
 
     <tag>
         <name>formatMoney</name>
-        <tag-class>ua.gordeichuk.payments.tag.ConvertLongTag</tag-class>
+        <tag-class>ua.gordeichuk.payments.tag.ConvertLongToDoubleStringTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>value</name>

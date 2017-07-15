@@ -71,6 +71,23 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
         }
         return list;
     }
+    protected int findCountByCondition(String sql, Object ... param){
+        int count = 0;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            setConditionParametersToStatement(statement, param);
+            LOGGER.info(statement.toString());
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+            LOGGER.info(LogMessage.ROWS_FOUND + count + LogMessage.IN_TABLE + entityName);
+        } catch (SQLException e) {
+            String errorMessage = LogMessage.DB_ERROR_FIND + entityName ;
+            LOGGER.error(errorMessage, e);
+            throw new RuntimeException(errorMessage, e);
+        }
+        return count;
+    }
 
 
     private void setConditionParametersToStatement(PreparedStatement statement, Object ... param) throws SQLException {
@@ -165,7 +182,7 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
         T entity = null;
         try {
             entity = extractEntityFromResultSet(resultSet);
-        } catch (SQLException e) {
+        } catch (NullPointerException | SQLException e) {
             String errorMessage = LogMessage.EXTRACT_ENTITY_ERROR + entityName;
             LOGGER.error(errorMessage, e);
             throw new RuntimeException(errorMessage, e);
@@ -176,7 +193,8 @@ public abstract class JdbcEntityDao<T extends Entity> implements Dao<T> {
     private void setEntity(T entity, PreparedStatement statement){
         try {
             setEntityToPreparedStatement(entity, statement);
-        } catch (SQLException e) {
+        } catch (NullPointerException | SQLException e) {
+            System.out.println("I am here");
             String errorMessage = LogMessage.SET_ENTITY_TO_PS_ERROR + entityName;
             LOGGER.error(errorMessage, e);
             throw new RuntimeException(errorMessage, e);

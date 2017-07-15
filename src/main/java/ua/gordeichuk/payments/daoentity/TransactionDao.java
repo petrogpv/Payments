@@ -11,4 +11,7 @@ import java.util.List;
 public interface TransactionDao extends Dao<Transaction> {
     String ENTITY_NAME = "transaction";
     List<Transaction> findManyByParamDTO(TransactionParamDto transactionParamDto);
+    Integer findCountByLogin(String login);
+    Integer findCountByAccount(Long accountId);
+    Integer findCountByCard(Long cardId);
 }

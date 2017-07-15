@@ -33,7 +33,7 @@ public class PaymentParamDto {
         this.valueString = valueString;
     }
     public static class Builder {
-        private PaymentParamDto paymentParamDto;
+        private PaymentParamDto paymentParamDto = new PaymentParamDto();
 
         public Builder setCardIdFromString(String cardIdFromString) {
             paymentParamDto.setCardIdFromString(cardIdFromString);

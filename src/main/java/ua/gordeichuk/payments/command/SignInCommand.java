@@ -3,11 +3,15 @@ package ua.gordeichuk.payments.command;
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.Command;
 import ua.gordeichuk.payments.Validator;
-import ua.gordeichuk.payments.exception.ServiceException;
-import ua.gordeichuk.payments.service.UserService;
-import ua.gordeichuk.payments.util.*;
 import ua.gordeichuk.payments.entity.User;
 import ua.gordeichuk.payments.entity.UserAuth;
+import ua.gordeichuk.payments.exception.ServiceException;
+import ua.gordeichuk.payments.service.UserService;
+import ua.gordeichuk.payments.service.localization.Message;
+import ua.gordeichuk.payments.service.localization.MessageDtoBuilder;
+import ua.gordeichuk.payments.util.Attribute;
+import ua.gordeichuk.payments.util.LogMessage;
+import ua.gordeichuk.payments.util.Path;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +34,8 @@ public class SignInCommand implements Command {
         validateUser(userAuth);
         User user = userService.signInUser(userAuth);
         request.getSession().setAttribute(Attribute.USER, user);
-        request.setAttribute(Attribute.MESSAGE, MessageDto.getMessage(Message.SIGNED_IN_SUCCESS));
+        request.setAttribute(Attribute.MESSAGE, new MessageDtoBuilder()
+                .getMessage(Message.SIGNED_IN_SUCCESS));
 
         LOGGER.info(LogMessage.USER_SIGNED_IN + user.getUserAuth().getLogin());
         return Path.DEFAULT;

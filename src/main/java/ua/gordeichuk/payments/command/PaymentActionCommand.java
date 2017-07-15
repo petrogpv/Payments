@@ -7,7 +7,11 @@ import ua.gordeichuk.payments.dto.commandparam.PaymentParamDto;
 import ua.gordeichuk.payments.dto.commandparam.TransferParamDto;
 import ua.gordeichuk.payments.exception.ServiceException;
 import ua.gordeichuk.payments.service.CardService;
-import ua.gordeichuk.payments.util.*;
+import ua.gordeichuk.payments.service.localization.Message;
+import ua.gordeichuk.payments.service.localization.MessageDtoBuilder;
+import ua.gordeichuk.payments.util.Attribute;
+import ua.gordeichuk.payments.util.LogMessage;
+import ua.gordeichuk.payments.util.Path;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,19 +29,25 @@ public class PaymentActionCommand implements Command{
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public String execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServiceException {
             PaymentParamDto paramDto = extractPaymentParamDto(request);
             TransferParamDto transferParamDto = validateAndGetParams(paramDto);
             cardService.transfer(transferParamDto);
-            request.setAttribute(Attribute.MESSAGE, MessageDto.getMessage(Message.PAYMENT_SUCCESS));
+            request.setAttribute(Attribute.MESSAGE, new MessageDtoBuilder()
+                    .getMessage(Message.PAYMENT_SUCCESS));
             writeLog(paramDto);
         return Path.PAYMENT;
     }
-    private TransferParamDto validateAndGetParams(PaymentParamDto paymentParamDto) throws ServiceException{
-        Long cardIdFrom = validator.validateAndParseCardNumber(paymentParamDto.getCardIdFromString());
-        Long cardIdTo = validator.validateAndParseCardNumber(paymentParamDto.getCardIdToString());
-        validator.validateCardsNotEquals(cardIdFrom, cardIdTo );
-        Long value = validator.validateAndParseMoneyValue(paymentParamDto.getValueString());
+    private TransferParamDto validateAndGetParams(PaymentParamDto paymentParamDto)
+            throws ServiceException{
+        Long cardIdFrom = validator
+                .validateAndParseCardNumber(paymentParamDto.getCardIdFromString());
+        Long cardIdTo = validator
+                .validateAndParseCardNumber(paymentParamDto.getCardIdToString());
+        validator.validateCardsNotEquals(cardIdFrom, cardIdTo);
+        Long value = validator
+                .validateAndParseMoneyValue(paymentParamDto.getValueString());
         return new TransferParamDto.Builder()
                 .setCarIdFrom(cardIdFrom)
                 .setCardIdTo(cardIdTo)

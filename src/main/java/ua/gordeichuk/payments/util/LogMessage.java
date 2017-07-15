@@ -5,13 +5,11 @@ package ua.gordeichuk.payments.util;
  */
 public final class LogMessage {
 
-    public static final String EXCEPTION = "exception";
     public static final String PREPARED_STATEMENT = "Prepared statement: ";
     public static final String DB_ERROR_FIND = "DB error operation [find] in table: ";;
     public static final String DB_ERROR_CREATE = "DB error operation [create] in table: ";
     public static final String DB_ERROR_UPDATE = "DB error operation [update] table: ";
     public static final String DB_ERROR_DELETE = "DB error operation [delete] from table: ";
-    public static final String EXCEPTION_MESSAGE = ", exception message: ";
     public static final String ROWS_FOUND = "Rows found: ";
     public static final String ROWS_SAVED = "Rows saved: ";
     public static final String ROWS_UPDATED = "Rows updated: ";
@@ -22,29 +20,22 @@ public final class LogMessage {
     public static final String DAO_FACTORY_CREATED = "Dao factory created  successfully: ";
     public static final String DAO_FACTORY_CREATION_ERROR = "Error while creating Dao factory: ";
     public static final String GET_CONNECTION_ERROR = "Can't get connection from datasource ";
-    public static final String CREATE_DAO_ERROR = "Can't create DAO for entity: ";
     public static final String RETRIEVE_DATASOURCE_ERROR = "Can't retrieve datasource ";
     public static final String ROLLBACK = "Rollback invoked ";
     public static final String CLOSE_WHILE_ROLLBACK_ERROR = "Error while closing connection after rollback " ;
     public static final String SET_AUTOCOMMIT_ERROR = "Set autocommit \'false\' error ";
     public static final String COMMIT_ERROR = "Commit error ";
     public static final String ROLLBACK_ERROR = "Rollback error ";
-    public static final String SET_TRANSACTION_ISO_LEVEL_ERROR = "Set transaction isolation level error ";
-    public static final String TRANSFER_SUCCESSFUL = "Transfer successful from  ";
     public static final String TO = " to ";
-    public static final String FOR = " for ";
     public static final String FROM = " from ";
     public static final String VALUE = " value ";
     public static final String DEPOSITING_SUCCESSFUL = "Depositing successful to card: ";
-    public static final String TRANSACTION_DELETE_ERROR = "Transaction deletion isn't supported ";
     public static final String ATTEMPT_TO_VISIT_AUTHORIZED = "Attempt ro visit authorized area without signing in ";
     public static final String ATTEMPT_TO_VISIT_WITHOUT_PERMISSION = "Attempt ro visit without permission ";
-    public static final String VISITOR_INPUTTED_LOGIN_WRONG_FORMAT = "Visitor inputted wrong format login ";
-    public static final String VISITOR_NOT_EXIST = "Visitor inputted login which doesn't exist ";
     public static final String SET_ENTITY_TO_PS_ERROR = "Error while setting entity to prepared statement for" +
-            "entity name: ";
+            " entity name: ";
     public static final String EXTRACT_ENTITY_ERROR = "Error while extracting entity from result set for" +
-            "entity name: ";
+            " entity name: ";
     public static final String USER_SIGNED_IN = "Visitor successfully signed in: ";
     public static final String ERROR_NOT_IDENTIFIED = "Unpredictable error has occurred! " ;
     public static final String VISITOR_WAS_DENIED_ACCESS = "The visitor was denied access: ";
@@ -63,4 +54,9 @@ public final class LogMessage {
     public static final String MANAGE_SEARCH_FAILED = "Manage search failed!";
     public static final String CARDS_ACTION_ATTRIBUTE_ERROR = "Wrong attribute \"action\" for card status change: ";
     public static final String CHANGE_CARD_STATUS_FAILED = "Change card status failed for card: ";
+    public static final String USER_REGISTRATION_ERROR = "User was not registered: ";
+    public static final String ADD_CARD_FAILED = "Adding card to account failed";
+    public static final String ACCOUNT_DELETE_FAILED = "Account deletion failed";
+    public static final String CARD_DELETION_FAILED = "Card deletion failed";
+    public static final String USER_DELETION_FAILED = "User deletion failed";;
 }

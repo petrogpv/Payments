@@ -18,7 +18,6 @@ public abstract class DaoFactory {
     private static final Logger LOGGER = Logger.getLogger(DaoFactory.class);
     public static final String DB_FILE = "/db.properties";
     private static final String DB_FACTORY_CLASS = "factory.class";
-
     public abstract AccountDao createAccountDao(DaoConnection connection);
     public abstract CardDao createCardDao(DaoConnection connection);
     public abstract TransactionDao createTransactionDao(DaoConnection connection);

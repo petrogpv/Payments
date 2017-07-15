@@ -10,7 +10,6 @@ public class HistoryParamDto {
     private String dateToString;
     private String transactionTypeString;
     private String sortTypeString;
-    private String locale;
 
 
     public String getCardIdString() {
@@ -53,14 +52,6 @@ public class HistoryParamDto {
         this.sortTypeString = sortTypeString;
     }
 
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
     public static class Builder {
         private HistoryParamDto historyParamDto = new HistoryParamDto();
 
@@ -86,10 +77,6 @@ public class HistoryParamDto {
 
         public Builder setSortTypeString(String sortTypeString) {
             historyParamDto.setSortTypeString(sortTypeString);
-            return this;
-        }
-        public Builder setLocale (String locale){
-            historyParamDto.setLocale(locale);
             return this;
         }
 

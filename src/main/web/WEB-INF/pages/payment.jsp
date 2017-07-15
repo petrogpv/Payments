@@ -1,6 +1,5 @@
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="title" value="New payment"/>
+<%@include file="/WEB-INF/pages/common/taglib.jsp" %>
+<fmt:message key="payment.title" var="title" bundle="${bundle}"/>
 
 <html>
 <%@include file="/WEB-INF/pages/common/head.jsp" %>
@@ -8,15 +7,19 @@
 <%@include file="/WEB-INF/pages/common/header.jsp" %>
 
 <div class="container">
-    <div class="header-text"><p>New payment</p></div>
-    <%@include file = "/WEB-INF/pages/common/messageError.jsp"%>
-    <%@include file = "/WEB-INF/pages/common/message.jsp"%>
+    <div class="header-text"><p>${title}</p></div>
+
+    <%@include file="/WEB-INF/pages/common/messageError.jsp" %>
+    <%@include file="/WEB-INF/pages/common/message.jsp" %>
+
     <form method="post" action="/user/payment/action">
         <div class="row">
-            <div class="col-xs-2"><label class="label-input"><p><b>Select card from: </b></p></label></div>
-            <div class=" col-xs-4">
+            <div class="col-xs-2"><label class="label-input"><p><b>
+                <fmt:message key="payment.label.selectCard" bundle="${bundle}"/></b></p></label></div>
+            <div class=" col-xs-5 col-md-4">
                 <select class="selectpicker form-control form-group" required name="cardFrom">
-                    <option value="" disabled selected>select card</option>
+                    <option value="" disabled selected>
+                        <fmt:message key="app.label.selectCard" bundle="${bundle}"/></option>
                     <c:forEach items="${cards}" var="card">
                         <option
                                 <c:if test="${not empty param.cardFrom && param.cardFrom eq card.id}">
@@ -32,23 +35,25 @@
                 </select>
             </div>
         </div>
-
         <div class="row">
-            <div class="col-xs-2"><label class="label-input"><p><b>Enter card to: </b></p></label></div>
-            <div class="col-xs-4"><input type="number" class="form-control" name="cardTo" required
+            <div class="col-xs-2"><label class="label-input"><p><b>
+                <fmt:message key="payment.label.enterCard" bundle="${bundle}"/></b></p></label></div>
+            <div class="col-xs-5 col-md-4"><input type="number" class="form-control"
+                                                  name="cardTo" required max="550599999999"
                     <c:if test="${not empty param.cardTo}"> value="${param.cardTo}" </c:if>/></div>
         </div>
-
         <div class="row">
-            <div class="col-xs-2"><label class="label-input"><p><b>Value: </b></p></label></div>
-            <div class="col-xs-4"><input type="text" step="0.01" class="form-control" name="value" required
+            <div class="col-xs-2"><label class="label-input"><p><b>
+                <fmt:message key="payment.label.value" bundle="${bundle}"/></b></p></label></div>
+            <div class="col-xs-3 col-md-2"><input type="text" step="0.01" class="form-control" name="value" required
                     <c:if test="${not empty param.value}"> value="${param.value}" </c:if>/></div>
         </div>
         <div class="row">
-            <div class="col-xs-1 col-xs-offset-2"><input type="submit" class="btn btn-primary" value="Pay"></div>
+            <div class="col-xs-1 col-xs-offset-2"><input type="submit" class="btn btn-primary"
+                                                         value="<fmt:message key="payment.button.pay" bundle="${bundle}"/>">
+            </div>
         </div>
     </form>
-
 </div>
 </body>
 </html>

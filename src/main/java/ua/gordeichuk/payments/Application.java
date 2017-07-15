@@ -4,7 +4,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.entity.enums.CardStatus;
-import ua.gordeichuk.payments.util.Attribute;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -62,30 +61,9 @@ public class Application {
 
 
 
-        String result = String.valueOf("0");
-        char separator = '.';
-        int length = result.length();
-        String MINUS = "-";
-        String ZERO = "0";
-        String DOUBLE_ZERO = "00";
-
-        if (result.startsWith(MINUS) && length == 2) {
-            result = MINUS + DOUBLE_ZERO + result.substring(1);
-        } else if (result.startsWith(MINUS) && length == 3) {
-            result = MINUS + ZERO + result.substring(1);
-
-        } else if (length == 1) {
-            result = DOUBLE_ZERO + result;
-        } else if (length == 2) {
-            result = ZERO + result;
-        }
-
-        length = result.length();
-
-        result = result.substring(0, length - 2)
-                + separator + result.substring(length - 2, length);
-
-        System.out.println("Res:  " + result);
+        String regex = "^[A-Z]{1}[a-z]+$";
+        String test = "Fakir";
+        System.out.println(test.matches(regex));
     }
 
     public static String nextRandomString() {

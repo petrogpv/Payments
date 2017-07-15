@@ -3,12 +3,12 @@ package ua.gordeichuk.payments.command;
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.Command;
 import ua.gordeichuk.payments.Validator;
+import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.exception.ServiceException;
 import ua.gordeichuk.payments.service.CardService;
 import ua.gordeichuk.payments.util.Attribute;
 import ua.gordeichuk.payments.util.LogMessage;
 import ua.gordeichuk.payments.util.Path;
-import ua.gordeichuk.payments.entity.Card;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +34,6 @@ public class ManageCardsActionCommand implements Command {
             String searchType = request.getParameter(Attribute.SEARCH_TYPE);
             String searchParameter = request.getParameter(Attribute.SEARCH_PARAMETER);
             List<Card> cards = new ArrayList();
-
             if (searchType.equals(CARD_BY_NUMBER)) {
                 Long cardId = validator.validateAndParseCardNumber(searchParameter);
                 Card card = cardService.findCardById(cardId);

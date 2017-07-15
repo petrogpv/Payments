@@ -5,16 +5,16 @@ import ua.gordeichuk.payments.Command;
 import ua.gordeichuk.payments.Validator;
 import ua.gordeichuk.payments.exception.ServiceException;
 import ua.gordeichuk.payments.service.CardService;
-import ua.gordeichuk.payments.util.*;
+import ua.gordeichuk.payments.service.localization.Message;
+import ua.gordeichuk.payments.service.localization.MessageDto;
+import ua.gordeichuk.payments.service.localization.MessageDtoBuilder;
+import ua.gordeichuk.payments.util.Attribute;
+import ua.gordeichuk.payments.util.LogMessage;
+import ua.gordeichuk.payments.util.Path;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by Администратор on 11.07.2017.
- */
 public class CardsChangeCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(CardsChangeCommand.class);
     private static final String UNLOCK = "Unlock";
@@ -50,13 +50,12 @@ public class CardsChangeCommand implements Command {
     }
 
     private void writeMessageAndLog(HttpServletRequest request){
-        MessageDto messageDto = new MessageDto.Builder()
+        MessageDto messageDto = new MessageDtoBuilder()
                 .addMessage(Message.CARD_STATUS_CHANGED)
                 .addMessage(request.getParameter(Attribute.CARD))
                 .build();
         request.setAttribute(Attribute.MESSAGE, messageDto.getMessage());
         LOGGER.info(messageDto.getLogMessage());
-
     }
 
     @Override

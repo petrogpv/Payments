@@ -21,5 +21,4 @@ public interface Command {
     default String doOnError(HttpServletRequest request, Exception e) {
             throw new RuntimeException(e);
     }
-
 }

@@ -1,6 +1,5 @@
 package ua.gordeichuk.payments.daojdbc.jdbcimpl.entityimpl;
 
-import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.daoentity.TransactionDao;
 import ua.gordeichuk.payments.daojdbc.jdbcimpl.JdbcEntityDao;
 import ua.gordeichuk.payments.daojdbc.jdbcimpl.entityimpl.enums.CardRelation;
@@ -18,7 +17,10 @@ import java.util.List;
  * Created by Валерий on 18.06.2017.
  */
 public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements TransactionDao {
-
+    public static final String COUNT_ALL = "count.All";
+    public static final String FIND_BY_LOGIN_CONDITION = "find.ByLogin";
+    public static final String FIND_BY_ACCOUNT_CONDITION = "find.ByAccount";
+    private static final String FIND_BY_CARD_CONDITION = "find.ByCard";
     private static final String ID = "transaction_id";
     private static final String TYPE = "type";
     private static final String BALANCE_AFTER = "balance_after";
@@ -96,4 +98,27 @@ public class JdbcTransactionDao extends JdbcEntityDao<Transaction> implements Tr
         return findManyByCondition(preparedStatementDto.getSql(),
                 preparedStatementDto.getParameters().toArray());
     }
+
+    @Override
+    public Integer findCountByLogin(String login) {
+        String sql = getSqlString(COUNT_ALL)
+                + getSqlString(FIND_BY_LOGIN_CONDITION);
+        return findCountByCondition(sql, login);
+    }
+
+    @Override
+    public Integer findCountByAccount(Long accountId) {
+        String sql = getSqlString(COUNT_ALL)
+                + getSqlString(FIND_BY_ACCOUNT_CONDITION);
+        return findCountByCondition(sql, accountId);
+    }
+
+    @Override
+    public Integer findCountByCard(Long cardId) {
+        String sql = getSqlString(COUNT_ALL)
+                + getSqlString(FIND_BY_CARD_CONDITION);
+        return findCountByCondition(sql, cardId);
+    }
+
+
 }

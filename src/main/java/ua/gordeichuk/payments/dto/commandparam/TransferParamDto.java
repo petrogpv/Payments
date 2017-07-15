@@ -33,7 +33,7 @@ public class TransferParamDto {
     }
 
     public static class Builder{
-      private TransferParamDto transferParamDto;
+      private TransferParamDto transferParamDto = new TransferParamDto();
         public Builder setCarIdFrom(Long cardIdFrom) {
             transferParamDto.setCardIdFrom(cardIdFrom);
             return this;

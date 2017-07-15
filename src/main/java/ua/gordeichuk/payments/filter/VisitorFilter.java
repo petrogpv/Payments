@@ -23,16 +23,16 @@ public abstract  class VisitorFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse res = (HttpServletResponse) servletResponse;
-        HttpSession session = req.getSession(false);
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+        HttpSession session = request.getSession(false);
 
         if (session == null || !isUserAuthorized(session)) {
             LOGGER.info(LogMessage.ATTEMPT_TO_VISIT_WITHOUT_PERMISSION);
-            res.sendRedirect(DEFAULT_PATH);
+            response.sendRedirect(DEFAULT_PATH);
         } else {
-            filterChain.doFilter(req, res);
+            chain.doFilter(request, response);
         }
     }
 

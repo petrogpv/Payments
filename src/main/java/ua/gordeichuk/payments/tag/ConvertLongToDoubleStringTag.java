@@ -10,8 +10,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 /**
  * Created by Администратор on 06.07.2017.
  */
-public class ConvertLongTag extends TagSupport {
-    private static final Logger LOGGER = Logger.getLogger(ConvertLongTag.class);
+public class ConvertLongToDoubleStringTag extends TagSupport {
+    private static final Logger LOGGER = Logger.getLogger(ConvertLongToDoubleStringTag.class);
     private static final String EN_LOCALE = "en_US";
     private static final String UA_LOCALE = "uk_UA";
     private static final char DOT = '.';
@@ -19,7 +19,7 @@ public class ConvertLongTag extends TagSupport {
     private static final String MINUS = "-";
     private static final String ZERO = "0";
     private static final String DOUBLE_ZERO = "00";
-    private static final String TAG_ERROR = "ConvertLongTag error for value: ";
+    private static final String TAG_ERROR = "ConvertLongToDoubleStringTag error for value: ";
     private Long value;
 
     public void setValue(Long value) {

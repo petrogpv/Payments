@@ -2,6 +2,7 @@ package ua.gordeichuk.payments.daoentity;
 
 import ua.gordeichuk.payments.entity.Account;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -9,5 +10,6 @@ import java.util.Optional;
  */
 public interface AccountDao extends Dao<Account> {
     String ENTITY_NAME = "account";
-    Optional<Account> findByCard(Long CardId);
+    Optional<Account> findByCard(Long cardId);
+    List<Account> findManyByUser(Long userId);
 }

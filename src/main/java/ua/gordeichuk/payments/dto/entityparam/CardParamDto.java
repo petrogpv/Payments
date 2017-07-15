@@ -43,7 +43,7 @@ public class CardParamDto {
         this.cardStatus = cardStatus;
     }
 
-    public class Builder {
+    public static class Builder {
         private CardParamDto cardParamDto = new CardParamDto();
 
         public Builder setUserId(Long userId) {

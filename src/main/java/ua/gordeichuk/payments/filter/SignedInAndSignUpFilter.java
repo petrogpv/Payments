@@ -28,9 +28,7 @@ public class SignedInAndSignUpFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        String path = request.getServletPath();
         HttpSession session = request.getSession(false);
-
 
         if (isUserSigned(session)) {
             LOGGER.info(LogMessage.ATTEMPT_TO_SIGN_UP_BY_SIGNED_IN_USER);

@@ -24,16 +24,12 @@ public class SignUpActionCommand implements Command {
     }
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-//        TODO make DTO?
         String login =  request.getParameter(Attribute.USERNAME);
         String password =  request.getParameter(Attribute.PASSWORD);
         String passwordConfirm =  request.getParameter(Attribute.PASSWORD_CONFIRM);
-
         validator.validateLogin(login);
         validator.validatePasswordsOnSignUp(password, passwordConfirm);
-
-        userService.signUpUser(login, password, passwordConfirm);
-//        request.getSession().setAttribute(Attribute.USER, user);
+        userService.signUpUser(login, password);
         return Path.DEFAULT;
     }
 

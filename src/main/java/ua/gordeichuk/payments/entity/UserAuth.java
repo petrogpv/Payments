@@ -9,7 +9,8 @@ public class UserAuth implements Entity, Cloneable {
     private String password;
     private String sole;
 
-    public UserAuth(){};
+    public UserAuth() {
+    }
 
     public Long getId() {
         return id;
@@ -51,13 +52,14 @@ public class UserAuth implements Entity, Cloneable {
         this.sole = sole;
     }
 
-    public static class Builder{
+    public static class Builder {
         private UserAuth userAuth = new UserAuth();
 
         public Builder setRole(UserRole role) {
             userAuth.role = role;
             return this;
         }
+
         public Builder setLogin(String login) {
             userAuth.login = login;
             return this;
@@ -67,6 +69,7 @@ public class UserAuth implements Entity, Cloneable {
             userAuth.password = password;
             return this;
         }
+
         public Builder setSole(String sole) {
             userAuth.sole = sole;
             return this;
@@ -110,7 +113,7 @@ public class UserAuth implements Entity, Cloneable {
 
     @Override
     public UserAuth clone() throws CloneNotSupportedException {
-        return (UserAuth)super.clone();
+        return (UserAuth) super.clone();
     }
 
     @Override

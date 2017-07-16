@@ -11,13 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Locale;
 
-/**
- * Created by Валерий on 14.07.2017.
- */
 public class LocaleHandlingFilter implements Filter {
     private static final String EN_LOCALE = "en_US";
     private static final String UA_LOCALE = "uk_UA";
     private static final Logger LOGGER = Logger.getLogger(LocaleHandlingFilter.class);
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -30,9 +28,10 @@ public class LocaleHandlingFilter implements Filter {
         manageLocaleContext(localeString, request);
         chain.doFilter(req, res);
     }
-    private void manageLocaleContext(String localeString, HttpServletRequest request){
+
+    private void manageLocaleContext(String localeString, HttpServletRequest request) {
         String sessionId = request.getSession().getId();
-        if(localeString!=null) {
+        if (localeString != null) {
             if (localeString.equals(EN_LOCALE)) {
                 request.getSession().setAttribute(Attribute.LOCALE, EN_LOCALE);
                 SessionLocale.getInstance().setLocale(sessionId, SessionLocale.ENGLISH_LOCALE);
@@ -46,6 +45,7 @@ public class LocaleHandlingFilter implements Filter {
         Locale locale = SessionLocale.getInstance().getLocale(sessionId);
         LocaleContext.setLocale(locale);
     }
+
     @Override
     public void destroy() {
 

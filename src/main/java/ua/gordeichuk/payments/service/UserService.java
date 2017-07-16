@@ -1,12 +1,12 @@
 package ua.gordeichuk.payments.service;
 
 import org.apache.log4j.Logger;
-import ua.gordeichuk.payments.Hasher;
-import ua.gordeichuk.payments.daoentity.AccountDao;
-import ua.gordeichuk.payments.daoentity.UserAuthDao;
-import ua.gordeichuk.payments.daoentity.UserDao;
-import ua.gordeichuk.payments.daojdbc.DaoConnection;
-import ua.gordeichuk.payments.daojdbc.DaoFactory;
+import ua.gordeichuk.payments.util.Hasher;
+import ua.gordeichuk.payments.dao.AccountDao;
+import ua.gordeichuk.payments.dao.UserAuthDao;
+import ua.gordeichuk.payments.dao.UserDao;
+import ua.gordeichuk.payments.dao.DaoConnection;
+import ua.gordeichuk.payments.dao.DaoFactory;
 import ua.gordeichuk.payments.entity.Account;
 import ua.gordeichuk.payments.entity.User;
 import ua.gordeichuk.payments.entity.UserAuth;
@@ -19,9 +19,6 @@ import ua.gordeichuk.payments.service.localization.MessageDtoBuilder;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by Валерий on 26.06.2017.
- */
 public class UserService {
     private static final Logger LOGGER = Logger.getLogger(UserService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -110,19 +107,21 @@ public class UserService {
             return user;
         }
     }
+
     public User findUserByLogin(String login, DaoConnection connection)
             throws ServiceException {
-            UserDao userDao = daoFactory.createUserDao(connection);
-            Optional<User> userOptional = userDao.findByLogin(login);
-            if (!userOptional.isPresent()) {
-                MessageDto messageDto = new MessageDtoBuilder()
-                        .addMessage(Message.USER_NOT_EXIST)
-                        .addMessage(login)
-                        .build();
-                throw new ServiceException(messageDto.getMessage());
-            }
-            return userOptional.get();
+        UserDao userDao = daoFactory.createUserDao(connection);
+        Optional<User> userOptional = userDao.findByLogin(login);
+        if (!userOptional.isPresent()) {
+            MessageDto messageDto = new MessageDtoBuilder()
+                    .addMessage(Message.USER_NOT_EXIST)
+                    .addMessage(login)
+                    .build();
+            throw new ServiceException(messageDto.getMessage());
+        }
+        return userOptional.get();
     }
+
     public User findUser(Long userId, DaoConnection connection)
             throws ServiceException {
         UserDao userDao = daoFactory.createUserDao(connection);

@@ -47,7 +47,7 @@ public class User implements Entity, Cloneable {
 
     public List<Card> getCards() {
         List<Card> cardsToGet = new ArrayList<>();
-        for (Card card :cards ) {
+        for (Card card : cards) {
             try {
                 cardsToGet.add(card.clone());
             } catch (CloneNotSupportedException e) {
@@ -68,7 +68,7 @@ public class User implements Entity, Cloneable {
         }
     }
 
-    public static class Builder{
+    public static class Builder {
         private User user = new User();
 
         public Builder setFirstName(String firstName) {
@@ -128,7 +128,7 @@ public class User implements Entity, Cloneable {
 
     @Override
     public User clone() throws CloneNotSupportedException {
-        return (User)super.clone();
+        return (User) super.clone();
     }
 
     @Override

@@ -8,8 +8,9 @@ import java.util.ResourceBundle;
 public class SqlBundle {
     private static final Logger LOGGER = Logger.getLogger(SqlBundle.class);
     private static final String SQL_PROPERTIES_FILE = "sql";
-    private static ResourceBundle sqlBundle;
-    static {
+    private ResourceBundle sqlBundle;
+
+    private SqlBundle() {
         try {
             sqlBundle = ResourceBundle.getBundle(SQL_PROPERTIES_FILE);
             LOGGER.info(LogMessage.RB_READ_SUCCESSFUL + SQL_PROPERTIES_FILE);
@@ -20,7 +21,15 @@ public class SqlBundle {
         }
     }
 
-    public static ResourceBundle getSqlBundle(){
+    private static class Holder {
+        static final SqlBundle INSTANCE = new SqlBundle();
+    }
+
+    public static SqlBundle getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    public ResourceBundle getSqlBundle() {
         return sqlBundle;
     }
 }

@@ -1,16 +1,13 @@
 package ua.gordeichuk.payments.util;
 
-/**
- * Created by Администратор on 29.06.2017.
- */
 public final class Attribute {
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String LOGIN = "login";
     public static final String USERNAME = "username";
-    public static final String PASSWORD= "password";
-    public static final String PASSWORD_CONFIRM = "passwordConfirm" ;
-    public static final String LOCALE = "locale" ;
+    public static final String PASSWORD = "password";
+    public static final String PASSWORD_CONFIRM = "passwordConfirm";
+    public static final String LOCALE = "locale";
     public static final String USER = "user";
     public static final String USER_TO_DELETE = "userIdToDelete";
     public static final String MESSAGE_ERROR = "messageError";

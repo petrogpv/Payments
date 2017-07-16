@@ -6,6 +6,7 @@ public class MessageDto {
 
     public MessageDto() {
     }
+
     public String getMessage() {
         return message;
     }

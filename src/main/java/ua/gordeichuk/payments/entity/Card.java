@@ -5,9 +5,6 @@ import ua.gordeichuk.payments.entity.enums.CardStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Валерий on 12.06.2017.
- */
 public class Card implements Entity, Cloneable {
     private Long id;
     private User user;
@@ -44,19 +41,19 @@ public class Card implements Entity, Cloneable {
 
     public List<Transaction> getTransactions() {
         List<Transaction> transactionsToGet = new ArrayList<>();
-        for (Transaction transaction : transactions ) {
+        for (Transaction transaction : transactions) {
             try {
                 transactionsToGet.add(transaction.clone());
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
         }
-         return transactions;
+        return transactions;
     }
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = new ArrayList<>();
-        for (Transaction transaction: transactions) {
+        for (Transaction transaction : transactions) {
             try {
                 this.transactions.add(transaction.clone());
             } catch (CloneNotSupportedException e) {
@@ -68,33 +65,37 @@ public class Card implements Entity, Cloneable {
     public Account getAccount() {
         return account;
     }
+
     public void setAccount(Account account) {
         this.account = account;
     }
 
-    public  static class Builder{
+    public static class Builder {
         private Card card = new Card();
 
-        public Builder setUser (User user){
+        public Builder setUser(User user) {
             card.user = user;
             return this;
         }
-        public Builder setAccount (Account account){
+
+        public Builder setAccount(Account account) {
             card.account = account;
             return this;
         }
-        public Builder setCardStatus (CardStatus cardStatus){
+
+        public Builder setCardStatus(CardStatus cardStatus) {
             card.status = cardStatus;
             return this;
         }
 
-        public Builder setId (Long id){
+        public Builder setId(Long id) {
             card.id = id;
             return this;
         }
-        public Builder setTransactions (List<Transaction> transactions){
+
+        public Builder setTransactions(List<Transaction> transactions) {
             card.transactions = new ArrayList<>();
-            for (Transaction transaction: transactions) {
+            for (Transaction transaction : transactions) {
                 try {
                     card.transactions.add(transaction.clone());
                 } catch (CloneNotSupportedException e) {
@@ -104,7 +105,7 @@ public class Card implements Entity, Cloneable {
             return this;
         }
 
-        public Card build(){
+        public Card build() {
             return card;
         }
     }

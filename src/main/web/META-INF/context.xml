@@ -2,11 +2,7 @@
 <Context>
     <Resource name="jdbc/payments" auth="Container" type="javax.sql.DataSource"
               maxTotal="30" maxIdle="10" maxWaitMillis="10000"
-
               username="root" password="root"
-
               driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://localhost/payments?serverTimezone=Europe/Helsinki"/>
-
 </Context>
-        <!--driverClassName="com.mysql.jdbc.Driver"-->

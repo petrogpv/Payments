@@ -1,9 +1,9 @@
 package ua.gordeichuk.payments.service;
 
-import ua.gordeichuk.payments.daoentity.TransactionDao;
-import ua.gordeichuk.payments.daojdbc.DaoConnection;
-import ua.gordeichuk.payments.daojdbc.DaoFactory;
-import ua.gordeichuk.payments.dto.entityparam.TransactionParamDto;
+import ua.gordeichuk.payments.dao.TransactionDao;
+import ua.gordeichuk.payments.dao.DaoConnection;
+import ua.gordeichuk.payments.dao.DaoFactory;
+import ua.gordeichuk.payments.dao.parameters.dto.TransactionParamDto;
 import ua.gordeichuk.payments.entity.Account;
 import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.entity.Transaction;
@@ -12,9 +12,6 @@ import ua.gordeichuk.payments.exception.ServiceException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Валерий on 26.06.2017.
- */
 public class TransactionService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
@@ -80,10 +77,10 @@ public class TransactionService {
                 Long cardId;
                 for (Account account : accounts) {
                     cards = account.getCards();
-                    if (!cards.isEmpty()){
-                        for (Card card : cards ) {
+                    if (!cards.isEmpty()) {
+                        for (Card card : cards) {
                             cardId = card.getId();
-                            if(transactionDao.findCountByCard(cardId) == 0){
+                            if (transactionDao.findCountByCard(cardId) == 0) {
                                 cardsIdToDelete.add(cardId);
                             }
                         }

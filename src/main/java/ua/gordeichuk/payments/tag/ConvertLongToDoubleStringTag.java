@@ -6,10 +6,6 @@ import ua.gordeichuk.payments.util.Attribute;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-
-/**
- * Created by Администратор on 06.07.2017.
- */
 public class ConvertLongToDoubleStringTag extends TagSupport {
     private static final Logger LOGGER = Logger.getLogger(ConvertLongToDoubleStringTag.class);
     private static final String EN_LOCALE = "en_US";

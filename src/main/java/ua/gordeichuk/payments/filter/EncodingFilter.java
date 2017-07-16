@@ -3,9 +3,6 @@ package ua.gordeichuk.payments.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
-/**
- * Created by Администратор on 28.06.2017.
- */
 public class EncodingFilter implements Filter {
 
     public static final String ENCODING = "utf-8";

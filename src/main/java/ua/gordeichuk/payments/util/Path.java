@@ -1,8 +1,5 @@
 package ua.gordeichuk.payments.util;
 
-/**
- * Created by Администратор on 28.06.2017.
- */
 public class Path {
     public static final String DEFAULT = "/";
     public static final String SIGNIN = "/auth/signin";

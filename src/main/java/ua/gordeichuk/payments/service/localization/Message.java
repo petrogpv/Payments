@@ -1,8 +1,5 @@
 package ua.gordeichuk.payments.service.localization;
 
-/**
- * Created by Валерий on 25.06.2017.
- */
 public final class Message {
 
     public static final String CARD_NOT_ACTIVE = "failed.card.notActive";

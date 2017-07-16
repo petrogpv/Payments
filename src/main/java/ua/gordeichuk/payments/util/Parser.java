@@ -8,9 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by Администратор on 05.07.2017.
- */
 public class Parser {
     private static final String DATE_PATTERN_EN = "MM.dd.yyyy";
     private static final String DATE_PATTERN_UA = "dd.MM.yyyy";

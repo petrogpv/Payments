@@ -3,9 +3,6 @@ package ua.gordeichuk.payments.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Валерий on 12.06.2017.
- */
 public class Account implements Entity, Cloneable{
     private  Long id;
     private List<Card> cards = new ArrayList<>();

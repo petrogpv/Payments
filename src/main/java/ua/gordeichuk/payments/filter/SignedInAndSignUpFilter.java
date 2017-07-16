@@ -9,10 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * Created by Администратор on 03.07.2017.
- */
-public class SignedInAndSignUpFilter implements Filter{
+public class SignedInAndSignUpFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(CommonVisitorFilter.class);
     private static final String DEFAULT_PATH = "/";
     private static final String USER_ATTRIBUTE_NAME = "user";

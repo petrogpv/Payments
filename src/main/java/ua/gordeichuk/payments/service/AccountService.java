@@ -1,11 +1,11 @@
 package ua.gordeichuk.payments.service;
 
 import org.apache.log4j.Logger;
-import ua.gordeichuk.payments.daoentity.AccountDao;
-import ua.gordeichuk.payments.daoentity.CardDao;
-import ua.gordeichuk.payments.daojdbc.DaoConnection;
-import ua.gordeichuk.payments.daojdbc.DaoFactory;
-import ua.gordeichuk.payments.dto.entityparam.CardParamDto;
+import ua.gordeichuk.payments.dao.AccountDao;
+import ua.gordeichuk.payments.dao.CardDao;
+import ua.gordeichuk.payments.dao.DaoConnection;
+import ua.gordeichuk.payments.dao.DaoFactory;
+import ua.gordeichuk.payments.dao.parameters.dto.CardParamDto;
 import ua.gordeichuk.payments.entity.Account;
 import ua.gordeichuk.payments.entity.Card;
 import ua.gordeichuk.payments.entity.User;
@@ -18,9 +18,6 @@ import ua.gordeichuk.payments.service.localization.MessageDtoBuilder;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by Валерий on 26.06.2017.
- */
 public class AccountService {
     private static final Logger LOGGER = Logger.getLogger(AccountService.class);
     public static final long ZERO_BALANCE = 0L;
@@ -38,16 +35,7 @@ public class AccountService {
         return Holder.INSTANCE;
     }
 
-    public Optional<Account> getAccountByCard(Long cardId) {
-        try (DaoConnection connection = daoFactory.getConnection()) {
-            connection.begin();
-            AccountDao accountDao = daoFactory.createAccountDao(connection);
-            Optional<Account> entity = accountDao.findByCard(cardId);
-            connection.commit();
-            return entity;
-        }
-    }
-    public List<Account> findAccountsByUser(User user){
+    public List<Account> findAccountsByUser(User user) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             AccountDao accountDao = daoFactory.createAccountDao(connection);
@@ -57,6 +45,7 @@ public class AccountService {
             return accounts;
         }
     }
+
     public Card addAccountAndCard(Long userId) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
@@ -79,7 +68,7 @@ public class AccountService {
     }
 
 
-    public void deleteAccount(Long accountId ) throws ServiceException {
+    public void deleteAccount(Long accountId) throws ServiceException {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             Account account = findAccount(accountId, connection);
@@ -90,8 +79,7 @@ public class AccountService {
     }
 
 
-
-    protected void fillAccountWithCards(Account account,DaoConnection connection){
+    protected void fillAccountWithCards(Account account, DaoConnection connection) {
         CardDao cardDao = daoFactory.createCardDao(connection);
         CardParamDto cardParamDto = new CardParamDto.Builder()
                 .setAccountId(account.getId())
@@ -99,14 +87,16 @@ public class AccountService {
         List<Card> cards = cardDao.findManyByDto(cardParamDto);
         account.setCards(cards);
     }
-    private void fillAccountsWithCards(List<Account> accounts,DaoConnection connection){
-        if(!accounts.isEmpty()){
-            for (Account account : accounts ) {
+
+    private void fillAccountsWithCards(List<Account> accounts, DaoConnection connection) {
+        if (!accounts.isEmpty()) {
+            for (Account account : accounts) {
                 fillAccountWithCards(account, connection);
             }
         }
     }
-    private Account findAccount(Long accountId, DaoConnection connection )
+
+    private Account findAccount(Long accountId, DaoConnection connection)
             throws ServiceException {
         AccountDao accountDao = daoFactory.createAccountDao(connection);
         Optional<Account> accountOptional = accountDao.find(accountId);
@@ -115,6 +105,7 @@ public class AccountService {
                     .addMessage(Message.ACCOUNT_NOT_EXIST)
                     .addMessage(String.valueOf(accountId))
                     .build();
+            LOGGER.warn(messageDto.getLogMessage());
             throw new ServiceException(messageDto.getMessage());
         }
         return accountOptional.get();

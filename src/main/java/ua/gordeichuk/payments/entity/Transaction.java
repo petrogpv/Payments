@@ -16,7 +16,8 @@ public class Transaction implements Entity, Comparable<Transaction>, Cloneable {
     private Date date;
     private TransactionType type;
 
-    public Transaction(){}
+    public Transaction() {
+    }
 
     public Long getId() {
         return id;
@@ -79,13 +80,14 @@ public class Transaction implements Entity, Comparable<Transaction>, Cloneable {
         return this.date.compareTo(transaction.getDate());
     }
 
-    public static class Builder{
+    public static class Builder {
         private Transaction transaction = new Transaction();
 
         public Builder setCard(Card card) {
             transaction.card = card;
             return this;
         }
+
         public Builder setType(TransactionType type) {
             transaction.type = type;
             return this;
@@ -100,14 +102,17 @@ public class Transaction implements Entity, Comparable<Transaction>, Cloneable {
             transaction.balanceAfter = balanceAfter;
             return this;
         }
+
         public Builder setValue(Long value) {
             transaction.value = value;
             return this;
         }
+
         public Builder setDate(Date date) {
             transaction.date = date;
             return this;
         }
+
         public Builder setId(Long id) {
             transaction.id = id;
             return this;
@@ -132,7 +137,8 @@ public class Transaction implements Entity, Comparable<Transaction>, Cloneable {
 
         if (!id.equals(that.id)) return false;
         if (card != null ? !card.equals(that.card) : that.card != null) return false;
-        if (relativeTransaction != null ? !relativeTransaction.equals(that.relativeTransaction) : that.relativeTransaction != null) return false;
+        if (relativeTransaction != null ? !relativeTransaction.equals(that.relativeTransaction) : that.relativeTransaction != null)
+            return false;
         if (balanceAfter != null ? !balanceAfter.equals(that.balanceAfter) : that.balanceAfter != null) return false;
         if (value != null ? !value.equals(that.value) : that.value != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;

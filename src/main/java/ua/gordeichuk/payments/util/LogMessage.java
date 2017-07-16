@@ -1,8 +1,5 @@
 package ua.gordeichuk.payments.util;
 
-/**
- * Created by Валерий on 25.06.2017.
- */
 public final class LogMessage {
 
     public static final String PREPARED_STATEMENT = "Prepared statement: ";

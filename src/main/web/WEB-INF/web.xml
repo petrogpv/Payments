@@ -6,16 +6,14 @@
          metadata-complete="true">
     <display-name>Archetype Created Web Application</display-name>
 
-    <!--<error-page>-->
-        <!--<exception-type>java.lang.Exception</exception-type>-->
-        <!--<location>/WEB-INF/jsp/error.jsp</location>-->
-    <!--</error-page>-->
-
-
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/WEB-INF/pages/error.jsp</location>
+    </error-page>
 
     <servlet>
         <servlet-name>AppServlet</servlet-name>
-        <servlet-class>ua.gordeichuk.payments.AppServlet</servlet-class>
+        <servlet-class>ua.gordeichuk.payments.controller.AppServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -23,18 +21,10 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
-
     <welcome-file-list>
         <welcome-file>/</welcome-file>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>default</servlet-name>-->
-        <!--<url-pattern>/resources/*</url-pattern>-->
-    <!--</servlet-mapping>-->
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -46,7 +36,6 @@
         <url-pattern>*.png</url-pattern>
     </servlet-mapping>
 
-
     <session-config>
         <session-timeout>20</session-timeout>
         <cookie-config>
@@ -55,19 +44,16 @@
         </cookie-config>
     </session-config>
 
-    <listener>
-    <listener-class>ua.gordeichuk.payments.service.localization.SessionListener</listener-class>
-    </listener>
-    <!--<listener>-->
-    <!--<listener-class>ua.gordeichuk.payments.service.localization.LocalePropagationListener</listener-class>-->
-    <!--</listener>-->
-
     <resource-ref>
         <description>Payments Pool</description>
         <res-ref-name>jdbc/payments</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+
+    <listener>
+        <listener-class>ua.gordeichuk.payments.service.localization.SessionListener</listener-class>
+    </listener>
 
     <filter>
         <filter-name>EncodingFilter</filter-name>

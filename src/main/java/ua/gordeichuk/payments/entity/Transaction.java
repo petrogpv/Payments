@@ -4,9 +4,6 @@ import ua.gordeichuk.payments.entity.enums.TransactionType;
 
 import java.util.Date;
 
-/**
- * Created by Валерий on 12.06.2017.
- */
 public class Transaction implements Entity, Comparable<Transaction>, Cloneable {
     private Long id;
     private Card card;
@@ -123,10 +120,7 @@ public class Transaction implements Entity, Comparable<Transaction>, Cloneable {
         }
     }
 
-//    @Override
-//    public int compare(Transaction o1, Transaction o2) {
-//        return o1.getDate().compareTo(o2.getDate());
-//    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -167,12 +161,12 @@ public class Transaction implements Entity, Comparable<Transaction>, Cloneable {
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-//                ", relativeTransaction=" + relativeTransaction +
+                ", relativeTransaction=" + relativeTransaction +
                 ", type=" + type +
-//                ", card=" + card +
-//                ", balanceAfter=" + balanceAfter +
-//                ", value=" + value +
-//                ", date=" + date +
+                ", card=" + card +
+                ", balanceAfter=" + balanceAfter +
+                ", value=" + value +
+                ", date=" + date +
                 '}';
     }
 }

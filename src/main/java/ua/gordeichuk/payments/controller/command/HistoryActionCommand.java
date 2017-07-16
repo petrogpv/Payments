@@ -32,7 +32,8 @@ public class HistoryActionCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public String execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServiceException {
 
         HistoryParamDto historyParamDto = extractHistoryParams(request);
         TransactionParamDto paramDto = validateAndGetParams(historyParamDto);

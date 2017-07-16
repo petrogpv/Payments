@@ -1,8 +1,5 @@
 package ua.gordeichuk.payments.controller.parameters.dto;
 
-/**
- * Created by Администратор on 09.07.2017.
- */
 public class TransferParamDto {
     private Long cardIdFrom;
     private Long cardIdTo;
@@ -32,21 +29,25 @@ public class TransferParamDto {
         this.value = value;
     }
 
-    public static class Builder{
-      private TransferParamDto transferParamDto = new TransferParamDto();
+    public static class Builder {
+        private TransferParamDto transferParamDto = new TransferParamDto();
+
         public Builder setCarIdFrom(Long cardIdFrom) {
             transferParamDto.setCardIdFrom(cardIdFrom);
             return this;
         }
-        public Builder setCardIdTo(Long cardIdTo){
+
+        public Builder setCardIdTo(Long cardIdTo) {
             transferParamDto.setCardIdTo(cardIdTo);
             return this;
         }
-        public Builder setValue(Long value){
+
+        public Builder setValue(Long value) {
             transferParamDto.setValue(value);
             return this;
         }
-        public  TransferParamDto build(){
+
+        public TransferParamDto build() {
             return transferParamDto;
         }
     }

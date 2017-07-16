@@ -115,7 +115,6 @@ public class CardService {
         try (DaoConnection connection = daoFactory.getConnection()) {
             connection.begin();
             Card card = findCard(cardId, connection);
-//            checkCardForActivity(card);
             card.setStatus(cardStatus);
             CardDao cardDao = daoFactory.createCardDao(connection);
             cardDao.update(card);

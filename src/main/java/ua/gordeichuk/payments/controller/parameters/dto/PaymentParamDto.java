@@ -1,8 +1,5 @@
 package ua.gordeichuk.payments.controller.parameters.dto;
 
-/**
- * Created by Администратор on 09.07.2017.
- */
 public class PaymentParamDto {
 
     private String cardIdFromString;
@@ -32,6 +29,7 @@ public class PaymentParamDto {
     public void setValueString(String valueString) {
         this.valueString = valueString;
     }
+
     public static class Builder {
         private PaymentParamDto paymentParamDto = new PaymentParamDto();
 

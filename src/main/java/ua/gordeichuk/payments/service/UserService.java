@@ -21,13 +21,14 @@ import java.util.Optional;
 
 public class UserService {
     private static final Logger LOGGER = Logger.getLogger(UserService.class);
-    private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DaoFactory daoFactory;
 
-    private UserService() {
+    public UserService(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
     }
 
     private static class Holder {
-        static final UserService INSTANCE = new UserService();
+        static final UserService INSTANCE = new UserService(DaoFactory.getInstance());
     }
 
     public static UserService getInstance() {
@@ -53,6 +54,7 @@ public class UserService {
 
     public boolean addUser(User user) throws ServiceException {
         try (DaoConnection connection = daoFactory.getConnection()) {
+//       DaoConnection connection = daoFactory.getConnection();
             connection.begin();
             UserDao userDao = daoFactory.createUserDao(connection);
             Optional<User> userOptional = userDao

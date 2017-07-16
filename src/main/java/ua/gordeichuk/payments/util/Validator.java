@@ -15,18 +15,18 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- *
+ * Consist of validation methods for service layer
  */
 public class Validator {
     private static final Logger LOGGER = Logger.getLogger(Validator.class);
-    private static final String LOGIN_EMAIL_REGEX =
+    public static final String LOGIN_EMAIL_REGEX =
             "^(?=.{1,50}$)[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,20}$";
-    private static final String FIRST_NAME_REGEX = "^(?=.{1,50}$)[A-Z]{1}[a-z]+$";
-    private static final String LAST_NAME_REGEX = "^(?=.{1,50}$)[A-Z]{1}[a-z]+([-][A-Z]{1}[a-z]+)?$";
-    private static final String ACCOUNT_NUMBER_REGEX = "^2605[\\d]{6}$";
-    private static final String CARD_NUMBER_REGEX = "^5505[\\d]{8}$";
-    private static final String MONEY_VALUE_REGEX = "^(?=.{1,10}$)\\d+([\\.|,]\\d\\d?)?$";  // check with one digit!!!!
+    public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,20}$";
+    public static final String FIRST_NAME_REGEX = "^(?=.{1,50}$)[A-Z]{1}[a-z]+$";
+    public static final String LAST_NAME_REGEX = "^(?=.{1,50}$)[A-Z]{1}[a-z]+([-][A-Z]{1}[a-z]+)?$";
+    public static final String ACCOUNT_NUMBER_REGEX = "^2605[\\d]{6}$";
+    public static final String CARD_NUMBER_REGEX = "^5505[\\d]{8}$";
+    public static final String MONEY_VALUE_REGEX = "^(?=.{1,10}$)\\d+([\\.|,]\\d\\d?)?$";
     private static final String SPLIT_VALUE_REGEX = "\\.|,";
     private static final String DOUBLE_ZERO = "00";
     private static final String ZERO = "0";
@@ -35,11 +35,11 @@ public class Validator {
     private Validator() {
     }
 
-    private static class Holder{
+    private static class Holder {
         static final Validator INSTANCE = new Validator();
     }
 
-    public static Validator getInstance(){
+    public static Validator getInstance() {
         return Holder.INSTANCE;
     }
 
@@ -49,7 +49,7 @@ public class Validator {
         if (dateString == null || dateString.length() == 0) {
             date = null;
         } else {
-            try{
+            try {
                 date = Parser.parseStringToDate(dateString);
             } catch (ParseException e) {
                 MessageDto messageDto = new MessageDtoBuilder()
@@ -87,6 +87,7 @@ public class Validator {
         }
         return Long.parseLong(cardNumber);
     }
+
     public Long validateAndParseAccountNumber(String accountId) throws ServiceException {
         if (accountId == null || !accountId.matches(ACCOUNT_NUMBER_REGEX)) {
             MessageDto messageDto = new MessageDtoBuilder()
@@ -112,14 +113,15 @@ public class Validator {
             return parseMoneyValue(value);
         }
     }
-    private Long parseMoneyValue (String value){
+
+    private Long parseMoneyValue(String value) {
         String resultValue;
-        String [] valueParts = value.split(SPLIT_VALUE_REGEX);
-        if(valueParts.length == 1){
+        String[] valueParts = value.split(SPLIT_VALUE_REGEX);
+        if (valueParts.length == 1) {
             resultValue = value + DOUBLE_ZERO;
-        }else if(valueParts[1].length() == 1){
+        } else if (valueParts[1].length() == 1) {
             resultValue = valueParts[0] + valueParts[1] + ZERO;
-        }else {
+        } else {
             resultValue = valueParts[0] + valueParts[1];
         }
         return Long.parseLong(resultValue);
@@ -135,6 +137,7 @@ public class Validator {
             throw new ServiceException(messageDto.getMessage());
         }
     }
+
     public void validateFirstName(String firstName) throws ServiceException {
         if (firstName == null || !firstName.matches(FIRST_NAME_REGEX)) {
             MessageDto messageDto = new MessageDtoBuilder()
@@ -145,6 +148,7 @@ public class Validator {
             throw new ServiceException(messageDto.getMessage());
         }
     }
+
     public void validateLastName(String lastName) throws ServiceException {
         if (lastName == null || !lastName.matches(LAST_NAME_REGEX)) {
             MessageDto messageDto = new MessageDtoBuilder()
@@ -194,7 +198,7 @@ public class Validator {
             throws ServiceException {
         try {
             return SortType.valueOf(sortType);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             MessageDto messageDto = new MessageDtoBuilder()
                     .addMessage(Message.WRONG_SORT_TYPE)
                     .addMessage(sortType)
@@ -205,8 +209,8 @@ public class Validator {
     }
 
     public TransactionType validateTransactionType(String transactionTypeString)
-                                                    throws ServiceException {
-        if(transactionTypeString.equals(ALL)){
+            throws ServiceException {
+        if (transactionTypeString.equals(ALL)) {
             return null;
         }
         try {
@@ -221,8 +225,9 @@ public class Validator {
         }
 
     }
+
     public void validateNotAdmin(User user) throws ServiceException {
-        if(user.getUserAuth().getRole().equals(UserRole.ADMIN)){
+        if (user.getUserAuth().getRole().equals(UserRole.ADMIN)) {
             MessageDto messageDto = new MessageDtoBuilder()
                     .addMessage(Message.WRONG_ADMIN_CANNOT_MANAGE_HIMSELF)
                     .build();

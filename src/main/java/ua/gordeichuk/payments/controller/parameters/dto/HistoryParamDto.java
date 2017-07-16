@@ -1,8 +1,5 @@
 package ua.gordeichuk.payments.controller.parameters.dto;
 
-/**
- * Created by Администратор on 08.07.2017.
- */
 public class HistoryParamDto {
 
     private String cardIdString;
@@ -61,7 +58,7 @@ public class HistoryParamDto {
         }
 
         public Builder setDateFromString(String dateFromString) {
-           historyParamDto.setDateFromString(dateFromString);
+            historyParamDto.setDateFromString(dateFromString);
             return this;
         }
 

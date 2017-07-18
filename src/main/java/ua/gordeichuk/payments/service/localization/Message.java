@@ -39,4 +39,5 @@ public final class Message {
     public static final String CARD_SUCCESSFULLY_DELETED = "success.card.deleted";
     public static final String USER_NOT_EXIST = "failed.user.notExist";
     public static final String USER_SUCCESSFULLY_DELETED = "success.user.deleted";
+    public static final String SIGNED_UP_SUCCESSFULLY = "success.user.signedup";
 }

@@ -4,8 +4,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ValidatorRegexTest {
-    Validator validator = Validator.getInstance();
-
 
     @Test()
     public void testCardNumberRegex() throws Exception {

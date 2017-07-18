@@ -2,12 +2,15 @@ package ua.gordeichuk.payments.controller.command.auth;
 
 import org.apache.log4j.Logger;
 import ua.gordeichuk.payments.controller.Command;
-import ua.gordeichuk.payments.util.Validator;
 import ua.gordeichuk.payments.exception.ServiceException;
 import ua.gordeichuk.payments.service.UserService;
+import ua.gordeichuk.payments.service.localization.Message;
+import ua.gordeichuk.payments.service.localization.MessageDto;
+import ua.gordeichuk.payments.service.localization.MessageDtoBuilder;
 import ua.gordeichuk.payments.util.Attribute;
 import ua.gordeichuk.payments.util.LogMessage;
 import ua.gordeichuk.payments.util.Path;
+import ua.gordeichuk.payments.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +33,7 @@ public class SignUpActionCommand implements Command {
         validator.validateLogin(login);
         validator.validatePasswordsOnSignUp(password, passwordConfirm);
         userService.signUpUser(login, password);
+        writeMessageAndLog(request);
         return Path.DEFAULT;
     }
 
@@ -39,5 +43,12 @@ public class SignUpActionCommand implements Command {
                 + request.getParameter(Attribute.USERNAME));
         request.setAttribute(Attribute.MESSAGE_ERROR, e.getMessage());
         return Path.SIGNUP;
+    }
+    private void writeMessageAndLog(HttpServletRequest request) {
+        MessageDto messageDto = new MessageDtoBuilder()
+                .addMessage(Message.SIGNED_UP_SUCCESSFULLY)
+                .build();
+        LOGGER.info(messageDto.getLogMessage());
+        request.setAttribute(Attribute.MESSAGE, messageDto.getMessage());
     }
 }

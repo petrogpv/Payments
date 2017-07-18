@@ -51,10 +51,6 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
-    <listener>
-        <listener-class>ua.gordeichuk.payments.service.localization.SessionListener</listener-class>
-    </listener>
-
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>ua.gordeichuk.payments.filter.EncodingFilter</filter-class>

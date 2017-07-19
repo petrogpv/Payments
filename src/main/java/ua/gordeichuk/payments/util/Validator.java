@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Consist of validation methods for service layer
+ * Consists of validation methods for service layer
  */
 public class Validator {
     private static final Logger LOGGER = Logger.getLogger(Validator.class);

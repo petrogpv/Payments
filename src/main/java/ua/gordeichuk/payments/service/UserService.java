@@ -54,7 +54,6 @@ public class UserService {
 
     public boolean addUser(User user) throws ServiceException {
         try (DaoConnection connection = daoFactory.getConnection()) {
-//       DaoConnection connection = daoFactory.getConnection();
             connection.begin();
             UserDao userDao = daoFactory.createUserDao(connection);
             Optional<User> userOptional = userDao
